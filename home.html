@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="antialiased selection:bg-[#c8b49e] selection:text-[#050505]"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suvastu Properties | Elite Real Estate</title>
+
+    <!-- Ultra Premium Fonts: Cormorant Garamond (Display) & Manrope (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Manrope:wght@200;300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Manrope", "sans-serif"],
+              display: ["Cormorant Garamond", "serif"],
+            },
+            colors: {
+              dark: "#050505",
+              surface: "#0a0a0a",
+              light: "#f4f0ec",
+              accent: "#c8b49e",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        background-color: #050505;
+        color: #f4f0ec;
+        overflow-x: hidden;
+      }
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Lenis Smooth Scroll */
+      html.lenis {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto;
+      }
+      .lenis.lenis-smooth[data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+
+      /* Cinematic Noise Overlay */
+      .noise {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0.05;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* Custom Cursor for Desktop */
+      @media (pointer: fine) {
+        :root {
+          cursor: none;
+        }
+        .cursor-dot {
+          position: fixed;
+          width: 5px;
+          height: 5px;
+          background: #c8b49e;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 10000;
+          transform: translate(-50%, -50%);
+          transition: opacity 0.3s;
+        }
+        .cursor-ring {
+          position: fixed;
+          width: 40px;
+          height: 40px;
+          border: 1px solid rgba(200, 180, 158, 0.5);
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 10000;
+          transform: translate(-50%, -50%);
+          transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+        .cursor-hover .cursor-ring {
+          width: 70px;
+          height: 70px;
+          background-color: rgba(200, 180, 158, 0.1);
+          border-color: transparent;
+          mix-blend-mode: difference;
+        }
+      }
+      @media (pointer: coarse) {
+        .cursor-dot,
+        .cursor-ring {
+          display: none;
+        }
+      }
+
+      /* Typography Utilities */
+      .text-fluid-h2 {
+        font-size: clamp(2.5rem, 6vw, 6rem);
+        line-height: 0.9;
+        letter-spacing: -0.01em;
+      }
+      .text-fluid-p {
+        font-size: clamp(1.2rem, 3vw, 2.5rem);
+        line-height: 1.3;
+      }
+
+      /* Text Masking Lines */
+      .line-wrap {
+        overflow: hidden;
+        display: block;
+      }
+      .line-inner {
+        display: block;
+        transform-origin: top left;
+        will-change: transform, opacity;
+      }
+
+      /* Flawless Hero Slider */
+      .hero-slide {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        visibility: hidden;
+      }
+      .hero-img-wrap {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        will-change: clip-path;
+        background-color: #050505;
+      }
+      .hero-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.7;
+        transform: scale(1.15);
+        transform-origin: center;
+        will-change: transform;
+      }
+
+      /* Parallax & Reveal Utilities */
+      .parallax-mask {
+        overflow: hidden;
+        position: relative;
+        clip-path: inset(100% 0 0 0);
+        will-change: clip-path;
+      }
+      .parallax-img {
+        position: absolute;
+        top: -15%;
+        left: 0;
+        width: 100%;
+        height: 130%;
+        object-fit: cover;
+        will-change: transform;
+        transform: scale(1.2);
+      }
+      .proj-desc {
+        opacity: 0;
+        filter: blur(4px);
+        will-change: filter, opacity;
+      }
+
+      /* Navigation Glass */
+      .nav-glass {
+        background: linear-gradient(
+          to bottom,
+          rgba(5, 5, 5, 0.9) 0%,
+          rgba(5, 5, 5, 0) 100%
+        );
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      }
+
+      /* Bento Grid Hover Effects */
+      .bento-card {
+        transition: background-color 0.5s ease, border-color 0.5s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .bento-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at center,
+          rgba(200, 180, 158, 0.05) 0%,
+          transparent 70%
+        );
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+      }
+      .bento-card:hover {
+        background-color: #0a0a0c;
+        border-color: rgba(200, 180, 158, 0.2);
+      }
+      .bento-card:hover::before {
+        opacity: 1;
+      }
+      .bento-icon {
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+          color 0.5s ease;
+      }
+      .bento-card:hover .bento-icon {
+        transform: scale(1.1) translateY(-2px);
+        color: #c8b49e;
+      }
+
+      /* Hide scrollbar for gallery track */
+      .gallery-track::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- Navigation -->
+    <nav
+      class="fixed top-0 w-full z-50 nav-glass px-6 md:px-12 py-6 flex justify-between items-center transition-transform duration-500"
+      id="navbar"
+    >
+      <div class="font-display text-2xl uppercase tracking-[0.2em] cursor-link">
+        Suvastu
+      </div>
+      <div
+        class="hidden md:flex gap-10 font-sans text-[11px] uppercase tracking-[0.2em] font-light"
+      >
+        <a href="#" class="hover:text-accent transition-colors cursor-link"
+          >Projects</a
+        >
+        <a href="#" class="hover:text-accent transition-colors cursor-link"
+          >Philosophy</a
+        >
+        <a href="#" class="hover:text-accent transition-colors cursor-link"
+          >Journal</a
+        >
+        <a href="#" class="hover:text-accent transition-colors cursor-link"
+          >Contact</a
+        >
+      </div>
+      <div class="md:hidden text-[11px] uppercase tracking-[0.2em] cursor-link">
+        Menu
+      </div>
+    </nav>
+
+    <!-- Masterpiece Cinematic Hero (Redesigned & Glitch-Free) -->
+    <header
+      class="relative w-full h-[100svh] bg-dark overflow-hidden"
+      id="hero-slider"
+    >
+      <!-- Slide 1: Florentina -->
+      <div class="hero-slide">
+        <div class="hero-img-wrap bg-dark">
+          <img
+            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2500&auto=format&fit=crop"
+            class="hero-img"
+            alt="Suvastu Florentina"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-transparent md:bg-gradient-to-r md:from-dark md:via-dark/90 md:to-transparent w-full md:w-[80%]"
+          ></div>
+        </div>
+
+        <div
+          class="absolute inset-0 flex flex-col justify-center px-6 md:px-20 z-10 w-full md:w-[60%] lg:w-[50%]"
+        >
+          <h1
+            class="font-display text-5xl md:text-7xl mb-4 slide-anim text-white"
+          >
+            Suvastu Florentina
+          </h1>
+          <h2
+            class="font-display text-3xl md:text-[2.75rem] text-white/80 mb-8 slide-anim leading-[1.1]"
+          >
+            Inviting You to a<br />Life of Wellness
+          </h2>
+          <p
+            class="font-sans text-sm md:text-[15px] text-white/60 font-light leading-[1.8] mb-10 slide-anim max-w-lg"
+          >
+            The name “Florentina” is reminiscent of the iconic city of Florence,
+            Italy. And just like the city, Florentina tells a story of harmony
+            in our designs, meticulousness in our works, and grace in every
+            detail. Florentina extends a warm embrace to all and promises a life
+            of wellness.
+          </p>
+          <div class="slide-anim">
+            <a
+              href="#"
+              class="cursor-link inline-flex items-center justify-center px-8 py-4 bg-white/5 border border-white/20 hover:bg-white hover:text-dark transition-colors duration-300 font-sans text-[11px] font-medium tracking-[0.2em] uppercase"
+              >See Details</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Jesrin -->
+      <div class="hero-slide">
+        <div class="hero-img-wrap bg-dark">
+          <img
+            src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=2500&auto=format&fit=crop"
+            class="hero-img"
+            alt="Suvastu Jesrin"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-transparent md:bg-gradient-to-r md:from-dark md:via-dark/90 md:to-transparent w-full md:w-[80%]"
+          ></div>
+        </div>
+
+        <div
+          class="absolute inset-0 flex flex-col justify-center px-6 md:px-20 z-10 w-full md:w-[60%] lg:w-[50%]"
+        >
+          <h1
+            class="font-display text-5xl md:text-7xl mb-4 slide-anim text-white"
+          >
+            Suvastu Jesrin
+          </h1>
+          <h2
+            class="font-display text-3xl md:text-[2.75rem] text-white/80 mb-8 slide-anim leading-[1.1]"
+          >
+            Luxury is in<br />Each Detail
+          </h2>
+          <p
+            class="font-sans text-sm md:text-[15px] text-white/60 font-light leading-[1.8] mb-10 slide-anim max-w-lg"
+          >
+            In the tranquil embrace of Bashundhara R/A, Block E, Suvastu Jesrin
+            offers a lifestyle worth remembering. It is surrounded by wide roads
+            on three sides ensuring abundant light and ventilation for the
+            residents. It is the embodiment of meticulous attention to even the
+            smallest details.
+          </p>
+          <div class="slide-anim">
+            <a
+              href="#"
+              class="cursor-link inline-flex items-center justify-center px-8 py-4 bg-white/5 border border-white/20 hover:bg-white hover:text-dark transition-colors duration-300 font-sans text-[11px] font-medium tracking-[0.2em] uppercase"
+              >See Details</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Shaptarshi -->
+      <div class="hero-slide">
+        <div class="hero-img-wrap bg-dark">
+          <img
+            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2500&auto=format&fit=crop"
+            class="hero-img"
+            alt="Suvastu Shaptarshi"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-transparent md:bg-gradient-to-r md:from-dark md:via-dark/90 md:to-transparent w-full md:w-[80%]"
+          ></div>
+        </div>
+
+        <div
+          class="absolute inset-0 flex flex-col justify-center px-6 md:px-20 z-10 w-full md:w-[60%] lg:w-[50%]"
+        >
+          <h1
+            class="font-display text-5xl md:text-7xl mb-4 slide-anim text-white"
+          >
+            Suvastu Shaptarshi
+          </h1>
+          <h2
+            class="font-display text-3xl md:text-[2.75rem] text-white/80 mb-8 slide-anim leading-[1.1]"
+          >
+            A Wholesome Blend of<br />Wellness and Luxury
+          </h2>
+          <p
+            class="font-sans text-sm md:text-[15px] text-white/60 font-light leading-[1.8] mb-10 slide-anim max-w-lg"
+          >
+            Strategically located at Block-H, Road-07, Banani, Suvastu
+            Shaptarshi is set to be your ideal abode to rejuvenate your mind and
+            soul! It is designed to be your ideal home where you can unwind and
+            focus on the true values of your life. It is a home where you Return
+            to Yourself!
+          </p>
+          <div class="slide-anim">
+            <a
+              href="#"
+              class="cursor-link inline-flex items-center justify-center px-8 py-4 bg-white/5 border border-white/20 hover:bg-white hover:text-dark transition-colors duration-300 font-sans text-[11px] font-medium tracking-[0.2em] uppercase"
+              >See Details</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Saleha -->
+      <div class="hero-slide">
+        <div class="hero-img-wrap bg-dark">
+          <img
+            src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2500&auto=format&fit=crop"
+            class="hero-img"
+            alt="Saleha Suvastu"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-transparent md:bg-gradient-to-r md:from-dark md:via-dark/90 md:to-transparent w-full md:w-[80%]"
+          ></div>
+        </div>
+
+        <div
+          class="absolute inset-0 flex flex-col justify-center px-6 md:px-20 z-10 w-full md:w-[60%] lg:w-[50%]"
+        >
+          <h1
+            class="font-display text-5xl md:text-7xl mb-4 slide-anim text-white"
+          >
+            Saleha Suvastu
+          </h1>
+          <h2
+            class="font-display text-3xl md:text-[2.75rem] text-white/80 mb-8 slide-anim leading-[1.1]"
+          >
+            Your Dream Home<br />Where Life is Celebrated
+          </h2>
+          <p
+            class="font-sans text-sm md:text-[15px] text-white/60 font-light leading-[1.8] mb-10 slide-anim max-w-lg"
+          >
+            Discover eco-friendly apartments with modern and luxurious
+            facilities in the heart of Gulshan. Saleha Suvastu is your gateway
+            to the finest real estate deal in Dhaka, offered by Suvastu
+            Properties Ltd.
+          </p>
+          <div class="slide-anim">
+            <a
+              href="#"
+              class="cursor-link inline-flex items-center justify-center px-8 py-4 bg-white/5 border border-white/20 hover:bg-white hover:text-dark transition-colors duration-300 font-sans text-[11px] font-medium tracking-[0.2em] uppercase"
+              >See Details</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero UI Layer: Controls (z-40 for max priority) -->
+      <div
+        class="absolute bottom-10 left-0 w-full px-6 md:px-20 z-40 flex justify-between items-end pointer-events-none"
+      >
+        <!-- Smooth Animated Counter -->
+        <div
+          class="font-sans text-[10px] tracking-[0.3em] text-light/40 uppercase flex items-center pointer-events-auto"
+        >
+          <div class="w-8 h-[1px] bg-accent mr-4 hidden md:block"></div>
+          <div
+            class="relative w-5 h-4 overflow-hidden flex items-center justify-center"
+          >
+            <span
+              id="current-slide-num"
+              class="absolute text-accent text-sm font-medium leading-none block"
+              >01</span
+            >
+          </div>
+          <span class="mx-2">/</span>
+          <span class="text-sm">04</span>
+        </div>
+
+        <!-- Reliable Control Buttons -->
+        <div class="flex gap-4 pointer-events-auto">
+          <button
+            id="hero-prev"
+            class="cursor-link w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-dark transition-all duration-300 backdrop-blur-md text-white"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            id="hero-next"
+            class="cursor-link w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-dark transition-all duration-300 backdrop-blur-md text-white"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Elegant Progress Bar -->
+      <div class="absolute bottom-0 left-0 w-full h-[2px] bg-white/5 z-30">
+        <div class="h-full bg-accent w-0 origin-left" id="hero-progress"></div>
+      </div>
+    </header>
+
+    <!-- Immersive Philosophy Section -->
+    <section class="py-32 md:py-48 relative overflow-hidden bg-dark">
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-display text-[30vw] text-white/5 leading-none select-none pointer-events-none z-0"
+      >
+        1994
+      </div>
+      <div
+        class="max-w-6xl mx-auto px-6 md:px-12 relative z-10 flex flex-col items-center text-center"
+      >
+        <p
+          class="font-sans text-accent text-[10px] md:text-xs tracking-[0.4em] uppercase mb-12 scrub-reveal"
+        >
+          The Philosophy
+        </p>
+        <h2
+          class="font-display text-fluid-p font-light text-light/20 leading-tight philosophy-text"
+        >
+          Our core belief revolves around unparalleled wellness. We dedicate
+          ourselves to crafting breathtaking spaces that echo your essence and
+          nurture your soul. In every meticulous detail, our ultimate invitation
+          remains: <br /><span class="italic text-accent"
+            >Return to yourself.</span
+          >
+        </h2>
+      </div>
+    </section>
+
+    <!-- Features Section: Premium Bento Grid -->
+    <section class="py-24 bg-surface relative z-10 border-t border-white/5">
+      <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <div
+          class="flex flex-col md:flex-row justify-between md:items-end mb-16 gap-8"
+        >
+          <h2 class="font-display text-4xl md:text-5xl uppercase font-light">
+            The Suvastu<br /><span class="italic text-accent">Difference</span>
+          </h2>
+          <p
+            class="font-sans text-xs text-light/50 font-light max-w-sm tracking-wide leading-relaxed"
+          >
+            We set the benchmark for luxury real estate in Dhaka, driven by core
+            pillars of uncompromising excellence.
+          </p>
+        </div>
+
+        <div
+          class="grid grid-cols-1 md:grid-cols-6 gap-4 md:gap-6 auto-rows-fr"
+        >
+          <div
+            class="bento-card md:col-span-3 bg-[#080809] border border-white/5 p-8 md:p-12 rounded-sm cursor-link flex flex-col justify-between min-h-[280px]"
+          >
+            <div class="bento-icon text-white/50 mb-12">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-display text-3xl mb-4 tracking-wide text-light">
+                Prime Locations
+              </h3>
+              <p
+                class="font-sans text-xs text-light/50 leading-relaxed font-light"
+              >
+                Handpicked prestigious neighborhoods ensuring unparalleled
+                connectivity, security, and an elite community lifestyle.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="bento-card md:col-span-3 bg-[#080809] border border-white/5 p-8 md:p-12 rounded-sm cursor-link flex flex-col justify-between min-h-[280px]"
+          >
+            <div class="bento-icon text-white/50 mb-12">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="m21.4 8.6-4-4a2 2 0 0 0-2.8 0l-12 12a2 2 0 0 0 0 2.8l4 4a2 2 0 0 0 2.8 0l12-12a2 2 0 0 0 0-2.8Z"
+                />
+                <path d="m14 6 4 4" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-display text-3xl mb-4 tracking-wide text-light">
+                Architectural Excellence
+              </h3>
+              <p
+                class="font-sans text-xs text-light/50 leading-relaxed font-light"
+              >
+                Collaborating with visionary designers to create iconic facades
+                and interiors that harmoniously blend form and supreme function.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="bento-card md:col-span-2 bg-[#080809] border border-white/5 p-8 md:p-10 rounded-sm cursor-link flex flex-col justify-between min-h-[240px]"
+          >
+            <div class="bento-icon text-white/50 mb-8">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M22 22H2M18 22V11M6 22V4M6 4H20l-4 7M6 7h12M10 22V14h4v8"
+                />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-display text-2xl mb-3 tracking-wide text-light">
+                High-End Construction
+              </h3>
+              <p
+                class="font-sans text-xs text-light/40 leading-relaxed font-light line-clamp-3"
+              >
+                Sourcing only premium global materials and employing rigorous
+                engineering standards.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="bento-card md:col-span-2 bg-[#080809] border border-white/5 p-8 md:p-10 rounded-sm cursor-link flex flex-col justify-between min-h-[240px]"
+          >
+            <div class="bento-icon text-white/50 mb-8">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 22v-8" />
+                <path d="M8 22h8" />
+                <circle cx="12" cy="7" r="3" />
+                <path
+                  d="M18 11V6a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v5c0 2-2 4-4 4h16c-2 0-4-2-4-4Z"
+                />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-display text-2xl mb-3 tracking-wide text-light">
+                Concierge Services
+              </h3>
+              <p
+                class="font-sans text-xs text-light/40 leading-relaxed font-light line-clamp-3"
+              >
+                Five-star facility management dedicated to anticipating and
+                fulfilling your every need.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="bento-card md:col-span-2 bg-[#080809] border border-white/5 p-8 md:p-10 rounded-sm cursor-link flex flex-col justify-between min-h-[240px]"
+          >
+            <div class="bento-icon text-white/50 mb-8">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-display text-2xl mb-3 tracking-wide text-light">
+                On-Time Handover
+              </h3>
+              <p
+                class="font-sans text-xs text-light/40 leading-relaxed font-light line-clamp-3"
+              >
+                A flawless track record of delivering projects punctually
+                without compromising quality.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Perfect Parallax Masterpieces -->
+    <section class="bg-dark py-32 md:py-48 px-6 md:px-12 relative z-10">
+      <div
+        class="max-w-7xl mx-auto mb-24 md:mb-40 flex flex-col items-center text-center header-reveal"
+      >
+        <h2 class="font-display text-fluid-h2 uppercase mb-4">
+          Selected <span class="italic text-accent">Masterpieces</span>
+        </h2>
+        <div
+          class="w-[1px] h-16 bg-accent mt-8 mb-8 origin-top scale-y-0 line-anim"
+        ></div>
+      </div>
+
+      <div class="flex flex-col gap-32 md:gap-56 max-w-[90rem] mx-auto">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between gap-12 md:gap-0 project-section relative"
+        >
+          <div
+            class="w-full md:w-[60%] h-[60vh] md:h-[90vh] parallax-mask cursor-link"
+          >
+            <img
+              src="https://suvastuproperties.com/wp-content/uploads/2025/01/2-1.jpg"
+              class="parallax-img"
+              alt="Mirambeena"
+            />
+          </div>
+          <div
+            class="w-full md:w-[35%] md:absolute right-0 md:pl-16 flex flex-col justify-center project-content bg-dark/80 backdrop-blur-sm p-6 md:p-12 z-10 border border-white/5"
+          >
+            <span
+              class="font-sans text-accent text-[10px] tracking-[0.3em] uppercase mb-6 block proj-sub opacity-0"
+              >01 — Dhaka Urban</span
+            >
+            <h3
+              class="font-display text-4xl md:text-5xl lg:text-6xl mb-8 proj-title font-light"
+            >
+              Mirambeena
+            </h3>
+            <p
+              class="font-sans font-light text-light/50 text-sm leading-loose mb-10 proj-desc"
+            >
+              Where breathtaking luxury meets metropolitan convenience. A
+              curated elite real estate investment offering tailored to
+              architectural perfection.
+            </p>
+            <a
+              href="#"
+              class="cursor-link w-fit text-[10px] font-sans tracking-[0.2em] uppercase border-b border-light/20 pb-2 hover:border-accent hover:text-accent transition-all duration-300 proj-btn opacity-0"
+              >View Project</a
+            >
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col md:flex-row-reverse items-center justify-between gap-12 md:gap-0 project-section relative"
+        >
+          <div
+            class="w-full md:w-[60%] h-[60vh] md:h-[90vh] parallax-mask cursor-link"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1632400990400-416d5460f337?q=80&w=918&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              class="parallax-img"
+              alt="Shaptarshi"
+            />
+          </div>
+          <div
+            class="w-full md:w-[35%] md:absolute left-0 md:pr-16 flex flex-col justify-center project-content bg-dark/80 backdrop-blur-sm p-6 md:p-12 z-10 border border-white/5"
+          >
+            <span
+              class="font-sans text-accent text-[10px] tracking-[0.3em] uppercase mb-6 block proj-sub opacity-0"
+              >02 — Banani Block-H</span
+            >
+            <h3
+              class="font-display text-4xl md:text-5xl lg:text-6xl mb-8 proj-title font-light"
+            >
+              Shaptarshi
+            </h3>
+            <p
+              class="font-sans font-light text-light/50 text-sm leading-loose mb-10 proj-desc"
+            >
+              Strategically located to be your ideal abode. Rejuvenate your mind
+              and soul in an environment where true serenity commands the space.
+            </p>
+            <a
+              href="#"
+              class="cursor-link w-fit text-[10px] font-sans tracking-[0.2em] uppercase border-b border-light/20 pb-2 hover:border-accent hover:text-accent transition-all duration-300 proj-btn opacity-0"
+              >View Project</a
+            >
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center project-section relative">
+          <div
+            class="w-full h-[60vh] md:h-[100vh] parallax-mask cursor-link mb-12"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1625510790579-170eae5de7c9?q=80&w=1071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              class="parallax-img"
+              alt="Jesrin"
+            />
+          </div>
+          <div
+            class="max-w-2xl text-center project-content flex flex-col items-center"
+          >
+            <span
+              class="font-sans text-accent text-[10px] tracking-[0.3em] uppercase mb-6 block proj-sub opacity-0"
+              >03 — Bashundhara</span
+            >
+            <h3
+              class="font-display text-4xl md:text-6xl mb-8 proj-title font-light"
+            >
+              Jesrin Estate
+            </h3>
+            <p
+              class="font-sans font-light text-light/50 text-sm leading-loose mb-10 proj-desc"
+            >
+              Surrounded by wide roads on three sides ensuring abundant light.
+              The absolute embodiment of meticulous attention to spatial flow.
+            </p>
+            <a
+              href="#"
+              class="cursor-link w-fit text-[10px] font-sans tracking-[0.2em] uppercase border-b border-light/20 pb-2 hover:border-accent hover:text-accent transition-all duration-300 proj-btn opacity-0"
+              >View Project</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Horizontal Scroll Gallery -->
+    <section class="bg-surface relative z-10" id="gallery-pin">
+      <div
+        class="h-screen flex flex-col justify-center overflow-hidden sticky top-0 gallery-wrapper"
+      >
+        <div
+          class="absolute top-12 md:top-24 left-6 md:left-12 z-20 mix-blend-difference gallery-header"
+        >
+          <h2
+            class="font-display text-3xl md:text-5xl uppercase tracking-widest text-light"
+          >
+            Visual Excellence
+          </h2>
+          <p
+            class="font-sans text-[10px] text-accent mt-4 tracking-[0.3em] uppercase"
+          >
+            Scroll to explore
+          </p>
+        </div>
+
+        <div
+          class="flex items-center gap-10 md:gap-20 px-6 md:px-[20vw] h-full w-max gallery-track"
+        >
+          <div
+            class="w-[80vw] md:w-[50vw] h-[60vh] md:h-[70vh] relative overflow-hidden cursor-link group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s] ease-out"
+              alt="Interior"
+            />
+            <div
+              class="absolute bottom-6 left-6 text-xs font-sans tracking-widest uppercase text-white bg-dark/40 backdrop-blur-md px-4 py-2 border border-white/10"
+            >
+              The Lounge
+            </div>
+          </div>
+
+          <div
+            class="w-[70vw] md:w-[30vw] h-[50vh] md:h-[60vh] relative overflow-hidden cursor-link group mt-20"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s] ease-out"
+              alt="Exterior"
+            />
+            <div
+              class="absolute bottom-6 left-6 text-xs font-sans tracking-widest uppercase text-white bg-dark/40 backdrop-blur-md px-4 py-2 border border-white/10"
+            >
+              Night Facade
+            </div>
+          </div>
+
+          <div
+            class="w-[85vw] md:w-[60vw] h-[65vh] md:h-[80vh] relative overflow-hidden cursor-link group -mt-10"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s] ease-out"
+              alt="Lobby"
+            />
+            <div
+              class="absolute bottom-6 left-6 text-xs font-sans tracking-widest uppercase text-white bg-dark/40 backdrop-blur-md px-4 py-2 border border-white/10"
+            >
+              Grand Lobby
+            </div>
+          </div>
+
+          <div
+            class="w-[60vw] md:w-[35vw] h-[40vh] md:h-[50vh] relative overflow-hidden cursor-link group mt-32 mr-[10vw]"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1635108201018-94bbbfac4a79?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s] ease-out"
+              alt="Pool"
+            />
+            <div
+              class="absolute bottom-6 left-6 text-xs font-sans tracking-widest uppercase text-white bg-dark/40 backdrop-blur-md px-4 py-2 border border-white/10"
+            >
+              Infinity Pool
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="bg-dark pt-32 pb-12 px-6 md:px-12 border-t border-white/5 relative z-20"
+    >
+      <div
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 mb-24"
+      >
+        <div class="md:col-span-2">
+          <h4 class="font-display text-4xl mb-6 font-light">
+            Start your journey.
+          </h4>
+          <p
+            class="font-sans text-light/50 font-light text-sm max-w-sm mb-8 leading-relaxed"
+          >
+            At Suvastu Properties we aspire to make this journey pleasantly
+            memorable for you. Contact our advisors to begin.
+          </p>
+          <div
+            class="font-sans text-[11px] font-light tracking-[0.2em] text-light/40 uppercase space-y-3"
+          >
+            <p class="text-light">Suvastu Imam Square, 5th Floor</p>
+            <p>65 Gulshan Ave, Gulshan-1</p>
+            <p>Dhaka 1212</p>
+          </div>
+        </div>
+
+        <div>
+          <h5
+            class="font-sans uppercase tracking-[0.3em] text-[10px] mb-8 text-accent"
+          >
+            Get In Touch
+          </h5>
+          <ul class="font-sans text-sm font-light text-light/60 space-y-4">
+            <li>
+              Hotline:
+              <a href="#" class="cursor-link hover:text-white transition-colors"
+                >16730</a
+              >
+            </li>
+            <li>
+              <a href="#" class="cursor-link hover:text-white transition-colors"
+                >+880 9639 500 400</a
+              >
+            </li>
+            <li class="pt-4">
+              <a
+                href="mailto:marketing@suvastu.com"
+                class="cursor-link text-accent hover:text-white transition-colors text-xs tracking-wider"
+                >marketing@suvastu.com</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h5
+            class="font-sans uppercase tracking-[0.3em] text-[10px] mb-8 text-accent"
+          >
+            Newsletter
+          </h5>
+          <p
+            class="font-sans text-xs text-light/50 font-light mb-6 leading-relaxed"
+          >
+            Subscribe for exclusive private listings.
+          </p>
+          <div class="relative group cursor-link">
+            <input
+              type="email"
+              placeholder="Your Email Address"
+              class="w-full bg-transparent border-b border-light/20 pb-3 outline-none font-sans text-sm group-hover:border-accent transition-colors placeholder:text-light/30 cursor-none"
+            />
+            <button
+              class="absolute right-0 top-0 text-[10px] tracking-[0.2em] uppercase group-hover:text-accent transition-colors cursor-none"
+            >
+              Join
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 font-sans text-[9px] tracking-[0.3em] uppercase text-light/30"
+      >
+        <p>&copy; 2024 Suvastu Properties Ltd.</p>
+        <div class="flex gap-8 mt-6 md:mt-0">
+          <a href="#" class="cursor-link hover:text-accent transition-colors"
+            >Facebook</a
+          >
+          <a href="#" class="cursor-link hover:text-accent transition-colors"
+            >LinkedIn</a
+          >
+          <a href="#" class="cursor-link hover:text-accent transition-colors"
+            >Instagram</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- SplitType for Text Animation -->
+    <script src="https://unpkg.com/split-type"></script>
+
+    <script>
+      // 1. Setup & Cursors
+      gsap.registerPlugin(ScrollTrigger);
+
+      const cursorDot = document.querySelector(".cursor-dot");
+      const cursorRing = document.querySelector(".cursor-ring");
+
+      if (
+        cursorDot &&
+        cursorRing &&
+        window.matchMedia("(pointer: fine)").matches
+      ) {
+        window.addEventListener("mousemove", (e) => {
+          gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1 });
+          gsap.to(cursorRing, {
+            x: e.clientX,
+            y: e.clientY,
+            duration: 0.7,
+            ease: "power3.out",
+          });
+        });
+
+        document
+          .querySelectorAll("a, button, input, .cursor-link")
+          .forEach((el) => {
+            el.addEventListener("mouseenter", () =>
+              document.body.classList.add("cursor-hover"),
+            );
+            el.addEventListener("mouseleave", () =>
+              document.body.classList.remove("cursor-hover"),
+            );
+          });
+      }
+
+      // 2. Lenis Smooth Scroll Setup
+      const lenis = new Lenis({
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: "vertical",
+        smooth: true,
+      });
+
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+
+      // 3. Ultra-Smooth, Reliable Hero Slider Logic
+      const slides = document.querySelectorAll(".hero-slide");
+      const progressBar = document.getElementById("hero-progress");
+      const slideNumDisplay = document.getElementById("current-slide-num");
+      const nextBtn = document.getElementById("hero-next");
+      const prevBtn = document.getElementById("hero-prev");
+
+      let currentSlide = 0;
+      let isAnimating = false;
+      let autoPlayTimer;
+      const slideDuration = 6500;
+
+      // Initialize Slider Stack
+      gsap.set(slides, { zIndex: 1, autoAlpha: 0 });
+      gsap.set(slides[0], { zIndex: 2, autoAlpha: 1 });
+
+      slides.forEach((slide) => {
+        gsap.set(slide.querySelectorAll(".slide-anim"), { y: 40, opacity: 0 });
+      });
+
+      function playFirstSlide() {
+        const firstAnim = slides[0].querySelectorAll(".slide-anim");
+        const firstImg = slides[0].querySelector(".hero-img");
+
+        gsap.to(firstImg, { scale: 1, duration: 8, ease: "power1.out" });
+        gsap.to(firstAnim, {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.1,
+          ease: "power3.out",
+          delay: 0.5,
+        });
+        gsap.fromTo(
+          progressBar,
+          { scaleX: 0 },
+          { scaleX: 1, duration: slideDuration / 1000, ease: "none" },
+        );
+      }
+
+      function gotoSlide(index) {
+        if (isAnimating || index === currentSlide) return;
+        isAnimating = true;
+
+        const current = slides[currentSlide];
+        const next = slides[index];
+
+        const currentAnim = current.querySelectorAll(".slide-anim");
+        const nextWrap = next.querySelector(".hero-img-wrap");
+        const nextImg = next.querySelector(".hero-img");
+        const nextAnim = next.querySelectorAll(".slide-anim");
+
+        // Set up Next Slide layer to sit above current slide
+        gsap.set(next, { zIndex: 3, autoAlpha: 1 });
+        gsap.set(nextWrap, { clipPath: "inset(100% 0 0 0)" });
+        gsap.set(nextImg, { scale: 1.15, yPercent: 10 });
+        gsap.set(nextAnim, { y: 40, opacity: 0 });
+
+        const tl = gsap.timeline({
+          onComplete: () => {
+            gsap.set(current, { zIndex: 1, autoAlpha: 0 });
+            gsap.set(next, { zIndex: 2 });
+            gsap.set(nextWrap, { clearProps: "clipPath" });
+
+            currentSlide = index;
+            isAnimating = false;
+          },
+        });
+
+        // 1. Instant, smooth number update transition
+        const formattedNextNum = `0${index + 1}`;
+        gsap.to(slideNumDisplay, {
+          y: -15,
+          opacity: 0,
+          duration: 0.25,
+          ease: "power2.in",
+          onComplete: () => {
+            slideNumDisplay.textContent = formattedNextNum;
+            gsap.set(slideNumDisplay, { y: 15 });
+            gsap.to(slideNumDisplay, {
+              y: 0,
+              opacity: 1,
+              duration: 0.25,
+              ease: "power2.out",
+            });
+          },
+        });
+
+        // 2. Fade out current text
+        tl.to(
+          currentAnim,
+          {
+            y: -30,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.05,
+            ease: "power2.inOut",
+          },
+          0,
+        );
+
+        // 3. Solid wipe (no transparent ghosting)
+        tl.to(
+          nextWrap,
+          { clipPath: "inset(0% 0 0 0)", duration: 1.2, ease: "expo.inOut" },
+          0.2,
+        );
+        tl.to(
+          nextImg,
+          { yPercent: 0, scale: 1, duration: 2.2, ease: "power3.out" },
+          0.2,
+        );
+
+        // 4. Animate in new text
+        tl.to(
+          nextAnim,
+          { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" },
+          1.0,
+        );
+
+        // Progress Bar Reset
+        gsap.killTweensOf(progressBar);
+        gsap.fromTo(
+          progressBar,
+          { scaleX: 0 },
+          { scaleX: 1, duration: slideDuration / 1000, ease: "none" },
+        );
+      }
+
+      function resetTimer() {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = setInterval(() => {
+          if (!isAnimating) gotoSlide((currentSlide + 1) % slides.length);
+        }, slideDuration);
+      }
+
+      // Reliable Event Listeners for Arrows
+      nextBtn.addEventListener("click", () => {
+        if (!isAnimating) {
+          gotoSlide((currentSlide + 1) % slides.length);
+          resetTimer();
+        }
+      });
+
+      prevBtn.addEventListener("click", () => {
+        if (!isAnimating) {
+          gotoSlide((currentSlide - 1 + slides.length) % slides.length);
+          resetTimer();
+        }
+      });
+
+      // Init Hero
+      playFirstSlide();
+      resetTimer();
+
+      // 4. Philosophy Text Scrub
+      const philText = new SplitType(".philosophy-text", { types: "words" });
+      gsap.fromTo(
+        philText.words,
+        { opacity: 0.1 },
+        {
+          opacity: 1,
+          stagger: 0.1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".philosophy-text",
+            start: "top 80%",
+            end: "bottom 50%",
+            scrub: 1,
+          },
+        },
+      );
+
+      // 5. Perfect Parallax Masterpieces
+      const hReveal = gsap.timeline({
+        scrollTrigger: { trigger: ".header-reveal", start: "top 80%" },
+      });
+      hReveal
+        .from(".header-reveal h2", {
+          y: 30,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out",
+        })
+        .to(
+          ".line-anim",
+          { scaleY: 1, duration: 1, ease: "power3.out" },
+          "-=0.5",
+        );
+
+      document.querySelectorAll(".proj-title").forEach((title) => {
+        const split = new SplitType(title, {
+          types: "lines",
+          lineClass: "line-wrap",
+        });
+        split.lines.forEach((line) => {
+          const inner = document.createElement("div");
+          inner.classList.add("line-inner");
+          inner.innerHTML = line.innerHTML;
+          line.innerHTML = "";
+          line.appendChild(inner);
+        });
+      });
+
+      gsap.utils.toArray(".project-section").forEach((section) => {
+        const mask = section.querySelector(".parallax-mask");
+        const img = section.querySelector(".parallax-img");
+        const titleLines = section.querySelectorAll(".line-inner");
+        const sub = section.querySelector(".proj-sub");
+        const desc = section.querySelector(".proj-desc");
+        const btn = section.querySelector(".proj-btn");
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top 65%",
+            toggleActions: "play none none reverse",
+          },
+        });
+
+        tl.to(
+          mask,
+          { clipPath: "inset(0% 0 0 0)", duration: 1.6, ease: "power4.inOut" },
+          0,
+        );
+        tl.to(img, { scale: 1, duration: 1.6, ease: "power4.inOut" }, 0);
+
+        tl.to(
+          sub,
+          { opacity: 1, y: -10, duration: 0.8, ease: "power3.out" },
+          0.6,
+        );
+        tl.to(
+          titleLines,
+          { y: 0, duration: 1, stagger: 0.1, ease: "power4.out" },
+          0.8,
+        );
+        tl.to(
+          desc,
+          {
+            opacity: 1,
+            filter: "blur(0px)",
+            y: -10,
+            duration: 1,
+            ease: "power3.out",
+          },
+          1.0,
+        );
+        tl.to(
+          btn,
+          { opacity: 1, y: -5, duration: 0.8, ease: "power3.out" },
+          1.2,
+        );
+
+        gsap.to(img, {
+          yPercent: 25,
+          ease: "none",
+          scrollTrigger: {
+            trigger: mask,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      });
+
+      // 6. Horizontal Gallery Scroll
+      const galleryTrack = document.querySelector(".gallery-track");
+      gsap.to(galleryTrack, {
+        x: () => -(galleryTrack.scrollWidth - window.innerWidth),
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#gallery-pin",
+          pin: true,
+          start: "top top",
+          end: () => "+=" + (galleryTrack.scrollWidth - window.innerWidth),
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // Navbar Hide/Show
+      let lastScrollY = window.scrollY;
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > lastScrollY && window.scrollY > 100)
+          navbar.style.transform = "translateY(-100%)";
+        else navbar.style.transform = "translateY(0)";
+        lastScrollY = window.scrollY;
+      });
+    </script>
+  </body>
+</html>
