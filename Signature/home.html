@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Signature Plumbing, Inc. | Prompt & Professional</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                dark: "#020617", // Slate 950
+                navy: "#0A1128",
+                blue: "#1D4ED8", // Blue 700
+                red: "#E63946", // Premium Crimson
+                light: "#F8FAFC",
+              },
+            },
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', "sans-serif"],
+              display: ['"Outfit"', "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Lenis Smooth Scroll Setup */
+      html.lenis {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto;
+      }
+      .lenis.lenis-smooth[data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+      .lenis.lenis-scrolling iframe {
+        pointer-events: none;
+      }
+
+      /* Base Styling */
+      body {
+        background-color: #020617;
+        color: #f8fafc;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Noise Overlay for Premium Texture */
+      .noise {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* Custom Cursor */
+      .cursor-dot,
+      .cursor-outline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9999;
+        pointer-events: none;
+      }
+      .cursor-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #e63946;
+      }
+      .cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition: width 0.2s, height 0.2s, background-color 0.2s;
+      }
+      .cursor-outline.hovered {
+        width: 80px;
+        height: 80px;
+        background-color: rgba(230, 57, 70, 0.1);
+        border-color: #e63946;
+        backdrop-filter: blur(2px);
+      }
+      @media (pointer: coarse) {
+        .cursor-dot,
+        .cursor-outline {
+          display: none !important;
+        }
+      }
+
+      /* Utilities */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .text-stroke {
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+        color: transparent;
+      }
+      .text-stroke:hover {
+        color: #f8fafc;
+        -webkit-text-stroke: 1px transparent;
+        transition: all 0.3s ease;
+      }
+
+      /* Infinite Marquee */
+      .marquee-wrapper {
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+        display: flex;
+        mask-image: linear-gradient(
+          to right,
+          transparent,
+          black 10%,
+          black 90%,
+          transparent
+        );
+        -webkit-mask-image: linear-gradient(
+          to right,
+          transparent,
+          black 10%,
+          black 90%,
+          transparent
+        );
+      }
+      .marquee-content {
+        display: flex;
+        animation: marquee 30s linear infinite;
+      }
+      @keyframes marquee {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* Menu Overlay */
+      #nav-overlay {
+        clip-path: circle(0% at 100% 0%);
+        transition: clip-path 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+      }
+      #nav-overlay.open {
+        clip-path: circle(150% at 100% 0%);
+      }
+      .hamburger-line {
+        transition: all 0.3s ease;
+      }
+      .menu-open .line-1 {
+        transform: translateY(6px) rotate(45deg);
+      }
+      .menu-open .line-2 {
+        opacity: 0;
+      }
+      .menu-open .line-3 {
+        transform: translateY(-6px) rotate(-45deg);
+      }
+
+      /* Fix for Parallax Corners webkit bug */
+      .reveal-img-container {
+        overflow: hidden;
+        position: relative;
+        /* This prevents webkit from clipping the rounded corners when the child transforms */
+        -webkit-mask-image: -webkit-radial-gradient(white, black);
+        mask-image: radial-gradient(white, black);
+        isolation: isolate;
+      }
+      .reveal-img-overlay {
+        position: absolute;
+        inset: 0;
+        background-color: #020617;
+        z-index: 10;
+        transform-origin: top;
+      }
+
+      /* Checkmark Animation */
+      .service-item:hover .check-icon {
+        transform: scale(1.2) rotate(5deg);
+        color: #e63946;
+      }
+
+      /* Premium Grid Background */
+      .bg-premium-grid {
+        background-size: 40px 40px;
+        background-image: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          );
+      }
+    </style>
+  </head>
+  <body class="bg-brand-dark selection:bg-brand-red selection:text-white">
+    <div class="noise"></div>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- HEADER -->
+    <header
+      class="fixed top-0 w-full z-[60] px-6 py-6 md:px-12 md:py-8 flex justify-between items-center mix-blend-difference"
+    >
+      <div class="flex flex-col interactive z-50 relative">
+        <h1
+          class="text-2xl md:text-3xl font-display font-bold tracking-tight text-white leading-none"
+        >
+          SIGNATURE<span class="text-brand-blue mix-blend-normal">.</span>
+        </h1>
+        <span
+          class="text-[8px] md:text-[10px] tracking-[0.2em] uppercase font-sans text-gray-300 mt-1"
+        >
+          Plumbing, Inc.
+        </span>
+      </div>
+
+      <button
+        id="menu-btn"
+        class="relative z-50 w-12 h-12 flex flex-col justify-center items-end gap-1.5 interactive group"
+      >
+        <span
+          class="line-1 w-8 h-[2px] bg-white hamburger-line group-hover:w-6"
+        ></span>
+        <span class="line-2 w-6 h-[2px] bg-white hamburger-line"></span>
+        <span
+          class="line-3 w-4 h-[2px] bg-white hamburger-line group-hover:w-8"
+        ></span>
+      </button>
+    </header>
+
+    <!-- FULLSCREEN NAVIGATION OVERLAY -->
+    <nav
+      id="nav-overlay"
+      class="fixed inset-0 bg-brand-navy z-[55] flex flex-col justify-center px-6 md:px-24"
+    >
+      <div
+        class="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1550005809-91ad75fb315f?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay pointer-events-none"
+      ></div>
+
+      <div
+        class="max-w-7xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10"
+      >
+        <!-- Links -->
+        <div class="flex flex-col gap-2 md:gap-4 mt-20 md:mt-0">
+          <p
+            class="text-brand-red text-xs md:text-sm tracking-widest uppercase mb-4 nav-fade font-sans font-semibold"
+          >
+            Navigation
+          </p>
+          <a
+            href="#"
+            class="nav-link text-4xl md:text-7xl font-display font-bold uppercase text-white hover:text-brand-blue transition-colors w-max interactive"
+            >Home</a
+          >
+          <a
+            href="#"
+            class="nav-link text-4xl md:text-7xl font-display font-bold uppercase text-white hover:text-brand-blue transition-colors w-max interactive"
+            >Plumbing</a
+          >
+          <a
+            href="#"
+            class="nav-link text-4xl md:text-7xl font-display font-bold uppercase text-white hover:text-brand-blue transition-colors w-max interactive"
+            >Water Heaters</a
+          >
+          <a
+            href="#"
+            class="nav-link text-4xl md:text-7xl font-display font-bold uppercase text-white hover:text-brand-blue transition-colors w-max interactive"
+            >Sewers & Drains</a
+          >
+          <a
+            href="#"
+            class="nav-link text-4xl md:text-7xl font-display font-bold uppercase text-white hover:text-brand-blue transition-colors w-max interactive"
+            >Testimonials</a
+          >
+          <a
+            href="#"
+            class="nav-link text-4xl md:text-7xl font-display font-bold uppercase text-white hover:text-brand-red transition-colors w-max interactive"
+            >Contact Us</a
+          >
+        </div>
+
+        <!-- Info -->
+        <div class="flex flex-col justify-end pb-12 md:pb-0 md:justify-center">
+          <p
+            class="text-brand-red text-xs md:text-sm tracking-widest uppercase mb-6 nav-fade font-sans font-semibold"
+          >
+            Emergency Service
+          </p>
+
+          <div class="nav-fade mb-8">
+            <h4 class="text-gray-400 text-sm uppercase tracking-wider mb-1">
+              Sacramento Area
+            </h4>
+            <a
+              href="tel:9162237179"
+              class="text-3xl md:text-5xl font-display font-light hover:text-brand-blue transition-colors interactive inline-block"
+              >(916) 223-7179</a
+            >
+          </div>
+
+          <div class="nav-fade mb-10">
+            <h4 class="text-gray-400 text-sm uppercase tracking-wider mb-1">
+              Auburn & Foothills
+            </h4>
+            <a
+              href="tel:9162237179"
+              class="text-3xl md:text-5xl font-display font-light hover:text-brand-blue transition-colors interactive inline-block"
+              >(916) 223-7179</a
+            >
+          </div>
+
+          <div class="nav-fade h-px w-full bg-white/10 mb-8"></div>
+
+          <div class="nav-fade">
+            <p
+              class="text-gray-300 font-sans leading-relaxed text-sm md:text-base max-w-sm"
+            >
+              2250 Sierra Meadows Drive Suite C<br />
+              Rocklin, CA 95677<br /><br />
+              <span class="text-brand-blue font-semibold"
+                >Quick, Clean, Courteous Service.</span
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main
+      id="main-wrapper"
+      class="relative z-10 transition-transform duration-700 origin-top"
+    >
+      <!-- HERO SECTION -->
+      <section
+        class="relative h-[100svh] w-full flex flex-col justify-end pb-24 md:pb-32 px-6 md:px-12 overflow-hidden bg-brand-dark"
+      >
+        <!-- Cinematic Background Slideshow -->
+        <div class="absolute inset-0 z-0 bg-brand-dark">
+          <img
+            src="https://images.unsplash.com/photo-1596394723269-b2cbca4e6313?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            class="hero-bg-img absolute inset-0 w-full h-full object-cover opacity-0 scale-110"
+            alt="Sacramento Bridge"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            class="hero-bg-img absolute inset-0 w-full h-full object-cover opacity-0 scale-110"
+            alt="Industrial Pipes"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2000&auto=format&fit=crop"
+            class="hero-bg-img absolute inset-0 w-full h-full object-cover opacity-0 scale-110"
+            alt="Professional Tools"
+          />
+
+          <!-- Deep Premium Overlays -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/60 to-transparent"
+          ></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/40 to-transparent"
+          ></div>
+          <!-- Grid Overlay for texture -->
+          <div class="absolute inset-0 bg-premium-grid opacity-[0.15]"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto w-full">
+          <div class="overflow-hidden mb-2">
+            <p
+              class="hero-text text-brand-red font-sans font-semibold tracking-[0.3em] uppercase text-xs md:text-sm"
+            >
+              Quick, Clean, Courteous Service
+            </p>
+          </div>
+          <div class="overflow-hidden">
+            <h1
+              class="hero-text text-6xl sm:text-8xl md:text-9xl font-display font-black uppercase leading-[0.9] tracking-tighter"
+            >
+              Prompt &
+            </h1>
+          </div>
+          <div class="overflow-hidden mb-8 md:mb-12">
+            <h1
+              class="hero-text text-6xl sm:text-8xl md:text-9xl font-display font-black uppercase leading-[0.9] tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-gray-500"
+            >
+              Professional.
+            </h1>
+          </div>
+
+          <div
+            class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-end"
+          >
+            <div class="md:col-span-2 overflow-hidden">
+              <p
+                class="hero-text text-lg md:text-2xl font-sans font-light text-gray-300 max-w-2xl leading-relaxed"
+              >
+                Full-Service Plumbing excellence serving the Sacramento Area,
+                Auburn, and the Foothills. When you need it done right, call the
+                professionals.
+              </p>
+            </div>
+
+            <div class="hero-text flex flex-col gap-4">
+              <!-- Magnetic Button -->
+              <div class="interactive w-max" id="mag-btn-area">
+                <a
+                  href="tel:9162237179"
+                  id="mag-btn"
+                  class="group relative flex items-center justify-center w-32 h-32 md:w-40 md:h-40 rounded-full bg-brand-red text-white font-display font-bold uppercase tracking-wider overflow-hidden transition-colors hover:bg-white hover:text-brand-red shadow-[0_0_40px_rgba(230,57,70,0.3)]"
+                >
+                  <span class="relative z-10">Call Today</span>
+                  <div
+                    class="absolute inset-0 border border-white/30 rounded-full scale-90 group-hover:scale-100 transition-transform duration-500"
+                  ></div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INFO BAR MARQUEE -->
+      <div
+        class="w-full bg-brand-blue text-white py-4 border-y border-white/10 font-sans font-medium text-sm tracking-widest uppercase relative z-20"
+      >
+        <div class="marquee-wrapper">
+          <div class="marquee-content items-center">
+            <span class="mx-8">Call Us Today: (916) 223-7179</span>
+            <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+            <span class="mx-8">Sacramento Area</span>
+            <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+            <span class="mx-8">Auburn and Foothills</span>
+            <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+            <span class="mx-8 text-brand-dark font-bold"
+              >100% Satisfaction</span
+            >
+            <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+            <!-- Duplicate -->
+            <span class="mx-8">Call Us Today: (916) 223-7179</span>
+            <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+            <span class="mx-8">Sacramento Area</span>
+            <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+            <span class="mx-8">Auburn and Foothills</span>
+            <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+            <span class="mx-8 text-brand-dark font-bold"
+              >100% Satisfaction</span
+            >
+            <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISUAL/INTRO GRID -->
+      <section class="py-24 md:py-40 px-6 md:px-12 max-w-[1800px] mx-auto">
+        <div
+          class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-center"
+        >
+          <!-- Text Side -->
+          <div class="lg:col-span-5 flex flex-col gap-8 md:pr-12">
+            <h2
+              class="text-4xl md:text-6xl font-display font-bold uppercase leading-tight gs-reveal"
+            >
+              The <span class="text-brand-blue text-stroke">Signature</span
+              ><br />
+              Difference
+            </h2>
+            <p
+              class="text-gray-400 font-sans text-lg leading-relaxed gs-reveal"
+            >
+              We understand that plumbing issues can disrupt your entire day.
+              That's why our fleet is fully equipped and ready to deploy across
+              Sacramento, Rocklin, and Auburn. We tackle everything from simple
+              leaks to trenchless sewer replacements with precision.
+            </p>
+            <div
+              class="gs-reveal pt-4 flex gap-6 text-sm font-display font-bold uppercase tracking-wider text-white"
+            >
+              <div class="flex flex-col gap-1 border-l-2 border-brand-red pl-4">
+                <span class="text-3xl text-brand-red">20+</span>
+                <span class="text-gray-500">Years Experience</span>
+              </div>
+              <div
+                class="flex flex-col gap-1 border-l-2 border-brand-blue pl-4"
+              >
+                <span class="text-3xl text-brand-blue">24/7</span>
+                <span class="text-gray-500">Support Available</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image Grid Side -->
+          <div class="lg:col-span-7 grid grid-cols-2 gap-4 md:gap-6 relative">
+            <!-- Image 1 -->
+            <div
+              class="reveal-img-container rounded-2xl h-[30vh] md:h-[45vh] mt-12 md:mt-24"
+            >
+              <div class="reveal-img-overlay"></div>
+              <!-- Added scale-[1.25] and origin-center to guarantee edges never show during parallax -->
+              <img
+                src="https://images.unsplash.com/photo-1676210134188-4c05dd172f89?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Plumbing Van"
+                class="absolute inset-0 w-full h-full object-cover parallax-img scale-[1.25] origin-center"
+              />
+            </div>
+            <!-- Image 2 -->
+            <div class="reveal-img-container rounded-2xl h-[30vh] md:h-[45vh]">
+              <div class="reveal-img-overlay"></div>
+              <!-- Added scale-[1.25] and origin-center to guarantee edges never show during parallax -->
+              <img
+                src="https://images.unsplash.com/photo-1646714458816-98488c4fa81f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDN8fHxlbnwwfHx8fHw%3D"
+                alt="Water Heater Install"
+                class="absolute inset-0 w-full h-full object-cover parallax-img scale-[1.25] origin-center"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPREHENSIVE SERVICES -->
+      <section
+        class="py-24 md:py-40 bg-brand-navy border-y border-white/5 relative overflow-hidden"
+        id="services-section"
+      >
+        <!-- Premium Ambient Background Elements -->
+        <div
+          class="absolute inset-0 bg-premium-grid opacity-[0.05] pointer-events-none"
+        ></div>
+        <div
+          class="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-blue/10 rounded-full blur-[150px] pointer-events-none transform translate-x-1/3 -translate-y-1/3"
+        ></div>
+        <div
+          class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-red/5 rounded-full blur-[120px] pointer-events-none transform -translate-x-1/3 translate-y-1/3"
+        ></div>
+
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12 relative z-10">
+          <!-- Upgraded Premium Header Area -->
+          <div
+            class="mb-20 md:mb-32 flex flex-col xl:flex-row xl:items-end justify-between gap-12 gs-reveal"
+          >
+            <div class="relative">
+              <!-- Glowing pill badge -->
+              <div
+                class="inline-flex items-center gap-3 mb-8 border border-white/10 rounded-full px-5 py-2.5 bg-white/5 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
+              >
+                <span class="relative flex h-2.5 w-2.5">
+                  <span
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75"
+                  ></span>
+                  <span
+                    class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-red"
+                  ></span>
+                </span>
+                <span
+                  class="text-white text-xs tracking-[0.25em] uppercase font-sans font-bold"
+                  >Our Capabilities</span
+                >
+              </div>
+
+              <h2
+                class="text-5xl sm:text-6xl md:text-8xl lg:text-[7rem] font-display font-black uppercase text-white leading-[0.9] tracking-tighter drop-shadow-2xl"
+              >
+                Full-Service <br />
+                <span
+                  class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-blue-400 to-white"
+                  >Solutions.</span
+                >
+              </h2>
+            </div>
+
+            <!-- Glassmorphism refined text box -->
+            <div
+              class="relative max-w-xl pb-6 border-l-2 border-brand-red pl-8 bg-gradient-to-r from-brand-dark/40 to-transparent p-6 rounded-r-2xl backdrop-blur-sm border-y border-r border-white/5"
+            >
+              <svg
+                class="w-10 h-10 text-white/10 absolute top-2 left-4 -z-10"
+                fill="currentColor"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-1.1.9-2 2-2h2V8h-2zm14 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-1.1.9-2 2-2h2V8h-2z"
+                />
+              </svg>
+              <p
+                class="text-gray-300 font-sans text-lg md:text-xl leading-relaxed font-light"
+              >
+                From routine maintenance to complex underground trenchless
+                repairs, we have the technology and elite expertise to resolve
+                any residential or commercial issue.
+              </p>
+            </div>
+          </div>
+
+          <!-- Services Matrix -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4 md:gap-y-6"
+          >
+            <!-- Column 1 -->
+            <div class="flex flex-col gap-4">
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >General Plumbing</span
+                >
+              </div>
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >Toilets, Sinks & Baths</span
+                >
+              </div>
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >Faucets & Showers</span
+                >
+              </div>
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >Garbage Disposals</span
+                >
+              </div>
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >Gas Lines</span
+                >
+              </div>
+            </div>
+
+            <!-- Column 2 -->
+            <div class="flex flex-col gap-4">
+              <div
+                class="service-item bg-brand-dark/50 border border-brand-red/30 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-brand-red/60 hover:shadow-[0_0_30px_rgba(230,57,70,0.1)] gs-reveal delay-100"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-red check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-bold tracking-wide text-brand-red"
+                  >Tankless Water Heaters</span
+                >
+              </div>
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal delay-100"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >Standard Water Heaters</span
+                >
+              </div>
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal delay-100"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >Recirculating Systems</span
+                >
+              </div>
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal delay-100"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >Leak Detection</span
+                >
+              </div>
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal delay-100"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >Underground Leak Repairs</span
+                >
+              </div>
+            </div>
+
+            <!-- Column 3 -->
+            <div class="flex flex-col gap-4">
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal delay-200"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >Complete House Piping</span
+                >
+              </div>
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal delay-200"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >Water & Sewer Lines</span
+                >
+              </div>
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal delay-200"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >Sewer Systems & Pumps</span
+                >
+              </div>
+              <div
+                class="service-item bg-brand-dark/50 border border-brand-blue/30 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-brand-blue/60 hover:shadow-[0_0_30px_rgba(29,78,216,0.1)] gs-reveal delay-200"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-bold tracking-wide text-brand-blue"
+                  >Trenchless Sewer Lines</span
+                >
+              </div>
+              <div
+                class="service-item bg-brand-dark/50 border border-white/5 p-6 rounded-xl flex items-center gap-4 interactive transition-all hover:bg-brand-dark hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] gs-reveal delay-200"
+              >
+                <svg
+                  class="w-6 h-6 text-brand-blue check-icon transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  class="font-display text-lg md:text-xl font-medium tracking-wide"
+                  >Drainage Systems</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIAL PARALLAX SECTION -->
+      <section
+        class="relative py-32 md:py-48 overflow-hidden flex items-center justify-center"
+      >
+        <div class="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop"
+            class="w-full h-full object-cover opacity-20 parallax-bg scale-[1.2] origin-center"
+            alt="Pipes"
+          />
+          <div
+            class="absolute inset-0 bg-brand-red mix-blend-multiply opacity-80"
+          ></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-brand-dark via-transparent to-brand-dark opacity-90"
+          ></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center gs-reveal">
+          <svg
+            class="w-16 h-16 md:w-24 md:h-24 mx-auto text-brand-red opacity-50 mb-8"
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-1.1.9-2 2-2h2V8h-2zm14 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-1.1.9-2 2-2h2V8h-2z"
+            />
+          </svg>
+          <p
+            class="text-2xl md:text-5xl font-display font-light leading-snug md:leading-tight text-white mb-10"
+          >
+            "They were responsive, kept in touch while their plumber was in
+            route. Got right to work explained everything I felt the fee was
+            very fair. I will call them first if I need a plumber in the
+            future."
+          </p>
+          <div class="inline-block border-t border-white/20 pt-6">
+            <p
+              class="text-xl md:text-2xl font-display font-bold uppercase tracking-widest text-white"
+            >
+              Frank B.
+            </p>
+            <p
+              class="text-sm font-sans text-brand-red uppercase tracking-widest mt-1"
+            >
+              Verified Customer
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- BRANDS MARQUEE -->
+      <section
+        class="py-16 md:py-24 bg-brand-dark border-y border-white/5 overflow-hidden"
+      >
+        <div class="text-center mb-12 gs-reveal">
+          <h3
+            class="text-xs md:text-sm font-sans uppercase tracking-[0.3em] text-gray-500"
+          >
+            We Work With The Brands You Know and Trust
+          </h3>
+        </div>
+        <div class="marquee-wrapper">
+          <div
+            class="marquee-content items-center text-4xl md:text-6xl font-display font-black uppercase text-white/20 tracking-wider"
+          >
+            <span class="mx-12 hover:text-white transition-colors duration-300"
+              >Rohl</span
+            >
+            <span
+              class="mx-12 hover:text-white transition-colors duration-300 text-stroke"
+              >American Standard</span
+            >
+            <span class="mx-12 hover:text-white transition-colors duration-300"
+              >Bradford White</span
+            >
+            <span
+              class="mx-12 hover:text-white transition-colors duration-300 text-stroke"
+              >Delta</span
+            >
+            <span class="mx-12 hover:text-white transition-colors duration-300"
+              >Sterling</span
+            >
+            <span
+              class="mx-12 hover:text-white transition-colors duration-300 text-stroke"
+              >Kohler</span
+            >
+            <span
+              class="mx-12 hover:text-brand-red transition-colors duration-300"
+              >Rinnai</span
+            >
+            <span
+              class="mx-12 hover:text-white transition-colors duration-300 text-stroke"
+              >Pfister</span
+            >
+            <span class="mx-12 hover:text-white transition-colors duration-300"
+              >Moen</span
+            >
+            <span
+              class="mx-12 hover:text-white transition-colors duration-300 text-stroke"
+              >Toto</span
+            >
+            <span
+              class="mx-12 hover:text-brand-blue transition-colors duration-300"
+              >Grohe</span
+            >
+
+            <!-- Duplicate for infinite scroll -->
+            <span class="mx-12 hover:text-white transition-colors duration-300"
+              >Rohl</span
+            >
+            <span
+              class="mx-12 hover:text-white transition-colors duration-300 text-stroke"
+              >American Standard</span
+            >
+            <span class="mx-12 hover:text-white transition-colors duration-300"
+              >Bradford White</span
+            >
+            <span
+              class="mx-12 hover:text-white transition-colors duration-300 text-stroke"
+              >Delta</span
+            >
+            <span class="mx-12 hover:text-white transition-colors duration-300"
+              >Sterling</span
+            >
+            <span
+              class="mx-12 hover:text-white transition-colors duration-300 text-stroke"
+              >Kohler</span
+            >
+            <span
+              class="mx-12 hover:text-brand-red transition-colors duration-300"
+              >Rinnai</span
+            >
+            <span
+              class="mx-12 hover:text-white transition-colors duration-300 text-stroke"
+              >Pfister</span
+            >
+            <span class="mx-12 hover:text-white transition-colors duration-300"
+              >Moen</span
+            >
+            <span
+              class="mx-12 hover:text-white transition-colors duration-300 text-stroke"
+              >Toto</span
+            >
+            <span
+              class="mx-12 hover:text-brand-blue transition-colors duration-300"
+              >Grohe</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER / CONTACT -->
+      <footer
+        class="bg-brand-navy pt-24 md:pt-32 relative z-10 border-t border-white/5"
+      >
+        <div
+          class="max-w-[1800px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 mb-20"
+        >
+          <!-- Contact Info -->
+          <div class="flex flex-col gap-12 gs-reveal">
+            <div>
+              <h2
+                class="text-5xl md:text-7xl font-display font-black uppercase text-white mb-4"
+              >
+                Let's Talk.
+              </h2>
+              <p class="text-gray-400 font-sans text-lg">
+                Thanks for stopping by! We're here to help, please don't
+                hesitate to reach out to our team.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <p
+                  class="text-brand-blue text-xs uppercase tracking-widest font-bold mb-2"
+                >
+                  Sacramento Area
+                </p>
+                <a
+                  href="tel:9162237179"
+                  class="text-3xl font-display text-white hover:text-brand-red transition-colors inline-block"
+                  >(916) 223-7179</a
+                >
+              </div>
+              <div>
+                <p
+                  class="text-brand-blue text-xs uppercase tracking-widest font-bold mb-2"
+                >
+                  Auburn & Foothills
+                </p>
+                <a
+                  href="tel:9162237179"
+                  class="text-3xl font-display text-white hover:text-brand-red transition-colors inline-block"
+                  >(916) 223-7179</a
+                >
+              </div>
+              <div>
+                <p
+                  class="text-brand-blue text-xs uppercase tracking-widest font-bold mb-2"
+                >
+                  Direct / Mobile Fleet
+                </p>
+                <a
+                  href="tel:5308870000"
+                  class="text-3xl font-display text-white hover:text-brand-red transition-colors inline-block"
+                  >(530) 887-0000</a
+                >
+              </div>
+            </div>
+
+            <div class="h-px w-full bg-white/10"></div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 font-sans">
+              <div>
+                <p
+                  class="text-brand-red text-xs uppercase tracking-widest font-bold mb-3"
+                >
+                  Location
+                </p>
+                <p class="text-gray-300 leading-relaxed">
+                  2250 Sierra Meadows Drive<br />
+                  Suite C<br />
+                  Rocklin, CA 95677
+                </p>
+              </div>
+              <div>
+                <p
+                  class="text-brand-red text-xs uppercase tracking-widest font-bold mb-3"
+                >
+                  Hours of Operation
+                </p>
+                <ul class="text-gray-300 space-y-2 text-sm">
+                  <li class="flex justify-between">
+                    <span>Mon - Thu</span> <span>8:00 am - 6:00 pm</span>
+                  </li>
+                  <li class="flex justify-between">
+                    <span>Friday</span> <span>8:00 am - 5:00 pm</span>
+                  </li>
+                  <li class="flex justify-between text-gray-500">
+                    <span>Sat - Sun</span> <span>Closed</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map / Visual -->
+          <div
+            class="h-[500px] md:h-auto min-h-[500px] w-full rounded-2xl overflow-hidden relative border border-white/10 gs-reveal mix-blend-luminosity hover:mix-blend-normal transition-all duration-700"
+          >
+            <!-- Simulated Map Style via Unsplash Abstract Aerial -->
+            <img
+              src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1000&auto=format&fit=crop"
+              class="w-full h-full object-cover opacity-60"
+              alt="Map Area"
+            />
+            <div class="absolute inset-0 bg-brand-navy/40"></div>
+
+            <!-- Map Marker Pin -->
+            <div
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
+            >
+              <div
+                class="w-12 h-12 bg-brand-blue rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(29,78,216,0.6)] animate-bounce"
+              >
+                <svg
+                  class="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  ></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div
+                class="bg-brand-dark/90 backdrop-blur-md border border-white/10 px-4 py-2 mt-2 rounded-lg text-xs font-sans tracking-wider text-white"
+              >
+                Rocklin, CA
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="border-t border-white/5 py-8">
+          <div
+            class="max-w-[1800px] mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-sans tracking-wider text-gray-500 uppercase text-center md:text-left"
+          >
+            <p>
+              &copy; 2026 Signature Plumbing, Inc. Content displayed on this
+              website is protected by copyright laws.
+            </p>
+            <div class="flex gap-6">
+              <a href="#" class="hover:text-white transition-colors interactive"
+                >Terms of Use</a
+              >
+              <a href="#" class="hover:text-white transition-colors interactive"
+                >Privacy Policy</a
+              >
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+    <script>
+      // 1. Lenis Smooth Scroll Setup
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      // GSAP integration with Lenis
+      gsap.registerPlugin(ScrollTrigger);
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+
+      // 2. Custom Cursor Logic
+      if (window.matchMedia("(pointer: fine)").matches) {
+        const dot = document.getElementById("cursor-dot");
+        const outline = document.getElementById("cursor-outline");
+
+        document.addEventListener("mousemove", (e) => {
+          gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0 });
+          gsap.to(outline, {
+            x: e.clientX,
+            y: e.clientY,
+            duration: 0.15,
+            ease: "power2.out",
+          });
+        });
+
+        document.querySelectorAll(".interactive, a, button").forEach((el) => {
+          el.addEventListener("mouseenter", () =>
+            outline.classList.add("hovered"),
+          );
+          el.addEventListener("mouseleave", () =>
+            outline.classList.remove("hovered"),
+          );
+        });
+      }
+
+      // 3. Navigation Menu Overlay Logic
+      const menuBtn = document.getElementById("menu-btn");
+      const navOverlay = document.getElementById("nav-overlay");
+      const mainWrapper = document.getElementById("main-wrapper");
+      let isNavOpen = false;
+
+      // Initial state for nav links
+      gsap.set(".nav-link", { y: 100, opacity: 0, rotateZ: 5 });
+      gsap.set(".nav-fade", { y: 30, opacity: 0 });
+
+      menuBtn.addEventListener("click", () => {
+        isNavOpen = !isNavOpen;
+
+        if (isNavOpen) {
+          menuBtn.classList.add("menu-open");
+          navOverlay.classList.add("open");
+
+          // Push main content back
+          mainWrapper.style.transform = "scale(0.95) translateY(2vh)";
+          mainWrapper.style.filter = "blur(5px)";
+
+          // Animate links in
+          gsap.to(".nav-link", {
+            y: 0,
+            opacity: 1,
+            rotateZ: 0,
+            duration: 0.8,
+            stagger: 0.05,
+            ease: "power4.out",
+            delay: 0.4,
+          });
+          gsap.to(".nav-fade", {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.05,
+            ease: "power4.out",
+            delay: 0.6,
+          });
+
+          lenis.stop(); // Prevent scrolling while menu is open
+        } else {
+          menuBtn.classList.remove("menu-open");
+          navOverlay.classList.remove("open");
+
+          // Restore main content
+          mainWrapper.style.transform = "scale(1) translateY(0)";
+          mainWrapper.style.filter = "blur(0px)";
+
+          // Reset links
+          gsap.to(".nav-link", {
+            y: 100,
+            opacity: 0,
+            rotateZ: 5,
+            duration: 0.4,
+          });
+          gsap.to(".nav-fade", { y: 30, opacity: 0, duration: 0.4 });
+
+          lenis.start();
+        }
+      });
+
+      // 4. Hero Background Crossfade Slider Logic
+      const heroImages = gsap.utils.toArray(".hero-bg-img");
+      if (heroImages.length > 0) {
+        // Init first image
+        gsap.set(heroImages[0], { opacity: 0.4, scale: 1 });
+        let currentHero = 0;
+
+        function nextHeroBg() {
+          let next = (currentHero + 1) % heroImages.length;
+
+          // Fade out current
+          gsap.to(heroImages[currentHero], {
+            opacity: 0,
+            duration: 2,
+            ease: "power1.inOut",
+          });
+          // Keep scaling current slowly
+          gsap.to(heroImages[currentHero], {
+            scale: 1.1,
+            duration: 6,
+            ease: "none",
+          });
+
+          // Fade in next and start scale
+          gsap.fromTo(
+            heroImages[next],
+            { opacity: 0, scale: 1.1 },
+            { opacity: 0.4, scale: 1, duration: 2, ease: "power1.inOut" },
+          );
+
+          // Continue slow scale for next
+          gsap.to(heroImages[next], {
+            scale: 1.05,
+            duration: 6,
+            ease: "none",
+            onComplete: () => {
+              currentHero = next;
+              nextHeroBg();
+            },
+          });
+        }
+
+        // Start slideshow after a few seconds
+        setTimeout(nextHeroBg, 4500);
+      }
+
+      // 5. Hero Entry Text Animations
+      gsap.from(".hero-text", {
+        y: 100,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.15,
+        ease: "power4.out",
+        delay: 0.2,
+      });
+
+      // 6. Scroll Reveal Animations
+      // General Fade Up
+      document.querySelectorAll(".gs-reveal").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { y: 50, opacity: 0 },
+          {
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+            },
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power3.out",
+          },
+        );
+      });
+
+      // Cinematic Image Reveals
+      document
+        .querySelectorAll(".reveal-img-container")
+        .forEach((container) => {
+          const overlay = container.querySelector(".reveal-img-overlay");
+          const img = container.querySelector("img");
+
+          gsap.to(overlay, {
+            scrollTrigger: { trigger: container, start: "top 80%" },
+            scaleY: 0,
+            duration: 1.2,
+            ease: "power4.inOut",
+          });
+
+          // Subtle extra pop on reveal
+          gsap.fromTo(
+            img,
+            { filter: "brightness(1.5) blur(5px)" },
+            {
+              scrollTrigger: { trigger: container, start: "top 80%" },
+              filter: "brightness(1) blur(0px)",
+              duration: 1.5,
+              ease: "power3.out",
+            },
+          );
+        });
+
+      // 7. Refined Parallax Effects (Fixed corner issues by animating y from negative to positive over scaled img)
+      document.querySelectorAll(".parallax-img").forEach((img) => {
+        gsap.fromTo(
+          img,
+          { y: "-10%" },
+          {
+            scrollTrigger: {
+              trigger: img.parentElement,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+            y: "10%",
+            ease: "none",
+          },
+        );
+      });
+
+      // Testimonial Background Parallax
+      gsap.fromTo(
+        ".parallax-bg",
+        { y: "-15%" },
+        {
+          scrollTrigger: {
+            trigger: ".parallax-bg",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+          y: "15%",
+          ease: "none",
+        },
+      );
+
+      // 8. Magnetic Button Logic
+      const magBtnArea = document.getElementById("mag-btn-area");
+      const magBtn = document.getElementById("mag-btn");
+
+      if (
+        magBtnArea &&
+        magBtn &&
+        window.matchMedia("(pointer: fine)").matches
+      ) {
+        magBtnArea.addEventListener("mousemove", (e) => {
+          const rect = magBtnArea.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+
+          gsap.to(magBtn, {
+            x: x * 0.4,
+            y: y * 0.4,
+            duration: 0.8,
+            ease: "power3.out",
+          });
+        });
+
+        magBtnArea.addEventListener("mouseleave", () => {
+          gsap.to(magBtn, {
+            x: 0,
+            y: 0,
+            duration: 1.2,
+            ease: "elastic.out(1, 0.3)",
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
