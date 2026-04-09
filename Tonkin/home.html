@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Tonkin Plumbing | Premier Riverside Plumbers</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@300;400;500;700&family=Syncopate:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                black: "#050505", // Void black
+                dark: "#0a0a0a", // Surface black
+                pink: "#FF0055", // Aggressive neon brand pink
+                eco: "#00FF66", // Neon eco green
+                light: "#F4F4F5", // Off-white
+                gray: "#8c8c8c", // Neutral tech gray
+              },
+            },
+            fontFamily: {
+              sans: ['"Manrope"', "sans-serif"],
+              display: ['"Anton"', "sans-serif"],
+              tech: ['"Syncopate"', "sans-serif"],
+            },
+            letterSpacing: {
+              widest: ".25em",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Lenis Smooth Scroll Setup */
+      html.lenis {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto;
+      }
+      .lenis.lenis-smooth[data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+      .lenis.lenis-scrolling iframe {
+        pointer-events: none;
+      }
+
+      body {
+        background-color: #050505;
+        color: #f4f4f5;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        cursor: none;
+      }
+
+      /* Cinematic Noise Overlay */
+      .bg-noise {
+        position: fixed;
+        inset: 0;
+        z-index: 9990;
+        opacity: 0.05;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* Custom Fluid Cursor */
+      #cursor-dot {
+        width: 6px;
+        height: 6px;
+        background-color: #ff0055;
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9999;
+        pointer-events: none;
+      }
+      #cursor-ring {
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(255, 0, 85, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9998;
+        pointer-events: none;
+        transition: width 0.3s, height 0.3s, background-color 0.3s,
+          border-color 0.3s;
+      }
+      .cursor-hover #cursor-ring {
+        width: 80px;
+        height: 80px;
+        background-color: rgba(255, 0, 85, 0.05);
+        border-color: #ff0055;
+        backdrop-filter: blur(2px);
+      }
+      @media (pointer: coarse) {
+        #cursor-dot,
+        #cursor-ring {
+          display: none !important;
+        }
+        body {
+          cursor: auto;
+        }
+      }
+
+      /* Typography Tricks */
+      .text-stroke {
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+        color: transparent;
+      }
+      .text-stroke-pink {
+        -webkit-text-stroke: 1px #ff0055;
+        color: transparent;
+      }
+      .hover-fill:hover {
+        color: #f4f4f5;
+        -webkit-text-stroke: 1px transparent;
+        transition: all 0.4s ease;
+      }
+
+      /* Marquee */
+      .marquee {
+        overflow: hidden;
+        white-space: nowrap;
+        display: flex;
+      }
+      .marquee-content {
+        display: flex;
+        animation: scrollText 25s linear infinite;
+      }
+      @keyframes scrollText {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* Mega Menu Reveal */
+      #menu-overlay {
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+      }
+      #menu-overlay.menu-active {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      }
+
+      /* Hamburger */
+      .hamburger-line {
+        transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+      }
+      .menu-active .line-1 {
+        transform: translateY(8px) rotate(45deg);
+      }
+      .menu-active .line-2 {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      .menu-active .line-3 {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+
+      /* Elite Service Card Hover */
+      .service-card {
+        overflow: hidden;
+        position: relative;
+      }
+      .service-card img {
+        transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1),
+          filter 1.2s ease;
+        filter: grayscale(100%) brightness(0.4);
+      }
+      .service-card:hover img {
+        transform: scale(1.1);
+        filter: grayscale(0%) brightness(0.6);
+      }
+      .service-card .card-content {
+        transform: translateY(20px);
+        transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .service-card:hover .card-content {
+        transform: translateY(0);
+      }
+      .service-card .reveal-line {
+        width: 0;
+        transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .service-card:hover .reveal-line {
+        width: 100%;
+      }
+
+      /* Technical Grid */
+      .tech-grid {
+        background-size: 40px 40px;
+        background-image: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          );
+      }
+
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body class="selection:bg-brand-pink selection:text-white">
+    <div class="bg-noise"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- HEADER / NAVBAR -->
+    <header
+      class="fixed top-0 w-full z-[60] mix-blend-difference px-6 py-6 md:px-12 md:py-8 flex justify-between items-center transition-transform duration-500"
+      id="header"
+    >
+      <!-- Logo Area -->
+      <div
+        class="flex items-center gap-4 interactive z-50 group cursor-pointer"
+        onclick="window.scrollTo({top:0, behavior:'smooth'})"
+      >
+        <div class="flex flex-col">
+          <span
+            class="text-white font-display text-2xl md:text-3xl uppercase tracking-wider leading-none"
+            >Tonkin</span
+          >
+          <span
+            class="text-brand-pink text-[8px] md:text-[9px] font-tech uppercase tracking-[0.4em] font-bold mt-1"
+            >Plumbing.com</span
+          >
+        </div>
+      </div>
+
+      <!-- Right Side Actions -->
+      <div class="flex items-center gap-8 z-50">
+        <div class="hidden lg:flex flex-col text-right">
+          <a
+            href="tel:9517847586"
+            class="text-white font-display text-2xl tracking-widest hover:text-brand-pink transition-colors interactive"
+            >(951) 784-7586</a
+          >
+          <span
+            class="text-brand-gray text-[9px] uppercase font-tech tracking-[0.2em] mt-1"
+            >Riverside & Corona, CA</span
+          >
+        </div>
+
+        <!-- Hamburger Menu -->
+        <button
+          id="menu-toggle"
+          class="w-12 h-12 flex flex-col justify-center items-end gap-2 interactive relative group"
+        >
+          <span
+            class="hamburger-line line-1 w-8 h-[2px] bg-white group-hover:w-10"
+          ></span>
+          <span class="hamburger-line line-2 w-10 h-[2px] bg-brand-pink"></span>
+          <span
+            class="hamburger-line line-3 w-6 h-[2px] bg-white group-hover:w-10"
+          ></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- FULLSCREEN MEGA MENU -->
+    <nav
+      id="menu-overlay"
+      class="fixed inset-0 bg-brand-dark z-[55] flex flex-col justify-center px-6 md:px-24"
+    >
+      <div
+        class="absolute inset-0 tech-grid opacity-20 pointer-events-none"
+      ></div>
+      <div
+        class="absolute right-0 top-0 w-1/2 h-full bg-brand-pink/5 blur-[150px] pointer-events-none"
+      ></div>
+
+      <div
+        class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10"
+      >
+        <!-- Navigation Links -->
+        <div
+          class="lg:col-span-7 flex flex-col gap-2 mt-16 lg:mt-0 h-[60vh] overflow-y-auto no-scrollbar pr-4"
+        >
+          <p
+            class="text-brand-pink text-[10px] font-tech tracking-[0.3em] uppercase mb-4 nav-item"
+          >
+            System Directory
+          </p>
+          <a
+            href="#"
+            class="nav-item text-4xl sm:text-6xl md:text-7xl font-display uppercase text-white hover:text-brand-pink hover:pl-4 transition-all duration-300 w-max interactive leading-none"
+            >Home</a
+          >
+          <a
+            href="#"
+            class="nav-item text-4xl sm:text-6xl md:text-7xl font-display uppercase text-white hover:text-brand-pink hover:pl-4 transition-all duration-300 w-max interactive leading-none"
+            >About Us</a
+          >
+          <a
+            href="#"
+            class="nav-item text-4xl sm:text-6xl md:text-7xl font-display uppercase text-white hover:text-brand-pink hover:pl-4 transition-all duration-300 w-max interactive leading-none"
+            >Residential</a
+          >
+          <a
+            href="#"
+            class="nav-item text-4xl sm:text-6xl md:text-7xl font-display uppercase text-white hover:text-brand-pink hover:pl-4 transition-all duration-300 w-max interactive leading-none"
+            >Commercial</a
+          >
+          <a
+            href="#"
+            class="nav-item text-4xl sm:text-6xl md:text-7xl font-display uppercase text-white hover:text-brand-pink hover:pl-4 transition-all duration-300 w-max interactive leading-none"
+            >Remodeling</a
+          >
+          <a
+            href="#"
+            class="nav-item text-4xl sm:text-6xl md:text-7xl font-display uppercase text-stroke hover-fill hover:pl-4 transition-all duration-300 w-max interactive leading-none mt-4"
+            >Manufacturers</a
+          >
+          <a
+            href="#"
+            class="nav-item text-4xl sm:text-6xl md:text-7xl font-display uppercase text-stroke hover-fill hover:pl-4 transition-all duration-300 w-max interactive leading-none"
+            >Our Team</a
+          >
+          <a
+            href="#"
+            class="nav-item text-4xl sm:text-6xl md:text-7xl font-display uppercase text-stroke hover-fill hover:pl-4 transition-all duration-300 w-max interactive leading-none"
+            >Testimonials</a
+          >
+          <a
+            href="#"
+            class="nav-item text-4xl sm:text-6xl md:text-7xl font-display uppercase text-stroke hover-fill hover:pl-4 transition-all duration-300 w-max interactive leading-none"
+            >Contact Us</a
+          >
+        </div>
+
+        <!-- Meta Info -->
+        <div
+          class="lg:col-span-5 flex flex-col justify-end lg:justify-center border-l border-white/10 pl-6 lg:pl-12 pb-12 lg:pb-0"
+        >
+          <div class="nav-item mb-10">
+            <p
+              class="text-brand-gray text-[9px] font-tech uppercase tracking-[0.3em] mb-3 flex items-center gap-2"
+            >
+              <span
+                class="w-2 h-2 bg-brand-pink rounded-full animate-pulse"
+              ></span>
+              Emergency Hotline
+            </p>
+            <a
+              href="tel:9517847586"
+              class="text-3xl md:text-5xl font-display text-brand-pink hover:text-white transition-colors interactive block mb-2"
+              >(951) 784-7586</a
+            >
+            <p class="text-sm font-sans text-brand-gray max-w-xs">
+              Proudly serving Riverside, Corona and the Inland Empire.
+            </p>
+          </div>
+
+          <div class="nav-item space-y-6">
+            <div>
+              <p
+                class="text-brand-gray text-[9px] font-tech uppercase tracking-[0.3em] mb-2"
+              >
+                Electronic Mail
+              </p>
+              <a
+                href="mailto:myplumber@tonkinplumbing.com"
+                class="text-base font-sans hover:text-brand-pink transition-colors interactive"
+                >myplumber@tonkinplumbing.com</a
+              >
+            </div>
+            <div>
+              <p
+                class="text-brand-gray text-[9px] font-tech uppercase tracking-[0.3em] mb-2"
+              >
+                Headquarters
+              </p>
+              <p class="text-base font-sans text-white">Riverside, CA 92507</p>
+            </div>
+            <div class="flex gap-4 pt-4">
+              <!-- Social Icons -->
+              <a
+                href="#"
+                class="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-brand-pink hover:border-brand-pink transition-all interactive rounded-full"
+              >
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path
+                    d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07"
+                  />
+                </svg>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-brand-pink hover:border-brand-pink transition-all interactive rounded-full"
+              >
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path
+                    d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 15.9 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main
+      id="main-content"
+      class="relative z-10 transition-transform duration-700 bg-brand-black"
+    >
+      <!-- HERO SECTION -->
+      <section
+        class="relative h-[100svh] w-full flex flex-col justify-end overflow-hidden"
+      >
+        <!-- Cinematic Background Crossfade -->
+        <div class="absolute inset-0 z-0 bg-brand-black">
+          <img
+            src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2000&auto=format&fit=crop"
+            class="hero-slide absolute inset-0 w-full h-full object-cover scale-100 opacity-40 mix-blend-luminosity"
+            alt="Industrial Plumbing Pipes"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?q=80&w=2000&auto=format&fit=crop"
+            class="hero-slide absolute inset-0 w-full h-full object-cover scale-110 opacity-0 mix-blend-luminosity"
+            alt="Plumbing Tech Tools"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop"
+            class="hero-slide absolute inset-0 w-full h-full object-cover scale-110 opacity-0 mix-blend-luminosity"
+            alt="Water Installation"
+          />
+
+          <!-- Gradients for text pop -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/40 to-transparent"
+          ></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-brand-black via-brand-black/70 to-transparent"
+          ></div>
+          <div class="absolute inset-0 tech-grid opacity-30"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div
+          class="relative z-10 w-full max-w-[1800px] mx-auto px-6 md:px-12 pb-12 md:pb-20 h-full flex flex-col justify-end pt-32"
+        >
+          <div class="flex-1 flex flex-col justify-center">
+            <div class="overflow-hidden mb-6">
+              <div class="hero-reveal flex items-center gap-4">
+                <div class="h-[1px] w-8 md:w-12 bg-brand-pink"></div>
+                <p
+                  class="text-brand-pink font-tech text-[9px] md:text-xs uppercase tracking-[0.3em] font-bold"
+                >
+                  Licensed Plumbers • Riverside & Corona, CA
+                </p>
+              </div>
+            </div>
+
+            <div class="overflow-hidden">
+              <h1
+                class="hero-reveal text-[12vw] lg:text-[10rem] font-display uppercase leading-[0.85] tracking-tight text-white drop-shadow-2xl"
+              >
+                SUPERIOR
+              </h1>
+            </div>
+            <div class="overflow-hidden">
+              <h1
+                class="hero-reveal text-[12vw] lg:text-[10rem] font-display uppercase leading-[0.95] tracking-tight text-stroke-pink pt-2"
+              >
+                PLUMBING.
+              </h1>
+            </div>
+          </div>
+
+          <!-- Bottom CTA Row -->
+          <div
+            class="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-10 w-full mt-4"
+          >
+            <div class="overflow-hidden max-w-lg xl:max-w-2xl">
+              <p
+                class="hero-reveal text-base md:text-xl font-sans text-brand-gray font-light leading-relaxed"
+              >
+                You've tried the Rest, Now try the Best! For more than 3
+                decades, the professionals at Tonkin Plumbing, Inc. have
+                provided the Inland Empire with superior plumbing expertise and
+                timely service.
+              </p>
+            </div>
+
+            <div
+              class="hero-reveal flex items-center gap-8 self-start lg:self-end shrink-0"
+            >
+              <div class="hidden sm:flex flex-col text-right">
+                <p
+                  class="text-white font-display text-xl uppercase tracking-widest leading-none"
+                >
+                  Emergency Service
+                </p>
+                <p
+                  class="text-brand-gray text-[9px] font-tech uppercase tracking-[0.2em] mt-2"
+                >
+                  Residential & Commercial
+                </p>
+              </div>
+
+              <!-- Magnetic CTA Button -->
+              <div
+                class="interactive relative group w-max"
+                id="mag-btn-wrapper"
+              >
+                <a
+                  href="#contact"
+                  id="mag-btn"
+                  class="relative flex items-center justify-center w-32 h-32 md:w-40 md:h-40 rounded-full bg-brand-pink text-white font-tech uppercase tracking-widest text-[9px] md:text-[10px] font-bold overflow-hidden transition-colors hover:bg-white hover:text-brand-black shadow-[0_0_40px_rgba(255,0,85,0.3)]"
+                >
+                  <span class="relative z-10 text-center leading-[1.8]"
+                    >Quick<br />Contact</span
+                  >
+                  <div
+                    class="absolute inset-0 border border-white/30 rounded-full scale-[0.8] group-hover:scale-100 transition-transform duration-700 ease-out"
+                  ></div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INFINITE MARQUEE -->
+      <div
+        class="w-full bg-brand-pink py-3 md:py-4 border-y border-white/10 relative z-20 flex items-center"
+      >
+        <div class="marquee">
+          <div
+            class="marquee-content items-center text-brand-black font-display text-2xl md:text-4xl uppercase tracking-wider"
+          >
+            <span class="mx-8">Serving Riverside & Corona</span>
+            <span class="w-3 h-3 bg-brand-black rounded-full"></span>
+            <span class="mx-8 text-white">Call (951) 784-7586</span>
+            <span class="w-3 h-3 bg-brand-black rounded-full"></span>
+            <span class="mx-8">Residential & Commercial</span>
+            <span class="w-3 h-3 bg-brand-black rounded-full"></span>
+            <span class="mx-8 text-white">Environmentally Conscious</span>
+            <span class="w-3 h-3 bg-brand-black rounded-full"></span>
+            <!-- Repeat -->
+            <span class="mx-8">Serving Riverside & Corona</span>
+            <span class="w-3 h-3 bg-brand-black rounded-full"></span>
+            <span class="mx-8 text-white">Call (951) 784-7586</span>
+            <span class="w-3 h-3 bg-brand-black rounded-full"></span>
+            <span class="mx-8">Residential & Commercial</span>
+            <span class="w-3 h-3 bg-brand-black rounded-full"></span>
+            <span class="mx-8 text-white">Environmentally Conscious</span>
+            <span class="w-3 h-3 bg-brand-black rounded-full"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENVIRONMENT / ABOUT SECTION -->
+      <section
+        class="py-24 md:py-40 px-6 md:px-12 max-w-[1800px] mx-auto relative z-10"
+      >
+        <div
+          class="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center"
+        >
+          <div class="flex flex-col gap-8 gs-reveal">
+            <h2
+              class="text-4xl sm:text-5xl md:text-7xl font-display uppercase leading-[0.9] tracking-tight"
+            >
+              Environmentally<br />
+              <span class="text-brand-eco text-stroke hover-fill"
+                >Conscious</span
+              >
+            </h2>
+
+            <div class="w-full h-[1px] bg-white/10 my-2"></div>
+
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 gap-8 text-brand-gray font-sans font-light leading-relaxed text-sm md:text-base"
+            >
+              <p>
+                We are a company that cares about the environment including
+                water preservation, conservation and irrigation issues. Call us
+                to learn more about what we can do to address these important
+                concerns. We can survey your system to inform you where you may
+                be able to save water and energy.
+              </p>
+              <div class="space-y-6">
+                <p>
+                  When it comes to getting the job done right, no one compares
+                  to Tonkin Plumbing. Our dedication to customer service and
+                  drive to do the job without cutting corners, has made us the
+                  premier plumbing company in all of greater Riverside
+                  California.
+                </p>
+                <p>
+                  For over two decades, the people in the city of Riverside CA
+                  have trusted us. Plumbing is one of those things that should
+                  only be done by a professional, errors can create harmful
+                  health hazards over time.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Parallax Graphic -->
+          <div
+            class="relative h-[40vh] md:h-[70vh] w-full rounded-sm overflow-hidden gs-reveal parallax-container mt-4 lg:mt-0"
+          >
+            <div
+              class="absolute inset-0 scale-125 parallax-element bg-brand-dark"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?q=80&w=2000&auto=format&fit=crop"
+                class="w-full h-full object-cover mix-blend-luminosity opacity-40"
+                alt="Water Nature Conservation"
+              />
+            </div>
+            <div
+              class="absolute inset-0 border border-white/10 z-10 pointer-events-none"
+            ></div>
+            <div
+              class="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-20 backdrop-blur-md bg-brand-black/60 border border-white/10 p-6 interactive"
+            >
+              <p class="font-display text-2xl md:text-4xl uppercase text-white">
+                Save Water
+              </p>
+              <p
+                class="text-brand-eco font-tech text-[9px] md:text-[10px] uppercase tracking-widest mt-2"
+              >
+                Request System Survey &rarr;
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TACTICAL SERVICES GRID -->
+      <section
+        class="py-24 md:py-40 bg-brand-dark border-y border-white/5 relative z-10"
+      >
+        <div
+          class="absolute inset-0 tech-grid opacity-10 pointer-events-none"
+        ></div>
+
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12 relative z-20">
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16 md:mb-24 gs-reveal"
+          >
+            <div>
+              <p
+                class="text-brand-pink text-[10px] md:text-xs font-tech tracking-[0.3em] uppercase mb-4 font-bold"
+              >
+                Field Capabilities
+              </p>
+              <h2
+                class="text-4xl md:text-7xl font-display uppercase tracking-tight text-white"
+              >
+                What We Do.
+              </h2>
+            </div>
+            <p
+              class="max-w-md text-brand-gray font-sans font-light text-sm md:text-base"
+            >
+              From routine upkeep to major emergency repairs, we offer
+              <span class="text-white"
+                >Residential, Commercial & Institutional</span
+              >
+              clients a comprehensive roster of services.
+            </p>
+          </div>
+
+          <!-- 3x2 Grid Cinematic Reveal -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Service 1 -->
+            <div
+              class="service-card aspect-[4/5] rounded-sm bg-brand-black interactive gs-reveal"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?q=80&w=800&auto=format&fit=crop"
+                class="absolute inset-0 w-full h-full object-cover"
+                alt="Service & Repair"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/60 to-transparent pointer-events-none"
+              ></div>
+
+              <div
+                class="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none"
+              >
+                <div class="card-content">
+                  <p
+                    class="text-brand-pink font-tech text-[10px] uppercase tracking-widest mb-3"
+                  >
+                    01
+                  </p>
+                  <h3
+                    class="text-2xl md:text-4xl font-display uppercase text-white mb-4 leading-tight"
+                  >
+                    Service &<br />Repair
+                  </h3>
+                  <p class="text-brand-gray font-sans text-sm line-clamp-3">
+                    Routine upkeep, disposal fixes, apartment repairs, faucet
+                    leaks, shutoff valve fixes and replacement.
+                  </p>
+                </div>
+                <div class="h-[2px] bg-brand-pink mt-6 reveal-line"></div>
+              </div>
+            </div>
+
+            <!-- Service 2 -->
+            <div
+              class="service-card aspect-[4/5] rounded-sm bg-brand-black interactive gs-reveal"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop"
+                class="absolute inset-0 w-full h-full object-cover"
+                alt="Sewer Systems"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/60 to-transparent pointer-events-none"
+              ></div>
+
+              <div
+                class="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none"
+              >
+                <div class="card-content">
+                  <p
+                    class="text-white font-tech text-[10px] uppercase tracking-widest mb-3"
+                  >
+                    02
+                  </p>
+                  <h3
+                    class="text-2xl md:text-4xl font-display uppercase text-white mb-4 leading-tight"
+                  >
+                    Sewer &<br />Drains
+                  </h3>
+                  <p class="text-brand-gray font-sans text-sm line-clamp-3">
+                    Trenchless sewer installations, sewer line relining and
+                    bursting, drain cleaning, and high-pressure jetting.
+                  </p>
+                </div>
+                <div class="h-[2px] bg-white mt-6 reveal-line"></div>
+              </div>
+            </div>
+
+            <!-- Service 3 -->
+            <div
+              class="service-card aspect-[4/5] rounded-sm bg-brand-black interactive gs-reveal"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop"
+                class="absolute inset-0 w-full h-full object-cover"
+                alt="Repiping"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/60 to-transparent pointer-events-none"
+              ></div>
+
+              <div
+                class="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none"
+              >
+                <div class="card-content">
+                  <p
+                    class="text-brand-pink font-tech text-[10px] uppercase tracking-widest mb-3"
+                  >
+                    03
+                  </p>
+                  <h3
+                    class="text-2xl md:text-4xl font-display uppercase text-white mb-4 leading-tight"
+                  >
+                    Full<br />Repiping
+                  </h3>
+                  <p class="text-brand-gray font-sans text-sm line-clamp-3">
+                    Underground pipe boring, precision pipe location, leak
+                    detection, and total water service replacements.
+                  </p>
+                </div>
+                <div class="h-[2px] bg-brand-pink mt-6 reveal-line"></div>
+              </div>
+            </div>
+
+            <!-- Service 4 -->
+            <div
+              class="service-card aspect-[4/5] rounded-sm bg-brand-black interactive gs-reveal"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1620653713380-7a34b773fef8?q=80&w=800&auto=format&fit=crop"
+                class="absolute inset-0 w-full h-full object-cover"
+                alt="Water Heaters"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/60 to-transparent pointer-events-none"
+              ></div>
+
+              <div
+                class="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none"
+              >
+                <div class="card-content">
+                  <p
+                    class="text-white font-tech text-[10px] uppercase tracking-widest mb-3"
+                  >
+                    04
+                  </p>
+                  <h3
+                    class="text-2xl md:text-4xl font-display uppercase text-white mb-4 leading-tight"
+                  >
+                    Water<br />Heaters
+                  </h3>
+                  <p class="text-brand-gray font-sans text-sm line-clamp-3">
+                    Standard tank installations, tankless water heater
+                    installations, and instant hot water systems.
+                  </p>
+                </div>
+                <div class="h-[2px] bg-white mt-6 reveal-line"></div>
+              </div>
+            </div>
+
+            <!-- Service 5 -->
+            <div
+              class="service-card aspect-[4/5] rounded-sm bg-brand-black interactive gs-reveal"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=800&auto=format&fit=crop"
+                class="absolute inset-0 w-full h-full object-cover"
+                alt="Remodeling"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/60 to-transparent pointer-events-none"
+              ></div>
+
+              <div
+                class="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none"
+              >
+                <div class="card-content">
+                  <p
+                    class="text-brand-pink font-tech text-[10px] uppercase tracking-widest mb-3"
+                  >
+                    05
+                  </p>
+                  <h3
+                    class="text-2xl md:text-4xl font-display uppercase text-white mb-4 leading-tight"
+                  >
+                    Kitchen &<br />Bath
+                  </h3>
+                  <p class="text-brand-gray font-sans text-sm line-clamp-3">
+                    Full remodel service for kitchens and bathrooms, bath tub
+                    install and repair, everything from design to installation.
+                  </p>
+                </div>
+                <div class="h-[2px] bg-brand-pink mt-6 reveal-line"></div>
+              </div>
+            </div>
+
+            <!-- Service 6 -->
+            <div
+              class="service-card aspect-[4/5] rounded-sm bg-brand-black interactive gs-reveal"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1556910103-1c02745a872f?q=80&w=800&auto=format&fit=crop"
+                class="absolute inset-0 w-full h-full object-cover"
+                alt="Consulting"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/60 to-transparent pointer-events-none"
+              ></div>
+
+              <div
+                class="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none"
+              >
+                <div class="card-content">
+                  <p
+                    class="text-white font-tech text-[10px] uppercase tracking-widest mb-3"
+                  >
+                    06
+                  </p>
+                  <h3
+                    class="text-2xl md:text-4xl font-display uppercase text-white mb-4 leading-tight"
+                  >
+                    B2B<br />Consulting
+                  </h3>
+                  <p class="text-brand-gray font-sans text-sm line-clamp-3">
+                    Consulting for other plumbing companies and building
+                    engineers. High quality work and technical support.
+                  </p>
+                </div>
+                <div class="h-[2px] bg-white mt-6 reveal-line"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- REMODELING PARALLAX -->
+      <section class="py-24 md:py-40 relative z-10 border-b border-white/5">
+        <div
+          class="max-w-[1800px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center"
+        >
+          <div class="flex flex-col gap-8 gs-reveal order-2 lg:order-1">
+            <h2
+              class="text-4xl md:text-6xl font-display uppercase tracking-tight text-white leading-none"
+            >
+              Bathroom & Kitchen<br />
+              <span class="text-stroke-pink text-transparent">Remodeling.</span>
+            </h2>
+
+            <div
+              class="space-y-6 text-brand-gray font-sans font-light text-base md:text-lg leading-relaxed"
+            >
+              <p>
+                Today, discriminating people everywhere are giving the kitchen
+                and bath starring roles in their homes. Kitchens are no longer
+                just cooking spaces, they're gathering places. Baths are not
+                just function-oriented, but places of practical luxury.
+              </p>
+              <p>
+                Redesigning either or both not only greatly enhances your
+                enjoyment of your home, but also adds to its value.
+              </p>
+              <p
+                class="text-white font-medium border-l-2 border-brand-pink pl-6 py-2"
+              >
+                Tonkin Plumbing has worked with builders and homeowners for
+                years with everything from design to installation to ensure that
+                every move throughout the process is correct.
+              </p>
+            </div>
+
+            <a
+              href="#contact"
+              class="inline-block border border-white/20 text-white font-tech uppercase tracking-widest text-[10px] px-8 py-4 w-max hover:bg-white hover:text-brand-black transition-colors interactive mt-4"
+            >
+              See Our Work
+            </a>
+          </div>
+
+          <div
+            class="relative w-full aspect-[4/3] rounded-sm overflow-hidden gs-reveal parallax-container order-1 lg:order-2"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=2069&auto=format&fit=crop"
+              class="parallax-element absolute inset-0 w-full h-full object-cover scale-125 mix-blend-luminosity opacity-70"
+              alt="Luxury Bathroom"
+            />
+            <div
+              class="absolute inset-0 border border-white/10 pointer-events-none"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WHY US STATS (Brutalist) -->
+      <section class="py-20 bg-[#020202] border-b border-white/5 relative z-10">
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+          <div class="text-center mb-16 gs-reveal">
+            <h2
+              class="text-3xl md:text-5xl font-display uppercase text-white mb-4"
+            >
+              Why Us?
+            </h2>
+            <p
+              class="text-brand-gray font-tech text-[10px] uppercase tracking-[0.2em]"
+            >
+              We guarantee that you'll be satisfied with the work we do.
+            </p>
+          </div>
+
+          <div
+            class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 gs-reveal border-y border-white/10 py-12"
+          >
+            <div class="flex flex-col items-center text-center px-4">
+              <span class="text-5xl md:text-7xl font-display text-white"
+                >30<span class="text-brand-pink">+</span></span
+              >
+              <span
+                class="text-brand-gray text-[9px] md:text-[10px] font-tech uppercase tracking-[0.2em] mt-2"
+                >Years Experience</span
+              >
+            </div>
+
+            <div
+              class="flex flex-col items-center text-center px-4 md:border-l border-white/10"
+            >
+              <span class="text-5xl md:text-7xl font-display text-white"
+                >100<span class="text-brand-pink">%</span></span
+              >
+              <span
+                class="text-brand-gray text-[9px] md:text-[10px] font-tech uppercase tracking-[0.2em] mt-2"
+                >Satisfaction Guaranteed</span
+              >
+            </div>
+
+            <div
+              class="flex flex-col items-center text-center px-4 md:border-l border-white/10"
+            >
+              <span class="text-5xl md:text-7xl font-display text-white"
+                >Top</span
+              >
+              <span
+                class="text-brand-gray text-[9px] md:text-[10px] font-tech uppercase tracking-[0.2em] mt-2"
+                >Talented Employees</span
+              >
+            </div>
+
+            <div
+              class="flex flex-col items-center text-center px-4 md:border-l border-white/10"
+            >
+              <span class="text-5xl md:text-7xl font-display text-white"
+                >All</span
+              >
+              <span
+                class="text-brand-gray text-[9px] md:text-[10px] font-tech uppercase tracking-[0.2em] mt-2"
+                >Guaranteed Work</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT FORM & FOOTER -->
+      <footer id="contact" class="pt-24 md:pt-32 relative z-10 bg-[#050505]">
+        <div
+          class="max-w-[1800px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24 pb-20 border-b border-white/5"
+        >
+          <!-- Contact Info -->
+          <div class="lg:col-span-5 flex flex-col gap-12 gs-reveal">
+            <div>
+              <p
+                class="text-brand-pink text-[10px] font-tech tracking-[0.3em] uppercase mb-4"
+              >
+                Comments? Suggestions?
+              </p>
+              <h2
+                class="text-5xl md:text-7xl font-display uppercase text-white leading-none tracking-tight"
+              >
+                Get In <br />Touch.
+              </h2>
+            </div>
+
+            <div class="flex flex-col gap-8 border-l border-white/10 pl-6">
+              <div>
+                <p
+                  class="text-brand-gray text-[10px] font-tech uppercase tracking-widest mb-2"
+                >
+                  Location
+                </p>
+                <p class="text-base font-sans text-white">
+                  Riverside, CA 92507<br /><span class="text-brand-gray text-sm"
+                    >Serving Corona & Inland Empire</span
+                  >
+                </p>
+              </div>
+              <div>
+                <p
+                  class="text-brand-gray text-[10px] font-tech uppercase tracking-widest mb-2"
+                >
+                  Call Us
+                </p>
+                <a
+                  href="tel:9517847586"
+                  class="text-2xl font-display text-brand-pink hover:text-white transition-colors interactive block mb-1"
+                  >(951) 784-7586</a
+                >
+              </div>
+              <div>
+                <p
+                  class="text-brand-gray text-[10px] font-tech uppercase tracking-widest mb-2"
+                >
+                  Email
+                </p>
+                <a
+                  href="mailto:myplumber@tonkinplumbing.com"
+                  class="text-base font-sans text-white hover:text-brand-pink transition-colors interactive break-all"
+                  >myplumber@tonkinplumbing.com</a
+                >
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <h3 class="text-xl font-display uppercase text-white mb-4">
+                Reviews
+              </h3>
+              <button
+                class="bg-transparent border border-white/20 text-white font-tech uppercase tracking-widest text-[10px] px-8 py-4 hover:bg-white hover:text-brand-black transition-colors interactive"
+              >
+                Create Your Own Review
+              </button>
+            </div>
+          </div>
+
+          <!-- Glassmorphism Terminal Form -->
+          <div
+            class="lg:col-span-7 bg-brand-dark border border-white/5 p-8 md:p-12 gs-reveal relative overflow-hidden"
+          >
+            <!-- Glitch background line -->
+            <div
+              class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-pink to-transparent opacity-50"
+            ></div>
+
+            <h3 class="text-3xl font-display uppercase text-white mb-8">
+              Client Feedback Form
+            </h3>
+
+            <form class="flex flex-col gap-8 relative z-10">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="flex flex-col gap-2 relative">
+                  <label
+                    class="text-[10px] font-tech uppercase tracking-widest text-brand-gray"
+                    >First Name *</label
+                  >
+                  <input
+                    type="text"
+                    class="bg-transparent border-b border-white/20 py-2 text-white font-sans text-base focus:outline-none focus:border-brand-pink transition-colors rounded-none w-full"
+                    required
+                  />
+                </div>
+                <div class="flex flex-col gap-2 relative">
+                  <label
+                    class="text-[10px] font-tech uppercase tracking-widest text-brand-gray"
+                    >Last Name</label
+                  >
+                  <input
+                    type="text"
+                    class="bg-transparent border-b border-white/20 py-2 text-white font-sans text-base focus:outline-none focus:border-brand-pink transition-colors rounded-none w-full"
+                  />
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-2 relative">
+                <label
+                  class="text-[10px] font-tech uppercase tracking-widest text-brand-gray"
+                  >Email *</label
+                >
+                <input
+                  type="email"
+                  class="bg-transparent border-b border-white/20 py-2 text-white font-sans text-base focus:outline-none focus:border-brand-pink transition-colors rounded-none w-full"
+                  required
+                />
+              </div>
+
+              <div class="flex flex-col gap-2 relative">
+                <label
+                  class="text-[10px] font-tech uppercase tracking-widest text-brand-gray"
+                  >Phone</label
+                >
+                <input
+                  type="tel"
+                  class="bg-transparent border-b border-white/20 py-2 text-white font-sans text-base focus:outline-none focus:border-brand-pink transition-colors rounded-none w-full"
+                />
+              </div>
+
+              <div class="flex flex-col gap-2 relative">
+                <label
+                  class="text-[10px] font-tech uppercase tracking-widest text-brand-gray"
+                  >Message</label
+                >
+                <textarea
+                  rows="3"
+                  class="bg-transparent border-b border-white/20 py-2 text-white font-sans text-base focus:outline-none focus:border-brand-pink transition-colors resize-none rounded-none w-full"
+                ></textarea>
+              </div>
+
+              <div class="flex flex-col gap-4 mt-2">
+                <label
+                  class="text-[10px] font-tech uppercase tracking-widest text-brand-gray"
+                  >Receive Future Emails? *</label
+                >
+                <div class="flex gap-8">
+                  <label
+                    class="flex items-center gap-3 cursor-pointer interactive group"
+                  >
+                    <div
+                      class="w-4 h-4 border border-white/20 group-hover:border-brand-pink flex items-center justify-center relative"
+                    >
+                      <input
+                        type="radio"
+                        name="emails"
+                        value="yes"
+                        class="opacity-0 absolute inset-0 cursor-pointer peer"
+                        required
+                      />
+                      <div
+                        class="w-2 h-2 bg-brand-pink scale-0 peer-checked:scale-100 transition-transform"
+                      ></div>
+                    </div>
+                    <span
+                      class="text-sm font-sans text-white uppercase tracking-wider"
+                      >Yes</span
+                    >
+                  </label>
+                  <label
+                    class="flex items-center gap-3 cursor-pointer interactive group"
+                  >
+                    <div
+                      class="w-4 h-4 border border-white/20 group-hover:border-brand-pink flex items-center justify-center relative"
+                    >
+                      <input
+                        type="radio"
+                        name="emails"
+                        value="no"
+                        class="opacity-0 absolute inset-0 cursor-pointer peer"
+                        required
+                      />
+                      <div
+                        class="w-2 h-2 bg-brand-pink scale-0 peer-checked:scale-100 transition-transform"
+                      ></div>
+                    </div>
+                    <span
+                      class="text-sm font-sans text-white uppercase tracking-wider"
+                      >No</span
+                    >
+                  </label>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="bg-brand-pink text-white font-tech uppercase tracking-widest text-[10px] py-5 mt-4 hover:bg-white hover:text-brand-black transition-colors interactive"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div
+          class="max-w-[1800px] mx-auto px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left"
+        >
+          <p
+            class="text-[9px] font-tech uppercase tracking-widest text-brand-gray"
+          >
+            &copy; 2015 Tonkin Plumbing Inc. Riverside, CA 92507
+          </p>
+          <div
+            class="flex flex-wrap justify-center gap-6 text-[9px] font-tech uppercase tracking-widest text-brand-gray"
+          >
+            <a
+              href="#"
+              class="hover:text-brand-pink transition-colors interactive"
+              >Sitemap</a
+            >
+            <span class="hidden sm:inline">|</span>
+            <a
+              href="#"
+              class="hover:text-brand-pink transition-colors interactive"
+              >Privacy Policy</a
+            >
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+    <script>
+      // 1. Smooth Scrolling (Lenis)
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      gsap.registerPlugin(ScrollTrigger);
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+
+      // 2. Custom Cursor
+      if (window.matchMedia("(pointer: fine)").matches) {
+        const dot = document.getElementById("cursor-dot");
+        const ring = document.getElementById("cursor-ring");
+
+        document.addEventListener("mousemove", (e) => {
+          gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0 });
+          gsap.to(ring, {
+            x: e.clientX,
+            y: e.clientY,
+            duration: 0.1,
+            ease: "power2.out",
+          });
+        });
+
+        document
+          .querySelectorAll(".interactive, a, button, input, textarea, label")
+          .forEach((el) => {
+            el.addEventListener("mouseenter", () =>
+              document.body.classList.add("cursor-hover"),
+            );
+            el.addEventListener("mouseleave", () =>
+              document.body.classList.remove("cursor-hover"),
+            );
+          });
+      }
+
+      // 3. Navigation Menu Logic
+      const menuToggle = document.getElementById("menu-toggle");
+      const menuOverlay = document.getElementById("menu-overlay");
+      const mainContent = document.getElementById("main-content");
+      const header = document.getElementById("header");
+      let isNavOpen = false;
+
+      gsap.set(".nav-item", { y: 50, opacity: 0 });
+
+      menuToggle.addEventListener("click", () => {
+        isNavOpen = !isNavOpen;
+        if (isNavOpen) {
+          menuToggle.classList.add("menu-active");
+          menuOverlay.classList.add("menu-active");
+
+          mainContent.style.transform = "scale(0.95) translateY(2vh)";
+          mainContent.style.filter = "blur(10px) brightness(0.3)";
+
+          gsap.to(".nav-item", {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.05,
+            ease: "power4.out",
+            delay: 0.4,
+          });
+          lenis.stop();
+        } else {
+          menuToggle.classList.remove("menu-active");
+          menuOverlay.classList.remove("menu-active");
+
+          mainContent.style.transform = "scale(1) translateY(0)";
+          mainContent.style.filter = "blur(0px) brightness(1)";
+
+          gsap.to(".nav-item", { y: 50, opacity: 0, duration: 0.4 });
+          lenis.start();
+        }
+      });
+
+      // Hide header on scroll
+      let lastScroll = 0;
+      lenis.on("scroll", (e) => {
+        if (isNavOpen) return;
+        const currentScroll = e.animatedScroll;
+        if (currentScroll > 100 && currentScroll > lastScroll) {
+          header.style.transform = "translateY(-100%)";
+        } else {
+          header.style.transform = "translateY(0)";
+          if (currentScroll > 50) {
+            header.classList.add(
+              "bg-brand-black/90",
+              "backdrop-blur-md",
+              "border-b",
+              "border-white/10",
+            );
+          } else {
+            header.classList.remove(
+              "bg-brand-black/90",
+              "backdrop-blur-md",
+              "border-b",
+              "border-white/10",
+            );
+          }
+        }
+        lastScroll = currentScroll;
+      });
+
+      // 4. Hero Background Crossfade Logic
+      const slides = gsap.utils.toArray(".hero-slide");
+      let currentSlide = 0;
+
+      function nextSlide() {
+        if (!slides.length) return;
+        let next = (currentSlide + 1) % slides.length;
+
+        gsap.to(slides[currentSlide], {
+          opacity: 0,
+          duration: 2,
+          ease: "power2.inOut",
+        });
+        gsap.to(slides[currentSlide], {
+          scale: 1.15,
+          duration: 6,
+          ease: "none",
+        });
+
+        gsap.fromTo(
+          slides[next],
+          { opacity: 0, scale: 1.15 },
+          { opacity: 0.4, scale: 1, duration: 2, ease: "power2.inOut" },
+        );
+
+        gsap.to(slides[next], {
+          scale: 1.05,
+          duration: 6,
+          ease: "none",
+          onComplete: () => {
+            currentSlide = next;
+            nextSlide();
+          },
+        });
+      }
+      setTimeout(nextSlide, 4500);
+
+      // 5. Entry Animations
+      gsap.from(".hero-reveal", {
+        y: 100,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.15,
+        ease: "power4.out",
+        delay: 0.2,
+      });
+
+      // 6. General Scroll Reveals
+      document.querySelectorAll(".gs-reveal").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { y: 60, opacity: 0 },
+          {
+            scrollTrigger: { trigger: el, start: "top 85%" },
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: "power3.out",
+          },
+        );
+      });
+
+      // 7. Tactical Service Cards Batch Reveal
+      gsap.set(".service-card", { y: 100, opacity: 0, scale: 0.95 });
+      ScrollTrigger.batch(".service-card", {
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            stagger: 0.15,
+            duration: 1.2,
+            ease: "power4.out",
+            overwrite: true,
+          });
+        },
+        start: "top 85%",
+      });
+
+      // 8. Parallax Effects
+      document.querySelectorAll(".parallax-container").forEach((container) => {
+        const el = container.querySelector(".parallax-element");
+        gsap.fromTo(
+          el,
+          { y: "-15%" },
+          {
+            scrollTrigger: {
+              trigger: container,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+            y: "15%",
+            ease: "none",
+          },
+        );
+      });
+
+      // 9. Magnetic Button Logic
+      const magBtnWrapper = document.getElementById("mag-btn-wrapper");
+      const magBtn = document.getElementById("mag-btn");
+
+      if (
+        magBtnWrapper &&
+        magBtn &&
+        window.matchMedia("(pointer: fine)").matches
+      ) {
+        magBtnWrapper.addEventListener("mousemove", (e) => {
+          const rect = magBtnWrapper.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+
+          gsap.to(magBtn, {
+            x: x * 0.4,
+            y: y * 0.4,
+            duration: 0.6,
+            ease: "power3.out",
+          });
+        });
+
+        magBtnWrapper.addEventListener("mouseleave", () => {
+          gsap.to(magBtn, {
+            x: 0,
+            y: 0,
+            duration: 1.2,
+            ease: "elastic.out(1, 0.4)",
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
