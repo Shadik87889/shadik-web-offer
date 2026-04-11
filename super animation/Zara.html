@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apple Quantum | The Next Era</title>
+    <style>
+      /* ==========================================
+           1. SETUP & VARIABLES
+           ========================================== */
+      :root {
+        --bg: #000000;
+        --text: #ffffff;
+        --accent: #0066cc;
+        --glass: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        cursor: none; /* Custom cursor */
+      }
+
+      body {
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+          "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ==========================================
+           2. CUSTOM CURSOR
+           ========================================== */
+      .cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #fff;
+        pointer-events: none;
+        mix-blend-mode: difference;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.3s, height 0.3s, background 0.3s;
+      }
+      .cursor.active {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(4px);
+      }
+
+      /* ==========================================
+           3. GLOBAL TYPOGRAPHY & UTILS
+           ========================================== */
+      h1,
+      h2,
+      h3 {
+        font-weight: 700;
+        letter-spacing: -0.04em;
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #fff 0%, #666 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .aurora-bg {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 150vw;
+        height: 150vh;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(
+          circle,
+          rgba(0, 102, 204, 0.15) 0%,
+          rgba(0, 0, 0, 0) 60%
+        );
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      section {
+        position: relative;
+        width: 100vw;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* ==========================================
+           4. SECTIONS CSS
+           ========================================== */
+
+      /* Sec 1: Hero */
+      .hero {
+        flex-direction: column;
+        perspective: 1000px;
+      }
+      .hero h1 {
+        font-size: 12vw;
+        line-height: 1;
+        text-align: center;
+        transform-style: preserve-3d;
+      }
+      .hero p {
+        font-size: 2vw;
+        color: #888;
+        margin-top: 2vh;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      /* Sec 2: Manifesto (Text Scrub) */
+      .manifesto {
+        padding: 0 10vw;
+        text-align: center;
+      }
+      .manifesto p {
+        font-size: 5vw;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      .manifesto span {
+        opacity: 0.1;
+        transition: opacity 0.1s;
+      }
+
+      /* Sec 3: 3D Device Reveal */
+      .device-reveal {
+        perspective: 2000px;
+      }
+      .device-container {
+        width: 300px;
+        height: 600px;
+        position: relative;
+        transform-style: preserve-3d;
+      }
+      .device {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border-radius: 40px;
+        background: linear-gradient(145deg, #111, #000);
+        border: 2px solid #333;
+        box-shadow: 0 0 50px rgba(0, 102, 204, 0.5),
+          inset 0 0 20px rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .device::after {
+        content: "";
+        position: absolute;
+        width: 95%;
+        height: 97%;
+        border-radius: 35px;
+        background: url("https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop")
+          center/cover;
+        opacity: 0.8;
+      }
+
+      /* Sec 4: Horizontal Scroll */
+      .horizontal-wrapper {
+        width: 400vw;
+        display: flex;
+        flex-wrap: nowrap;
+        height: 100vh;
+      }
+      .horizontal-panel {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 10vw;
+      }
+      .horizontal-panel h2 {
+        font-size: 8vw;
+        margin-bottom: 20px;
+      }
+      .horizontal-panel p {
+        font-size: 2vw;
+        color: #aaa;
+        max-width: 600px;
+      }
+      .panel-1 {
+        background: transparent;
+      }
+      .panel-2 {
+        background: radial-gradient(circle at left, #1a1a1a 0%, #000 100%);
+      }
+      .panel-3 {
+        background: radial-gradient(circle at center, #0a0a2a 0%, #000 100%);
+      }
+      .panel-4 {
+        background: #000;
+      }
+
+      /* Sec 5: The Chip (Performance) */
+      .chip-section {
+        flex-direction: column;
+      }
+      .chip {
+        width: 200px;
+        height: 200px;
+        border: 1px solid var(--glass-border);
+        border-radius: 30px;
+        background: rgba(20, 20, 20, 0.8);
+        backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .chip h3 {
+        font-size: 2rem;
+        color: #fff;
+        z-index: 2;
+      }
+      .circuit-line {
+        position: absolute;
+        background: var(--accent);
+      }
+      .chip-stats {
+        display: flex;
+        gap: 50px;
+        margin-top: 50px;
+      }
+      .stat-box h4 {
+        font-size: 4rem;
+        color: var(--accent);
+      }
+
+      /* Sec 6: Bento Box Ecosystem */
+      .bento-section {
+        padding: 10vw;
+        display: flex;
+        align-items: center;
+      }
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 300px);
+        gap: 20px;
+        width: 100%;
+      }
+      .bento-item {
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        border-radius: 30px;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        backdrop-filter: blur(20px);
+        transition: transform 0.3s;
+      }
+      .bento-item:hover {
+        transform: scale(1.02);
+      }
+      .bento-item:nth-child(1) {
+        grid-column: span 2;
+      }
+      .bento-item:nth-child(4) {
+        grid-column: span 2;
+      }
+      .bento-item h3 {
+        font-size: 2rem;
+      }
+
+      /* Sec 7: Parallax Floating UI */
+      .parallax-ui {
+        position: relative;
+        overflow: hidden;
+      }
+      .ui-card {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        width: 300px;
+        height: 200px;
+      }
+      .ui-1 {
+        top: 20%;
+        left: 10%;
+      }
+      .ui-2 {
+        top: 50%;
+        right: 15%;
+        width: 400px;
+        height: 300px;
+      }
+      .ui-3 {
+        bottom: 10%;
+        left: 30%;
+      }
+
+      /* Sec 8: Sustainability (Clip Path Reveal) */
+      .sustainability-wrapper {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .sus-dark {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+      }
+      .sus-green {
+        position: absolute;
+        inset: 0;
+        background: url("https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=2000&auto=format&fit=crop")
+          center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        clip-path: circle(0% at center);
+      }
+      .sus-text {
+        font-size: 6vw;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Sec 9: Infinite Marquee */
+      .marquee-section {
+        flex-direction: column;
+        overflow: hidden;
+        background: #050505;
+      }
+      .marquee {
+        display: flex;
+        white-space: nowrap;
+        font-size: 10vw;
+        font-weight: 700;
+        color: transparent;
+        -webkit-text-stroke: 1px #333;
+        text-transform: uppercase;
+      }
+
+      /* Sec 10: Footer & Magnetic CTA */
+      .footer-sec {
+        flex-direction: column;
+        background: #000;
+      }
+      .magnetic-btn {
+        padding: 30px 80px;
+        border-radius: 100px;
+        background: #fff;
+        color: #000;
+        font-size: 2rem;
+        font-weight: 600;
+        border: none;
+        outline: none;
+        position: relative;
+        overflow: hidden;
+      }
+      .magnetic-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(0, 0, 0, 0.1),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+      .magnetic-btn:hover::before {
+        left: 100%;
+      }
+      .footer-links {
+        display: flex;
+        gap: 40px;
+        margin-top: 100px;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Ambient Background -->
+    <div class="aurora-bg"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <!-- SECTION 1: HERO -->
+    <section class="hero" id="sec-1">
+      <h1 class="gradient-text hero-title">Quantum.</h1>
+      <p class="hero-sub">Profoundly Powerful. Exceptionally Simple.</p>
+    </section>
+
+    <!-- SECTION 2: MANIFESTO -->
+    <section class="manifesto" id="sec-2">
+      <p class="split-text">
+        We didn't just push the boundaries. We erased them. Introducing a
+        paradigm shift in human-computer interaction, forged in glass, metal,
+        and pure imagination.
+      </p>
+    </section>
+
+    <!-- SECTION 3: 3D DEVICE REVEAL -->
+    <section class="device-reveal" id="sec-3">
+      <div class="device-container">
+        <div class="device"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: HORIZONTAL SCROLL -->
+    <div id="horizontal-container" style="overflow: hidden;">
+      <div class="horizontal-wrapper">
+        <section class="horizontal-panel panel-1">
+          <h2>Design</h2>
+          <p>
+            Forged from aerospace-grade titanium. Lighter. Stronger. Beyond
+            beautiful.
+          </p>
+        </section>
+        <section class="horizontal-panel panel-2">
+          <h2>Optics</h2>
+          <p>
+            A microscopic lens array that bends light to your will. Capture the
+            unseen.
+          </p>
+        </section>
+        <section class="horizontal-panel panel-3">
+          <h2>Intelligence</h2>
+          <p>
+            A neural engine capable of 100 trillion operations per second. It
+            thinks before you do.
+          </p>
+        </section>
+        <section class="horizontal-panel panel-4">
+          <h2 class="gradient-text">Experience It.</h2>
+        </section>
+      </div>
+    </div>
+
+    <!-- SECTION 5: PERFORMANCE CHIP -->
+    <section class="chip-section" id="sec-5">
+      <div class="chip">
+        <h3>M5 Ultra</h3>
+        <div
+          class="circuit-line"
+          style="top: 10%; left: -50px; width: 50px; height: 2px;"
+        ></div>
+        <div
+          class="circuit-line"
+          style="top: -50px; right: 20%; width: 2px; height: 50px;"
+        ></div>
+        <div
+          class="circuit-line"
+          style="bottom: 10%; right: -50px; width: 50px; height: 2px;"
+        ></div>
+        <div
+          class="circuit-line"
+          style="bottom: -50px; left: 20%; width: 2px; height: 50px;"
+        ></div>
+      </div>
+      <div class="chip-stats">
+        <div class="stat-box">
+          <h4 class="counter" data-target="100">0</h4>
+          <p>Trillion Ops/sec</p>
+        </div>
+        <div class="stat-box">
+          <h4 class="counter" data-target="3">0</h4>
+          <p>Nanometer Tech</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: BENTO ECOSYSTEM -->
+    <section class="bento-section" id="sec-6">
+      <div class="bento-grid">
+        <div class="bento-item hover-target">
+          <h3>Seamless Sync</h3>
+          <p style="color: #aaa; margin-top: 10px;">
+            Your world, connected instantly.
+          </p>
+        </div>
+        <div
+          class="bento-item hover-target"
+          style="
+            background: url('https://images.unsplash.com/photo-1614624532983-4ce03382d63d?q=80&w=800&auto=format&fit=crop')
+              center/cover;
+          "
+        ></div>
+        <div class="bento-item hover-target">
+          <h3 style="color: var(--accent); font-size: 4rem;">Pro</h3>
+        </div>
+        <div class="bento-item hover-target">
+          <h3>Spatial Audio</h3>
+          <p style="color: #aaa; margin-top: 10px;">
+            Sound that surrounds you completely.
+          </p>
+        </div>
+        <div class="bento-item hover-target">
+          <h3>Secure</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: PARALLAX UI -->
+    <section class="parallax-ui" id="sec-7">
+      <h2 style="font-size: 5vw; z-index: 10; position: relative;">Fluid OS</h2>
+      <div class="ui-card ui-1 p-element" data-speed="0.5">
+        <div
+          style="
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            margin-bottom: 20px;
+          "
+        ></div>
+        <div
+          style="
+            width: 100%;
+            height: 10px;
+            background: #333;
+            border-radius: 5px;
+            margin-bottom: 10px;
+          "
+        ></div>
+        <div
+          style="
+            width: 70%;
+            height: 10px;
+            background: #333;
+            border-radius: 5px;
+          "
+        ></div>
+      </div>
+      <div class="ui-card ui-2 p-element" data-speed="-0.3">
+        <div
+          style="
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(45deg, #0066cc, #00ccff);
+            border-radius: 10px;
+            margin-bottom: 20px;
+          "
+        ></div>
+        <div
+          style="
+            width: 100%;
+            height: 10px;
+            background: #333;
+            border-radius: 5px;
+            margin-bottom: 10px;
+          "
+        ></div>
+      </div>
+      <div class="ui-card ui-3 p-element" data-speed="0.8">
+        <div style="display: flex; gap: 10px;">
+          <div
+            style="
+              width: 50px;
+              height: 50px;
+              background: #222;
+              border-radius: 10px;
+            "
+          ></div>
+          <div
+            style="
+              width: 50px;
+              height: 50px;
+              background: #222;
+              border-radius: 10px;
+            "
+          ></div>
+          <div
+            style="
+              width: 50px;
+              height: 50px;
+              background: #222;
+              border-radius: 10px;
+            "
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: SUSTAINABILITY (CLIP PATH) -->
+    <div class="sustainability-wrapper" id="sec-8">
+      <div class="sus-dark">
+        <h2 class="sus-text" style="color: #444;">Carbon Neutral.</h2>
+      </div>
+      <div class="sus-green">
+        <h2 class="sus-text">By 2030.</h2>
+      </div>
+    </div>
+
+    <!-- SECTION 9: INFINITE MARQUEE -->
+    <section class="marquee-section" id="sec-9">
+      <div class="marquee m-1">
+        THINK DIFFERENT. THINK DIFFERENT. THINK DIFFERENT. THINK DIFFERENT.
+      </div>
+      <div
+        class="marquee m-2"
+        style="color: #fff; -webkit-text-stroke: 0px; font-style: italic;"
+      >
+        THE FUTURE IS HERE. THE FUTURE IS HERE. THE FUTURE IS HERE.
+      </div>
+    </section>
+
+    <!-- SECTION 10: FOOTER & CTA -->
+    <section class="footer-sec" id="sec-10">
+      <h2 style="font-size: 6vw; margin-bottom: 40px;" class="gradient-text">
+        Ready to leap?
+      </h2>
+      <button class="magnetic-btn hover-target">Pre-order Now</button>
+      <div class="footer-links">
+        <span>Privacy Policy</span>
+        <span>Terms of Use</span>
+        <span>Sales and Refunds</span>
+        <span>Legal</span>
+      </div>
+    </section>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+
+    <script>
+      // 1. INIT LENIS (Smooth Scroll)
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: "vertical",
+        gestureDirection: "vertical",
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false,
+      });
+
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+
+      // 2. CUSTOM CURSOR
+      const cursor = document.querySelector(".cursor");
+      const hoverTargets = document.querySelectorAll("button, .hover-target");
+
+      document.addEventListener("mousemove", (e) => {
+        gsap.to(cursor, {
+          x: e.clientX,
+          y: e.clientY,
+          duration: 0.1,
+          ease: "power2.out",
+        });
+      });
+
+      hoverTargets.forEach((target) => {
+        target.addEventListener("mouseenter", () =>
+          cursor.classList.add("active"),
+        );
+        target.addEventListener("mouseleave", () =>
+          cursor.classList.remove("active"),
+        );
+      });
+
+      // 3. GSAP ANIMATIONS
+      gsap.registerPlugin(ScrollTrigger);
+
+      // --- Sec 1: Hero
+      const heroTl = gsap.timeline();
+      heroTl
+        .fromTo(
+          ".hero-title",
+          { scale: 0.8, opacity: 0, rotateX: -20 },
+          { scale: 1, opacity: 1, rotateX: 0, duration: 2, ease: "power4.out" },
+        )
+        .fromTo(
+          ".hero-sub",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 1, ease: "power3.out" },
+          "-=1",
+        );
+
+      gsap.to(".hero", {
+        scrollTrigger: {
+          trigger: ".hero",
+          start: "top top",
+          end: "bottom top",
+          scrub: 1,
+        },
+        scale: 1.2,
+        opacity: 0,
+        filter: "blur(10px)",
+      });
+
+      // --- Sec 2: Manifesto Text Scrub
+      // Split text utility
+      const splitTextElement = document.querySelector(".split-text");
+      const text = splitTextElement.innerText;
+      splitTextElement.innerHTML = "";
+      text.split(" ").forEach((word) => {
+        const span = document.createElement("span");
+        span.innerText = word + " ";
+        splitTextElement.appendChild(span);
+      });
+
+      gsap.to(".manifesto span", {
+        scrollTrigger: {
+          trigger: ".manifesto",
+          start: "top 80%",
+          end: "bottom 50%",
+          scrub: 1,
+        },
+        opacity: 1,
+        stagger: 0.1,
+        color: "#fff",
+      });
+
+      // --- Sec 3: 3D Device
+      const deviceTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".device-reveal",
+          start: "top center",
+          end: "bottom center",
+          scrub: 1,
+        },
+      });
+      deviceTl
+        .fromTo(
+          ".device-container",
+          { rotateX: 60, rotateY: -30, scale: 0.5, y: 200 },
+          { rotateX: 0, rotateY: 0, scale: 1.5, y: 0, ease: "none" },
+        )
+        .to(
+          ".device",
+          {
+            boxShadow:
+              "0 0 100px rgba(0, 102, 204, 1), inset 0 0 20px rgba(255,255,255,0.5)",
+          },
+          "-=0.5",
+        );
+
+      // --- Sec 4: Horizontal Scroll
+      const horizContainer = document.querySelector(".horizontal-wrapper");
+      gsap.to(horizContainer, {
+        xPercent: -75, // 4 panels, move 3 of them
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#horizontal-container",
+          pin: true,
+          start: "top top",
+          end: "+=3000",
+          scrub: 1,
+        },
+      });
+
+      // --- Sec 5: Chip Counters & Lines
+      ScrollTrigger.create({
+        trigger: ".chip-section",
+        start: "top center",
+        onEnter: () => {
+          // Lines
+          gsap.fromTo(
+            ".circuit-line",
+            { scaleX: 0, scaleY: 0, transformOrigin: "left top" },
+            {
+              scaleX: 1,
+              scaleY: 1,
+              duration: 1,
+              stagger: 0.2,
+              ease: "power3.out",
+            },
+          );
+          // Counters
+          const counters = document.querySelectorAll(".counter");
+          counters.forEach((c) => {
+            const target = +c.getAttribute("data-target");
+            gsap.to(c, {
+              innerHTML: target,
+              duration: 2,
+              snap: { innerHTML: 1 },
+              ease: "power2.out",
+            });
+          });
+        },
+      });
+      gsap.to(".chip", {
+        scrollTrigger: {
+          trigger: ".chip-section",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+        rotateZ: 15,
+        y: -50,
+      });
+
+      // --- Sec 6: Bento Box Stagger
+      gsap.from(".bento-item", {
+        scrollTrigger: { trigger: ".bento-section", start: "top 70%" },
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.1,
+        ease: "back.out(1.7)",
+      });
+
+      // --- Sec 7: Parallax Floating UI
+      gsap.utils.toArray(".p-element").forEach((layer) => {
+        const speed = layer.getAttribute("data-speed");
+        gsap.to(layer, {
+          y: () => -100 * speed,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".parallax-ui",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      });
+
+      // --- Sec 8: Sustainability Clip-Path Reveal
+      gsap.to(".sus-green", {
+        scrollTrigger: {
+          trigger: ".sustainability-wrapper",
+          start: "top top",
+          end: "+=1500",
+          pin: true,
+          scrub: 1,
+        },
+        clipPath: "circle(150% at center)",
+      });
+
+      // --- Sec 9: Infinite Marquee
+      gsap.to(".m-1", {
+        xPercent: -20,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".marquee-section",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+      gsap.to(".m-2", {
+        xPercent: 20,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".marquee-section",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+
+      // --- Sec 10: Magnetic Button effect
+      const btn = document.querySelector(".magnetic-btn");
+      btn.addEventListener("mousemove", (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(btn, {
+          x: x * 0.4,
+          y: y * 0.4,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      });
+      btn.addEventListener("mouseleave", () => {
+        gsap.to(btn, {
+          x: 0,
+          y: 0,
+          duration: 0.7,
+          ease: "elastic.out(1, 0.3)",
+        });
+      });
+
+      // Background Aurora Shift
+      gsap.to(".aurora-bg", {
+        scrollTrigger: {
+          trigger: "body",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+        },
+        background:
+          "radial-gradient(circle, rgba(102,0,204,0.15) 0%, rgba(0,0,0,0) 60%)",
+        y: "50%",
+      });
+    </script>
+  </body>
+</html>

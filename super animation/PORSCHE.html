@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>PORSCHE | The Art of Speed</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700&family=Syncopate:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =========================================================
+           CSS Variables & Base
+           ========================================================= */
+      :root {
+        --pr-black: #050505;
+        --pr-red: #d5001c;
+        --pr-white: #f4f4f4;
+        --pr-silver: #8c8c8c;
+        --pr-dark-grey: #121212;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html.lenis,
+      html.lenis body {
+        height: auto;
+        width: 100vw;
+        overflow-x: hidden;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+      }
+      .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "Manrope", sans-serif;
+        background-color: var(--pr-black);
+        color: var(--pr-white);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      h1,
+      h2,
+      h3,
+      .sync {
+        font-family: "Syncopate", sans-serif;
+        text-transform: uppercase;
+        line-height: 1.1;
+      }
+
+      /* Premium Film Grain */
+      .film-grain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.06;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* =========================================================
+           Custom Cursor (Laser Red Dot)
+           ========================================================= */
+      @media (pointer: fine) {
+        body {
+          cursor: none;
+        }
+        .cursor-dot {
+          width: 6px;
+          height: 6px;
+          background: var(--pr-red);
+          border-radius: 50%;
+          position: fixed;
+          top: 0;
+          left: 0;
+          pointer-events: none;
+          z-index: 10001;
+          transform: translate(-50%, -50%);
+          box-shadow: 0 0 10px var(--pr-red), 0 0 20px var(--pr-red);
+        }
+        .cursor-ring {
+          width: 50px;
+          height: 50px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 50%;
+          position: fixed;
+          top: 0;
+          left: 0;
+          pointer-events: none;
+          z-index: 10000;
+          transform: translate(-50%, -50%);
+          transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s,
+            background 0.3s, border-color 0.3s;
+          backdrop-filter: blur(2px);
+        }
+      }
+      @media (pointer: coarse), (hover: none) {
+        .cursor-dot,
+        .cursor-ring {
+          display: none !important;
+        }
+      }
+
+      /* =========================================================
+           RPM Preloader
+           ========================================================= */
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: var(--pr-black);
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .rpm-ring {
+        position: relative;
+        width: 250px;
+        height: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .rpm-ring svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(135deg);
+      }
+      .rpm-circle-bg {
+        fill: none;
+        stroke: #222;
+        stroke-width: 4;
+        stroke-dasharray: 565;
+        stroke-dashoffset: 141;
+      }
+      .rpm-circle-fill {
+        fill: none;
+        stroke: var(--pr-red);
+        stroke-width: 6;
+        stroke-dasharray: 565;
+        stroke-dashoffset: 565;
+        stroke-linecap: round;
+      }
+
+      .rpm-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+      }
+      .rpm-num {
+        font-family: "Syncopate";
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: var(--pr-white);
+        line-height: 1;
+      }
+      .rpm-label {
+        font-family: "Manrope";
+        font-size: 0.9rem;
+        color: var(--pr-silver);
+        letter-spacing: 5px;
+        margin-top: 5px;
+      }
+
+      /* =========================================================
+           Section 1: Dynamic Spotlight Hero
+           ========================================================= */
+      #hero {
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+        background: #000;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .nav {
+        position: absolute;
+        top: 40px;
+        width: 100%;
+        padding: 0 5vw;
+        display: flex;
+        justify-content: space-between;
+        z-index: 20;
+      }
+      .nav-logo {
+        font-family: "Syncopate";
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 4px;
+      }
+      .nav-menu {
+        font-family: "Manrope";
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--pr-silver);
+      }
+
+      .hero-img-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("https://images.unsplash.com/photo-1503376760365-b3a5b67d581a?auto=format&fit=crop&w=2000&q=80");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.2; /* Submerged in dark */
+        filter: grayscale(100%) contrast(1.2);
+        transition: opacity 0.5s;
+      }
+
+      /* The Spotlight Div */
+      #spotlight {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+        background: radial-gradient(circle at 50% 50%, transparent 0%, #000 0%);
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 5;
+        padding: 0 5vw;
+        margin-top: 15vh;
+        mix-blend-mode: difference;
+        pointer-events: none;
+      }
+      .hero-title {
+        font-size: clamp(4rem, 12vw, 15rem);
+        color: var(--pr-white);
+        letter-spacing: -2px;
+        line-height: 0.8;
+      }
+      .hero-subtitle {
+        font-family: "Manrope";
+        font-size: clamp(1rem, 1.5vw, 2rem);
+        color: var(--pr-red);
+        font-weight: 500;
+        letter-spacing: 10px;
+        margin-top: 20px;
+        display: block;
+      }
+
+      .scroll-indicator {
+        position: absolute;
+        bottom: 5vh;
+        left: 5vw;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        z-index: 10;
+      }
+      .scroll-line {
+        width: 50px;
+        height: 1px;
+        background: var(--pr-red);
+        transform-origin: left;
+      }
+      .scroll-text {
+        font-family: "Syncopate";
+        font-size: 0.7rem;
+        letter-spacing: 4px;
+        color: var(--pr-white);
+      }
+
+      /* =========================================================
+           Section 2: The Wind Tunnel (Cinematic Blur)
+           ========================================================= */
+      #wind-tunnel {
+        height: 100vh;
+        position: relative;
+        background: var(--pr-black);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-top: 1px solid #222;
+      }
+
+      .wt-bg-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "Syncopate";
+        font-size: 15vw;
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+        white-space: nowrap;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .wt-image-wrapper {
+        position: relative;
+        width: 80vw;
+        height: 60vh;
+        z-index: 3;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+      }
+
+      .wt-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: contrast(1.2);
+      }
+
+      /* High Speed Wind Lines Overlay */
+      .wind-lines {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 100%;
+        background-image: repeating-linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.03) 1%,
+          transparent 2%,
+          transparent 10%
+        );
+        z-index: 4;
+        animation: speedLines 2s linear infinite;
+        pointer-events: none;
+      }
+      @keyframes speedLines {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      .wt-content {
+        position: absolute;
+        bottom: 10%;
+        right: 10%;
+        text-align: right;
+        z-index: 5;
+      }
+      .wt-content h3 {
+        font-size: clamp(2rem, 5vw, 4rem);
+        color: var(--pr-white);
+      }
+      .wt-content p {
+        font-family: "Manrope";
+        color: var(--pr-red);
+        letter-spacing: 5px;
+        font-weight: 700;
+        margin-top: 10px;
+      }
+
+      /* =========================================================
+           Section 3: Signature Illumination (Tail Light Draw)
+           ========================================================= */
+      #illumination {
+        height: 120vh;
+        background: #020202;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .ill-title {
+        font-size: clamp(3rem, 6vw, 6rem);
+        color: var(--pr-white);
+        z-index: 3;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      .ill-sub {
+        font-family: "Manrope";
+        color: var(--pr-silver);
+        letter-spacing: 4px;
+        margin-top: 20px;
+        z-index: 3;
+        opacity: 0;
+        text-transform: uppercase;
+      }
+
+      /* Massive SVG Tail Light */
+      .tail-light-svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90vw;
+        height: auto;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .tl-path-bg {
+        fill: none;
+        stroke: #111;
+        stroke-width: 8;
+        stroke-linecap: round;
+      }
+      .tl-path-glow {
+        fill: none;
+        stroke: var(--pr-red);
+        stroke-width: 10;
+        stroke-linecap: round;
+        filter: drop-shadow(0 0 20px rgba(213, 0, 28, 0.8))
+          drop-shadow(0 0 50px rgba(213, 0, 28, 0.6));
+        stroke-dasharray: 2000;
+        stroke-dashoffset: 2000;
+      }
+
+      /* =========================================================
+           Section 4: 3D Engineering Grid (Interactive)
+           ========================================================= */
+      #engineering {
+        min-height: 100vh;
+        background: var(--pr-black);
+        padding: 15vh 5vw;
+        position: relative;
+      }
+      .eng-header {
+        margin-bottom: 8vh;
+      }
+      .eng-header h2 {
+        font-size: clamp(3rem, 8vw, 6rem);
+        color: var(--pr-white);
+      }
+      .eng-header span {
+        color: var(--pr-red);
+      }
+
+      .eng-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        perspective: 1000px;
+      }
+
+      .tech-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 40px;
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: border-color 0.4s, box-shadow 0.4s;
+        transform-style: preserve-3d;
+        cursor: pointer;
+      }
+
+      .tech-card:hover {
+        border-color: rgba(213, 0, 28, 0.5);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      }
+
+      .tc-icon {
+        width: 50px;
+        height: 50px;
+        border: 1px solid var(--pr-red);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--pr-red);
+        transform: translateZ(30px);
+      }
+      .tc-data h3 {
+        font-size: 4rem;
+        color: var(--pr-white);
+        margin-bottom: 10px;
+        transform: translateZ(50px);
+        text-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+      }
+      .tc-data p {
+        font-family: "Manrope";
+        color: var(--pr-silver);
+        font-weight: 500;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        transform: translateZ(30px);
+      }
+
+      /* =========================================================
+           Section 5: Night Drive & Footer
+           ========================================================= */
+      #night-drive {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: #000;
+        border-top: 1px solid #111;
+      }
+
+      .nd-img {
+        position: absolute;
+        top: -15%;
+        left: 0;
+        width: 100%;
+        height: 130%;
+        object-fit: cover;
+        opacity: 0.4;
+        filter: contrast(1.3) brightness(0.7);
+      }
+
+      .nd-content {
+        position: relative;
+        z-index: 5;
+        text-align: center;
+      }
+      .nd-content h2 {
+        font-size: clamp(4rem, 10vw, 10rem);
+        color: var(--pr-white);
+        text-shadow: 0 20px 40px rgba(0, 0, 0, 1);
+      }
+
+      .ignite-btn {
+        margin-top: 40px;
+        padding: 20px 60px;
+        font-family: "Syncopate";
+        font-size: 1rem;
+        font-weight: 700;
+        background: transparent;
+        color: var(--pr-white);
+        border: 1px solid var(--pr-white);
+        border-radius: 50px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: color 0.4s;
+        display: inline-block;
+      }
+      .ignite-btn::before {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--pr-red);
+        transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: -1;
+      }
+      .ignite-btn:hover {
+        color: var(--pr-white);
+        border-color: transparent;
+      }
+      .ignite-btn:hover::before {
+        top: 0;
+      }
+
+      #footer {
+        background: var(--pr-black);
+        padding: 5vh 5vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: "Manrope";
+        font-size: 0.8rem;
+        color: var(--pr-silver);
+        border-top: 1px solid #111;
+      }
+      .f-logo {
+        font-family: "Syncopate";
+        font-size: 1.5rem;
+        color: var(--pr-white);
+      }
+
+      /* =========================================================
+           Mobile Responsiveness
+           ========================================================= */
+      @media (max-width: 768px) {
+        .hero-img-layer {
+          opacity: 0.5;
+          filter: none;
+        }
+        #spotlight {
+          display: none;
+        } /* Disable spotlight on mobile */
+        .hero-content {
+          margin-top: 0;
+        }
+        .wt-image-wrapper {
+          width: 90vw;
+          height: 50vh;
+        }
+        .wt-bg-text {
+          font-size: 25vw;
+        }
+        .ill-title {
+          font-size: 2.5rem;
+        }
+        .tail-light-svg {
+          width: 150vw;
+        } /* Make SVG overflow nicely */
+        .eng-grid {
+          grid-template-columns: 1fr;
+        }
+        .tech-card {
+          height: 300px;
+          transform: none !important;
+        } /* Disable 3D tilt on mobile */
+        #footer {
+          flex-direction: column;
+          gap: 20px;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Cinematic Grain -->
+    <div class="film-grain"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <!-- RPM Preloader -->
+    <div id="preloader">
+      <div class="rpm-ring">
+        <svg viewBox="0 0 200 200">
+          <circle class="rpm-circle-bg" cx="100" cy="100" r="90"></circle>
+          <circle
+            class="rpm-circle-fill"
+            id="rpm-fill"
+            cx="100"
+            cy="100"
+            r="90"
+          ></circle>
+        </svg>
+        <div class="rpm-text">
+          <div class="rpm-num" id="rpm-num">0</div>
+          <div class="rpm-label">RPM</div>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <!-- Section 1: Hero Spotlight -->
+      <section id="hero">
+        <div class="nav">
+          <div class="nav-logo">PORSCHE</div>
+          <div class="nav-menu">MISSION X</div>
+        </div>
+
+        <div class="hero-img-layer" id="hero-bg"></div>
+        <div id="spotlight"></div>
+
+        <div class="hero-content">
+          <h1 class="hero-title">PURE</h1>
+          <h1 class="hero-title" style="margin-left: 10vw;">ADRENALINE.</h1>
+          <span class="hero-subtitle">BORN ON THE TRACK</span>
+        </div>
+
+        <div class="scroll-indicator">
+          <div class="scroll-line"></div>
+          <div class="scroll-text">IGNITE</div>
+        </div>
+      </section>
+
+      <!-- Section 2: Wind Tunnel -->
+      <section id="wind-tunnel">
+        <div class="wt-bg-text">AERODYNAMICS</div>
+        <div class="wt-image-wrapper">
+          <div class="wind-lines"></div>
+          <img
+            src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=2000&q=80"
+            alt="Speed Blur Road"
+            class="wt-parallax"
+          />
+          <div class="wt-content">
+            <h3>ZERO DRAG</h3>
+            <p>ACTIVE AERO SYSTEMS</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Signature Illumination -->
+      <section id="illumination">
+        <svg
+          class="tail-light-svg"
+          viewBox="0 0 1000 200"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <!-- Sleek curve mimicking the 911 rear light bar -->
+          <path class="tl-path-bg" d="M 50 100 Q 500 50 950 100" />
+          <path
+            class="tl-path-glow"
+            id="glow-path"
+            d="M 50 100 Q 500 50 950 100"
+          />
+        </svg>
+
+        <h2 class="ill-title">SIGNATURE<br />ILLUMINATION</h2>
+        <p class="ill-sub">The undeniable mark of legacy.</p>
+      </section>
+
+      <!-- Section 4: 3D Engineering Grid -->
+      <section id="engineering">
+        <div class="eng-header">
+          <h2 class="sync">ENGINEERING <span>///</span></h2>
+        </div>
+
+        <div class="eng-grid">
+          <div class="tech-card">
+            <div class="tc-icon">01</div>
+            <div class="tc-data">
+              <h3><span class="count-up" data-target="900">0</span>+</h3>
+              <p>Horsepower Output</p>
+            </div>
+          </div>
+
+          <div class="tech-card">
+            <div class="tc-icon">02</div>
+            <div class="tc-data">
+              <h3><span class="count-up" data-target="1.9">0</span>s</h3>
+              <p>0-60 MPH Acceleration</p>
+            </div>
+          </div>
+
+          <div class="tech-card">
+            <div class="tc-icon">03</div>
+            <div class="tc-data">
+              <h3><span class="count-up" data-target="210">0</span></h3>
+              <p>Top Speed (MPH)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Night Drive & Footer -->
+      <section id="night-drive">
+        <!-- Sleek Porsche Steering/Interior view -->
+        <img
+          src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1500&q=80"
+          alt="Cockpit"
+          class="nd-img nd-parallax"
+        />
+        <div class="nd-content">
+          <h2 class="sync">TAKE THE WHEEL</h2>
+          <button class="ignite-btn">BUILD YOURS</button>
+        </div>
+      </section>
+
+      <footer id="footer">
+        <div class="f-logo">PORSCHE</div>
+        <div>© 2026 Porsche AG. All Rights Reserved.</div>
+        <div style="display: flex; gap: 20px;">
+          <span>LEGAL</span>
+          <span>PRIVACY</span>
+          <span>CONTACT</span>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+      // 1. Initialize Lenis (Smooth, heavy luxury feel)
+      const lenis = new Lenis({
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: "vertical",
+        gestureDirection: "vertical",
+        smooth: true,
+        mouseMultiplier: 0.8,
+        smoothTouch: false,
+        touchMultiplier: 2,
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // 2. Custom Cursor & Interactive Logic
+      if (window.matchMedia("(pointer: fine)").matches) {
+        const cursorDot = document.getElementById("cursor-dot");
+        const cursorRing = document.getElementById("cursor-ring");
+
+        let dotX = gsap.quickTo(cursorDot, "x", {
+          duration: 0.1,
+          ease: "power3.out",
+        });
+        let dotY = gsap.quickTo(cursorDot, "y", {
+          duration: 0.1,
+          ease: "power3.out",
+        });
+        let ringX = gsap.quickTo(cursorRing, "x", {
+          duration: 0.4,
+          ease: "power3.out",
+        });
+        let ringY = gsap.quickTo(cursorRing, "y", {
+          duration: 0.4,
+          ease: "power3.out",
+        });
+
+        window.addEventListener("mousemove", (e) => {
+          dotX(e.clientX);
+          dotY(e.clientY);
+          ringX(e.clientX);
+          ringY(e.clientY);
+        });
+
+        // Hover states for interactions
+        document
+          .querySelectorAll("button, .tech-card, .nav-logo")
+          .forEach((el) => {
+            el.addEventListener("mouseenter", () => {
+              cursorRing.style.width = "70px";
+              cursorRing.style.height = "70px";
+              cursorRing.style.borderColor = "var(--pr-red)";
+              cursorRing.style.background = "rgba(213, 0, 28, 0.1)";
+            });
+            el.addEventListener("mouseleave", () => {
+              cursorRing.style.width = "50px";
+              cursorRing.style.height = "50px";
+              cursorRing.style.borderColor = "rgba(255,255,255,0.2)";
+              cursorRing.style.background = "transparent";
+            });
+          });
+
+        // --- THE MIND-BLOWING SPOTLIGHT EFFECT ---
+        const heroSection = document.getElementById("hero");
+        const spotlight = document.getElementById("spotlight");
+        const heroBg = document.getElementById("hero-bg");
+
+        heroSection.addEventListener("mousemove", (e) => {
+          // Reveal color under spotlight
+          heroBg.style.filter = `grayscale(50%) contrast(1.2)`;
+          heroBg.style.opacity = `0.6`;
+
+          // Creates a literal spotlight gradient tracking the mouse
+          const x = e.clientX;
+          const y = e.clientY;
+          spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, transparent 10%, #000 40%)`;
+        });
+
+        heroSection.addEventListener("mouseleave", () => {
+          heroBg.style.filter = `grayscale(100%) contrast(1.2)`;
+          heroBg.style.opacity = `0.2`;
+          spotlight.style.background = `radial-gradient(circle at 50% 50%, transparent 0%, #000 0%)`;
+        });
+
+        // --- 3D TECH CARD TILT PHYSICS ---
+        const cards = document.querySelectorAll(".tech-card");
+        cards.forEach((card) => {
+          card.addEventListener("mousemove", (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left; // x position within the element.
+            const y = e.clientY - rect.top; // y position within the element.
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((y - centerY) / centerY) * -15; // Max 15 deg tilt
+            const rotateY = ((x - centerX) / centerX) * 15;
+
+            gsap.to(card, {
+              rotationX: rotateX,
+              rotationY: rotateY,
+              transformPerspective: 1000,
+              ease: "power2.out",
+              duration: 0.4,
+            });
+          });
+
+          card.addEventListener("mouseleave", () => {
+            gsap.to(card, {
+              rotationX: 0,
+              rotationY: 0,
+              ease: "elastic.out(1, 0.3)",
+              duration: 1,
+            });
+          });
+        });
+
+        // Magnetic Button
+        const magBtn = document.querySelector(".ignite-btn");
+        magBtn.addEventListener("mousemove", function (e) {
+          const rect = this.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          gsap.to(this, {
+            x: x * 0.3,
+            y: y * 0.3,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        });
+        magBtn.addEventListener("mouseleave", function () {
+          gsap.to(this, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: "elastic.out(1, 0.3)",
+          });
+        });
+      }
+
+      // 3. The 9000 RPM Preloader
+      window.addEventListener("load", () => {
+        let rpmObj = { val: 0 };
+        const tl = gsap.timeline();
+
+        tl.to(rpmObj, {
+          val: 9000,
+          duration: 2.5,
+          ease: "power4.in", // Simulates aggressive engine revving
+          onUpdate: () => {
+            document.getElementById("rpm-num").innerText = Math.floor(
+              rpmObj.val,
+            );
+            // Map 0-9000 to SVG dashoffset 565-141
+            let progress = rpmObj.val / 9000;
+            let offset = 565 - progress * (565 - 141);
+            document.getElementById("rpm-fill").style.strokeDashoffset = offset;
+          },
+        })
+          // Flash bang transition
+          .to("#preloader", { backgroundColor: "var(--pr-red)", duration: 0.1 })
+          .to("#preloader", {
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            onComplete: () => {
+              document.getElementById("preloader").style.display = "none";
+            },
+          })
+          // Hero Reveal
+          .from(
+            ".hero-title",
+            {
+              y: 100,
+              opacity: 0,
+              stagger: 0.2,
+              duration: 1.5,
+              ease: "power4.out",
+            },
+            "-=0.5",
+          )
+          .from(
+            ".hero-subtitle",
+            { x: -50, opacity: 0, duration: 1, ease: "power3.out" },
+            "-=1",
+          )
+          .from(
+            ".scroll-indicator",
+            { y: 20, opacity: 0, duration: 1 },
+            "-=0.5",
+          );
+      });
+
+      // 4. Wind Tunnel Parallax
+      gsap.to(".wt-bg-text", {
+        xPercent: -20,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#wind-tunnel",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+      gsap.fromTo(
+        ".wt-parallax",
+        { yPercent: -15 },
+        {
+          yPercent: 15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: "#wind-tunnel",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        },
+      );
+
+      // 5. Signature Tail-Light SVG Draw
+      let illTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#illumination",
+          start: "top 20%",
+          end: "+=100%",
+          pin: true,
+          scrub: 1,
+        },
+      });
+
+      // The path length is ~2000, we draw it from 2000 offset to 0
+      illTl
+        .to("#glow-path", {
+          strokeDashoffset: 0,
+          duration: 2,
+          ease: "power2.inOut",
+        })
+        .to(
+          ".ill-title",
+          { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+          "-=1",
+        )
+        .to(
+          ".ill-sub",
+          { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+          "-=0.8",
+        );
+
+      // 6. Tech Grid Count Ups
+      const counters = document.querySelectorAll(".count-up");
+      counters.forEach((counter) => {
+        let target = parseFloat(counter.getAttribute("data-target"));
+        let obj = { val: 0 };
+        gsap.to(obj, {
+          val: target,
+          duration: 2,
+          ease: "power3.out",
+          scrollTrigger: { trigger: "#engineering", start: "top 60%" },
+          onUpdate: () => {
+            counter.innerText =
+              target % 1 === 0 ? Math.floor(obj.val) : obj.val.toFixed(1);
+          },
+        });
+      });
+
+      // Staggered entrance for cards
+      gsap.from(".tech-card", {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power4.out",
+        scrollTrigger: { trigger: "#engineering", start: "top 50%" },
+      });
+
+      // 7. Night Drive Parallax
+      gsap.fromTo(
+        ".nd-parallax",
+        { yPercent: -20 },
+        {
+          yPercent: 20,
+          ease: "none",
+          scrollTrigger: {
+            trigger: "#night-drive",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        },
+      );
+      gsap.from(".nd-content h2", {
+        scale: 0.9,
+        opacity: 0,
+        y: 50,
+        duration: 1.5,
+        ease: "power4.out",
+        scrollTrigger: { trigger: "#night-drive", start: "top 60%" },
+      });
+
+      window.addEventListener("resize", () => {
+        ScrollTrigger.refresh();
+      });
+    </script>
+  </body>
+</html>
