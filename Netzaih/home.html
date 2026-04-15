@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-[#050505]">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Netziah | Revenue Growth Consulting</title>
+
+    <!-- Ultra Premium Fonts: Syne (Display) & Manrope (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Manrope", "sans-serif"],
+              display: ["Syne", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                black: "#030303",
+                dark: "#0a0a0a",
+                gray: "#121212",
+                border: "rgba(255,255,255,0.08)",
+                blue: "#0055FF",
+                accent: "#00D1FF",
+                text: "#8a8a93",
+              },
+            },
+            fontSize: {
+              "fluid-massive": "clamp(3.5rem, 10vw, 10rem)",
+              "fluid-h2": "clamp(2.5rem, 6vw, 6rem)",
+              "fluid-h3": "clamp(2rem, 4vw, 4rem)",
+              "fluid-p": "clamp(1rem, 1.2vw, 1.25rem)",
+            },
+            letterSpacing: {
+              tighter: "-0.04em",
+              widest: "0.2em",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Base & Lenis Smooth Scroll */
+      html.lenis {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto;
+      }
+      .lenis.lenis-smooth[data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+      .lenis.lenis-scrolling iframe {
+        pointer-events: none;
+      }
+
+      body {
+        background-color: #030303;
+        color: #ffffff;
+        overflow-x: hidden;
+        cursor: none; /* Custom Cursor */
+      }
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Custom Noise Texture Overlay */
+      .noise-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0.04;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* Custom Cursor (Blend Mode Difference) */
+      .cursor-dot,
+      .cursor-outline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9999;
+        pointer-events: none;
+        mix-blend-mode: difference;
+      }
+      .cursor-dot {
+        width: 8px;
+        height: 8px;
+        background-color: white;
+      }
+      .cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition: width 0.2s, height 0.2s, background-color 0.2s;
+      }
+      body:has(a:hover) .cursor-outline,
+      body:has(button:hover) .cursor-outline,
+      body:has(input:focus) .cursor-outline {
+        width: 80px;
+        height: 80px;
+        background-color: white;
+        border-color: transparent;
+      }
+
+      /* Preloader Split Screen */
+      .preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        display: flex;
+      }
+      .preloader-panel {
+        width: 50%;
+        height: 100%;
+        background: #030303;
+      }
+      .preloader-content {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10001;
+        pointer-events: none;
+      }
+      .loader-text {
+        font-family: "Syne", sans-serif;
+        overflow: hidden;
+      }
+      .loader-text span {
+        display: inline-block;
+        transform: translateY(100%);
+      }
+
+      /* Typography & Outlines */
+      .text-outline-premium {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+        transition: -webkit-text-stroke 0.3s ease, color 0.3s ease;
+      }
+      .text-outline-premium:hover {
+        color: white;
+        -webkit-text-stroke: 1px transparent;
+      }
+
+      /* Magnetic Button */
+      .magnetic-btn {
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        transition: color 0.4s ease, transform 0.2s;
+      }
+      .magnetic-btn .fill {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0055ff;
+        border-radius: 50%;
+        transition: top 0.5s cubic-bezier(0.19, 1, 0.22, 1), border-radius 0.5s;
+        z-index: -1;
+      }
+      .magnetic-btn:hover .fill {
+        top: 0;
+        border-radius: 0;
+      }
+      .btn-white .fill {
+        background: #fff;
+      }
+      .btn-white:hover {
+        color: #000 !important;
+      }
+
+      /* Image Filters */
+      .img-premium {
+        filter: grayscale(100%) contrast(1.1);
+        transition: filter 0.6s cubic-bezier(0.19, 1, 0.22, 1), transform 0.6s;
+      }
+      .group:hover .img-premium {
+        filter: grayscale(0%) contrast(1);
+        transform: scale(1.05);
+      }
+
+      /* Input Animations */
+      .input-premium:focus + .input-border {
+        transform: scaleX(1);
+      }
+      .input-border {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #0055ff;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+      }
+
+      /* Ambient Glows */
+      .ambient-glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(120px);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* Floating Animation */
+      @keyframes float {
+        0% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-25px) rotate(2deg);
+        }
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+      }
+      .animate-float {
+        animation: float 8s ease-in-out infinite;
+      }
+
+      /* Stacked Cards for Problem Section */
+      .stacked-card {
+        position: sticky;
+        transform-origin: center top;
+      }
+
+      /* Grid Lines */
+      .grid-lines {
+        background-image: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          );
+        background-size: 5vw 5vw;
+      }
+    </style>
+  </head>
+  <body class="antialiased selection:bg-brand-blue selection:text-white">
+    <!-- Custom Cursor -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+    <div class="noise-bg"></div>
+
+    <!-- Preloader -->
+    <div class="preloader">
+      <div class="preloader-panel panel-left"></div>
+      <div class="preloader-panel panel-right"></div>
+      <div class="preloader-content">
+        <div
+          class="loader-text text-white text-4xl md:text-6xl font-bold tracking-tighter uppercase mb-4"
+        >
+          <span class="loader-word">Netziah</span>
+        </div>
+        <div
+          class="loader-text text-brand-text text-xs md:text-sm font-sans uppercase tracking-widest"
+        >
+          <span class="loader-word">Intelligence. Execution. Revenue.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation (Sticky & Blend Mode) -->
+    <header
+      class="fixed top-0 left-0 w-full z-50 px-4 md:px-8 py-6 mix-blend-difference nav-reveal opacity-0"
+    >
+      <div class="max-w-[1800px] mx-auto flex justify-between items-center">
+        <!-- Brand Logo -->
+        <div class="flex items-center gap-3 group cursor-pointer text-white">
+          <svg
+            class="w-6 h-6 md:w-8 md:h-8 transition-transform duration-700 group-hover:rotate-180"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+          </svg>
+          <span
+            class="font-display font-bold text-xl md:text-2xl tracking-tighter uppercase"
+            >Netziah</span
+          >
+        </div>
+
+        <!-- Desktop Links -->
+        <nav
+          class="hidden lg:flex items-center gap-12 text-xs font-sans font-bold uppercase tracking-widest text-white"
+        >
+          <a
+            href="#"
+            class="hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
+            >Home</a
+          >
+          <a
+            href="#"
+            class="hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
+            >About Us</a
+          >
+          <a
+            href="#"
+            class="hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
+            >Solutions</a
+          >
+          <a
+            href="#"
+            class="hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
+            >Insights</a
+          >
+        </nav>
+
+        <!-- Contact / Meta -->
+        <div class="flex items-center gap-6">
+          <div
+            class="hidden md:flex flex-col items-end text-[10px] font-sans text-gray-400 font-medium uppercase tracking-widest border-r border-white/20 pr-6"
+          >
+            <a
+              href="mailto:hello@netziah.com"
+              class="hover:text-white transition-colors"
+              >hello@netziah.com</a
+            >
+            <a
+              href="tel:+13072248500"
+              class="hover:text-white transition-colors"
+              >+13072248500</a
+            >
+          </div>
+          <a
+            href="#"
+            class="magnetic-btn border border-white text-white px-6 py-3 text-[11px] md:text-xs uppercase tracking-widest font-bold hidden sm:flex btn-white"
+          >
+            <span class="relative z-10">Contact Sales</span>
+            <div class="fill"></div>
+          </a>
+          <!-- Mobile Menu Toggle -->
+          <button
+            id="mobile-menu-btn"
+            class="lg:hidden text-white flex flex-col gap-1.5 z-50"
+          >
+            <span class="w-6 h-[2px] bg-white block"></span>
+            <span class="w-6 h-[2px] bg-white block"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 bg-[#050505] z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-500"
+    >
+      <nav
+        class="flex flex-col items-center gap-8 text-2xl font-display font-bold uppercase tracking-widest text-white"
+      >
+        <a
+          href="#"
+          class="mobile-link hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
+          >Home</a
+        >
+        <a
+          href="#"
+          class="mobile-link hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
+          >About Us</a
+        >
+        <a
+          href="#"
+          class="mobile-link hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
+          >Solutions</a
+        >
+        <a
+          href="#"
+          class="mobile-link hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
+          >Insights</a
+        >
+        <a
+          href="#"
+          class="mobile-link mt-8 magnetic-btn border border-white text-white px-8 py-4 text-xs uppercase tracking-widest font-bold btn-white"
+        >
+          <span class="relative z-10">Contact Sales</span>
+          <div class="fill"></div>
+        </a>
+      </nav>
+    </div>
+
+    <!-- 
+      ===============================================================
+      AWWWARDS-STYLE HERO SECTION: Immersive, Layered & Cinematic
+      =============================================================== 
+    -->
+    <section
+      class="relative w-full h-[100svh] min-h-[700px] flex flex-col justify-center overflow-hidden bg-brand-black"
+      id="hero"
+    >
+      <!-- Deep Cinematic Glow -->
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] bg-brand-blue/20 rounded-full blur-[120px] pointer-events-none z-0"
+      ></div>
+
+      <!-- Massive Layered Typography (Background) -->
+      <div
+        class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-0 select-none hero-title opacity-80"
+      >
+        <h1
+          class="font-display font-extrabold text-[18vw] leading-[0.75] tracking-tighter uppercase text-outline-premium opacity-0 translate-y-12 hero-text-anim"
+        >
+          Revenue
+        </h1>
+        <h1
+          class="font-display font-extrabold text-[18vw] leading-[0.75] tracking-tighter uppercase text-white/5 -translate-y-2 opacity-0 hero-text-anim"
+        >
+          Engine
+        </h1>
+      </div>
+
+      <!-- Interactive / Foreground Layer -->
+      <div
+        class="relative z-10 w-full h-full max-w-[1800px] mx-auto px-4 md:px-8 flex items-center justify-center"
+      >
+        <!-- Floating Center Image -->
+        <div
+          class="relative w-full max-w-[800px] aspect-square flex items-center justify-center opacity-0 translate-y-12 scale-95 hero-img-anim"
+        >
+          <img
+            src="https://i.postimg.cc/X71MDb9z/SP1.png"
+            alt="Netziah 3D Element"
+            class="w-[85%] md:w-[100%] h-auto object-contain animate-float drop-shadow-[0_20px_80px_rgba(0,85,255,0.4)] filter contrast-125"
+          />
+
+          <!-- Floating Micro-UI Element 1 (Left) -->
+          <div
+            class="absolute top-[20%] left-[-5%] md:left-[5%] bg-[#121212]/60 backdrop-blur-xl border border-white/10 rounded-2xl p-4 flex items-center gap-4 shadow-[0_10px_40px_rgba(0,0,0,0.5)] hidden md:flex hero-details opacity-0"
+          >
+            <div
+              class="w-2.5 h-2.5 rounded-full bg-brand-accent animate-pulse shadow-[0_0_10px_#00D1FF]"
+            ></div>
+            <div class="flex flex-col">
+              <span
+                class="text-[9px] uppercase tracking-widest text-brand-text font-bold mb-0.5"
+                >Execution Status</span
+              >
+              <span
+                class="text-xs uppercase tracking-wider text-white font-display font-bold"
+                >Optimized</span
+              >
+            </div>
+          </div>
+
+          <!-- Floating Micro-UI Element 2 (Right) -->
+          <div
+            class="absolute bottom-[25%] right-[-5%] md:right-[5%] bg-[#121212]/60 backdrop-blur-xl border border-white/10 rounded-2xl p-4 flex items-center gap-4 shadow-[0_10px_40px_rgba(0,0,0,0.5)] hidden md:flex hero-details opacity-0"
+          >
+            <div class="text-brand-blue bg-brand-blue/10 p-2 rounded-full">
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                ></path>
+              </svg>
+            </div>
+            <div class="flex flex-col">
+              <span
+                class="text-[9px] uppercase tracking-widest text-brand-text font-bold mb-0.5"
+                >Yield Velocity</span
+              >
+              <span
+                class="text-xs uppercase tracking-wider text-white font-display font-bold"
+                >+124.8%</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Block: Bottom Left -->
+        <div
+          class="absolute bottom-[10%] md:bottom-16 left-4 md:left-8 z-30 max-w-sm hero-details opacity-0"
+        >
+          <div class="pl-4 md:pl-6 border-l-2 border-brand-accent">
+            <h2
+              class="text-white font-display text-2xl md:text-4xl uppercase font-bold tracking-tighter mb-3 leading-[0.9]"
+            >
+              Predictable <br />
+              <span class="text-brand-text">Outcomes.</span>
+            </h2>
+            <p
+              class="font-sans text-brand-text text-xs md:text-sm leading-relaxed mb-6 font-medium"
+            >
+              We embed into your organization, take ownership of execution, and
+              build systems that close deals.
+            </p>
+            <a
+              href="#"
+              class="magnetic-btn bg-white text-black px-6 md:px-8 py-3 md:py-4 text-[10px] md:text-[11px] uppercase tracking-widest font-bold btn-white"
+            >
+              <span class="z-10 relative">Initiate Systems</span>
+              <div class="fill bg-black"></div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Scroll Down Indicator: Bottom Right -->
+        <div
+          class="absolute bottom-8 right-4 md:right-8 flex flex-col items-center justify-end z-30 hero-details opacity-0 hidden sm:flex"
+        >
+          <span
+            class="text-[9px] font-sans font-bold uppercase tracking-[0.4em] text-brand-text mb-16 rotate-90 origin-center absolute top-[-40px]"
+            >Scroll</span
+          >
+          <div class="w-[1px] h-16 bg-brand-border relative overflow-hidden">
+            <div
+              class="absolute top-0 left-0 w-full h-1/3 bg-white animate-[bounce_2.5s_infinite]"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      THE PROBLEM WE FIX: Sticky Card Stack
+      =============================================================== 
+    -->
+    <section class="relative bg-brand-black pb-32" id="problem-section">
+      <div class="max-w-[1400px] mx-auto px-4 md:px-8 relative z-10 pt-32">
+        <div
+          class="flex flex-col items-center text-center mb-20 section-header"
+        >
+          <h3
+            class="text-brand-accent text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold mb-6 flex items-center gap-4 justify-center"
+          >
+            <span class="w-8 md:w-12 h-[1px] bg-brand-accent"></span> The
+            Problem We Fix
+            <span class="w-8 md:w-12 h-[1px] bg-brand-accent"></span>
+          </h3>
+          <h2
+            class="font-display text-fluid-h3 text-white leading-[1.1] tracking-tighter max-w-4xl uppercase"
+          >
+            Most sales teams don't have an operations problem.
+            <span class="text-brand-text">They have an execution problem.</span>
+          </h2>
+        </div>
+
+        <!-- Sticky Stack Container -->
+        <div class="relative w-full card-stack-container mt-16">
+          <!-- Card 01 -->
+          <div
+            class="stacked-card top-[15vh] mb-[5vh] w-full bg-brand-gray border border-brand-border rounded-3xl p-8 md:p-16 flex flex-col md:flex-row gap-8 justify-between shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+          >
+            <div
+              class="text-6xl md:text-8xl font-display font-bold text-transparent"
+              style="-webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);"
+            >
+              (01)
+            </div>
+            <div
+              class="max-w-2xl text-left md:text-right flex flex-col justify-center"
+            >
+              <h4
+                class="text-3xl md:text-5xl font-display font-bold mb-4 md:mb-6 uppercase tracking-tight text-white"
+              >
+                Excellence
+              </h4>
+              <p
+                class="text-brand-text text-base md:text-xl leading-relaxed font-sans"
+              >
+                Sales operations executed with professional standards,
+                structured processes, and disciplined performance.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 02 -->
+          <div
+            class="stacked-card top-[18vh] mb-[5vh] w-full bg-[#161616] border border-brand-border rounded-3xl p-8 md:p-16 flex flex-col md:flex-row gap-8 justify-between shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+          >
+            <div
+              class="text-6xl md:text-8xl font-display font-bold text-transparent"
+              style="-webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);"
+            >
+              (02)
+            </div>
+            <div
+              class="max-w-2xl text-left md:text-right flex flex-col justify-center"
+            >
+              <h4
+                class="text-3xl md:text-5xl font-display font-bold mb-4 md:mb-6 uppercase tracking-tight text-white"
+              >
+                Intelligence
+              </h4>
+              <p
+                class="text-brand-text text-base md:text-xl leading-relaxed font-sans"
+              >
+                Data, analytics, and intelligence systems that improve
+                decision-making and drive operational performance.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 03 -->
+          <div
+            class="stacked-card top-[21vh] mb-[5vh] w-full bg-[#1a1a1a] border border-brand-border rounded-3xl p-8 md:p-16 flex flex-col md:flex-row gap-8 justify-between shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+          >
+            <div
+              class="text-6xl md:text-8xl font-display font-bold text-transparent"
+              style="-webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);"
+            >
+              (03)
+            </div>
+            <div
+              class="max-w-2xl text-left md:text-right flex flex-col justify-center"
+            >
+              <h4
+                class="text-3xl md:text-5xl font-display font-bold mb-4 md:mb-6 uppercase tracking-tight text-white"
+              >
+                Governance
+              </h4>
+              <p
+                class="text-brand-text text-base md:text-xl leading-relaxed font-sans"
+              >
+                Continuous improvement of workflows, performance, and
+                operational efficiency across the sales lifecycle.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 04 -->
+          <div
+            class="stacked-card top-[24vh] mb-0 w-full bg-[#0055FF] border border-transparent rounded-3xl p-8 md:p-16 flex flex-col md:flex-row gap-8 justify-between shadow-[0_-10px_40px_rgba(0,0,0,0.5)] text-white"
+          >
+            <div
+              class="text-6xl md:text-8xl font-display font-bold text-white/30"
+            >
+              (04)
+            </div>
+            <div
+              class="max-w-2xl text-left md:text-right flex flex-col justify-center"
+            >
+              <h4
+                class="text-3xl md:text-5xl font-display font-bold mb-4 md:mb-6 uppercase tracking-tight text-white"
+              >
+                Optimization
+              </h4>
+              <p
+                class="text-white/80 text-base md:text-xl leading-relaxed font-sans"
+              >
+                Continuous improvement of workflows, performance, and
+                operational efficiency across the sales lifecycle.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      ABOUT NETZIAH: Editorial Split Screen
+      =============================================================== 
+    -->
+    <section class="relative bg-white text-brand-black border-t-0">
+      <div class="flex flex-col lg:flex-row min-h-[100svh]">
+        <!-- Left Sticky Pinned Panel -->
+        <div
+          class="w-full lg:w-[45%] p-6 md:p-16 lg:p-20 border-r border-gray-200 lg:sticky lg:top-0 h-auto lg:h-[100svh] flex flex-col justify-between bg-[#f8f8f8]"
+        >
+          <div>
+            <h3
+              class="text-brand-blue text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold mb-8 md:mb-12"
+            >
+              About Netziah
+            </h3>
+            <h2
+              class="font-display text-fluid-h3 leading-[0.95] tracking-tighter text-black uppercase mb-10"
+            >
+              Performance<br />
+              <span
+                class="text-outline-premium text-transparent"
+                style="-webkit-text-stroke: 1px rgba(0, 0, 0, 0.8);"
+                >Powered by</span
+              ><br />
+              Intelligence
+            </h2>
+          </div>
+
+          <div>
+            <div
+              class="text-gray-600 text-base md:text-lg leading-relaxed max-w-md space-y-6 font-medium"
+            >
+              <p>Netziah was built to fix sales execution.</p>
+              <p>We don't sit on the sidelines or deliver slide decks.</p>
+              <p>
+                We embed into your organization, take ownership of execution,
+                and build the systems needed to close deals and scale revenue.
+              </p>
+            </div>
+            <div class="mt-12">
+              <a
+                href="#"
+                class="magnetic-btn bg-black text-white px-8 py-4 text-[11px] md:text-xs uppercase tracking-widest font-bold btn-white"
+              >
+                <span class="z-10 relative">Learn more</span>
+                <div class="fill"></div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Scrolling Content -->
+        <div class="w-full lg:w-[55%] flex flex-col bg-white">
+          <!-- Content Block 1 -->
+          <div
+            class="min-h-[70vh] lg:h-[100svh] flex flex-col justify-center p-6 md:p-16 lg:p-24 border-b border-gray-200 content-reveal"
+          >
+            <div
+              class="w-16 h-16 md:w-24 md:h-24 rounded-full border border-gray-300 flex items-center justify-center mb-10 md:mb-16"
+            >
+              <svg
+                class="w-6 h-6 md:w-10 md:h-10 text-black"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                ></path>
+              </svg>
+            </div>
+            <h4
+              class="font-display text-4xl md:text-5xl lg:text-7xl text-black font-bold mb-6 md:mb-10 tracking-tighter uppercase leading-[0.9]"
+            >
+              How We Work
+            </h4>
+            <p
+              class="text-gray-600 text-lg md:text-2xl leading-relaxed max-w-xl mb-10 md:mb-16 font-medium"
+            >
+              To be the leading provider of trusted financial advice, driving
+              sustainable growth and financial success.
+            </p>
+            <a
+              href="#"
+              class="text-black text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold border-b-2 border-black w-fit pb-2 hover:text-brand-blue hover:border-brand-blue transition-colors"
+              >Read more</a
+            >
+          </div>
+
+          <!-- Content Block 2 -->
+          <div
+            class="min-h-[70vh] lg:h-[100svh] flex flex-col justify-center p-6 md:p-16 lg:p-24 border-b lg:border-b-0 border-gray-200 content-reveal bg-[#fcfcfc]"
+          >
+            <div
+              class="w-16 h-16 md:w-24 md:h-24 rounded-full border border-gray-300 flex items-center justify-center mb-10 md:mb-16"
+            >
+              <svg
+                class="w-6 h-6 md:w-10 md:h-10 text-black"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                ></path>
+              </svg>
+            </div>
+            <h4
+              class="font-display text-4xl md:text-5xl lg:text-7xl text-black font-bold mb-6 md:mb-10 tracking-tighter uppercase leading-[0.9]"
+            >
+              Our Operating Approach
+            </h4>
+            <p
+              class="text-gray-600 text-lg md:text-2xl leading-relaxed max-w-xl mb-10 md:mb-16 font-medium"
+            >
+              We design, build, and operate revenue systems that improve lead
+              conversion, pipeline performance, and predictable revenue growth.
+            </p>
+            <a
+              href="#"
+              class="text-black text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold border-b-2 border-black w-fit pb-2 hover:text-brand-blue hover:border-brand-blue transition-colors"
+              >Read more</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      WHAT WE OPERATE & MASSIVE FORM
+      =============================================================== 
+    -->
+    <section
+      class="py-24 md:py-40 bg-brand-black border-y border-brand-border relative overflow-hidden"
+    >
+      <div
+        class="ambient-glow w-[40vw] h-[40vw] bg-brand-blue/5 top-0 left-[-20%]"
+      ></div>
+      <div
+        class="max-w-[1600px] mx-auto px-4 md:px-8 flex flex-col lg:flex-row gap-16 md:gap-24 relative z-10"
+      >
+        <div class="w-full lg:w-1/2 flex flex-col justify-center">
+          <h3
+            class="text-brand-accent text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold mb-8 md:mb-12"
+          >
+            What We Actually Operate
+          </h3>
+          <h2
+            class="font-display text-fluid-h3 font-bold leading-[0.95] tracking-tighter mb-12 md:mb-16 uppercase text-white"
+          >
+            We don't advise from the sidelines — we operate the core components
+            of your sales engine.
+          </h2>
+
+          <ul class="space-y-0 border-t border-brand-border">
+            <li
+              class="flex items-start gap-6 border-b border-brand-border py-8 group hover:bg-brand-gray transition-colors px-4 -mx-4 rounded-lg list-reveal"
+            >
+              <span
+                class="text-transparent font-display text-2xl md:text-4xl font-bold"
+                style="-webkit-text-stroke: 1px #0055ff;"
+                >01</span
+              >
+              <span
+                class="font-display text-xl md:text-3xl font-medium tracking-tight text-gray-300 group-hover:text-white transition-colors"
+                >We run your sales operation</span
+              >
+            </li>
+            <li
+              class="flex items-start gap-6 border-b border-brand-border py-8 group hover:bg-brand-gray transition-colors px-4 -mx-4 rounded-lg list-reveal"
+            >
+              <span
+                class="text-transparent font-display text-2xl md:text-4xl font-bold"
+                style="-webkit-text-stroke: 1px #0055ff;"
+                >02</span
+              >
+              <span
+                class="font-display text-xl md:text-3xl font-medium tracking-tight text-gray-300 group-hover:text-white transition-colors"
+                >We manage lead intake and follow-up systems</span
+              >
+            </li>
+            <li
+              class="flex items-start gap-6 border-b border-brand-border py-8 group hover:bg-brand-gray transition-colors px-4 -mx-4 rounded-lg list-reveal"
+            >
+              <span
+                class="text-transparent font-display text-2xl md:text-4xl font-bold"
+                style="-webkit-text-stroke: 1px #0055ff;"
+                >03</span
+              >
+              <span
+                class="font-display text-xl md:text-3xl font-medium tracking-tight text-gray-300 group-hover:text-white transition-colors"
+                >We drive opportunities through the pipeline to close</span
+              >
+            </li>
+            <li
+              class="flex items-start gap-6 border-b border-brand-border py-8 group hover:bg-brand-gray transition-colors px-4 -mx-4 rounded-lg list-reveal"
+            >
+              <span
+                class="text-transparent font-display text-2xl md:text-4xl font-bold"
+                style="-webkit-text-stroke: 1px #0055ff;"
+                >04</span
+              >
+              <span
+                class="font-display text-xl md:text-3xl font-medium tracking-tight text-gray-300 group-hover:text-white transition-colors"
+                >We provide execution ownership and revenue visibility</span
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div
+          class="w-full lg:w-1/2 lg:pl-16 flex flex-col justify-center form-reveal bg-brand-gray/30 p-6 md:p-12 rounded-3xl border border-brand-border backdrop-blur-sm"
+        >
+          <form class="w-full flex flex-col gap-6 md:gap-10">
+            <div class="relative overflow-hidden group pb-2">
+              <input
+                type="text"
+                placeholder="NAME *"
+                class="input-premium w-full bg-transparent border-b border-brand-border text-white py-4 md:py-6 font-display text-xl md:text-3xl uppercase font-bold focus:outline-none placeholder:text-gray-600 transition-colors"
+              />
+              <div class="input-border"></div>
+            </div>
+            <div class="relative overflow-hidden group pb-2">
+              <input
+                type="email"
+                placeholder="EMAIL *"
+                class="input-premium w-full bg-transparent border-b border-brand-border text-white py-4 md:py-6 font-display text-xl md:text-3xl uppercase font-bold focus:outline-none placeholder:text-gray-600 transition-colors"
+              />
+              <div class="input-border"></div>
+            </div>
+            <div class="relative overflow-hidden group pb-2">
+              <input
+                type="tel"
+                placeholder="PHONE *"
+                class="input-premium w-full bg-transparent border-b border-brand-border text-white py-4 md:py-6 font-display text-xl md:text-3xl uppercase font-bold focus:outline-none placeholder:text-gray-600 transition-colors"
+              />
+              <div class="input-border"></div>
+            </div>
+            <div class="relative overflow-hidden group pb-2">
+              <input
+                type="text"
+                placeholder="COMPANY NAME *"
+                class="input-premium w-full bg-transparent border-b border-brand-border text-white py-4 md:py-6 font-display text-xl md:text-3xl uppercase font-bold focus:outline-none placeholder:text-gray-600 transition-colors"
+              />
+              <div class="input-border"></div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 mt-8">
+              <button
+                type="button"
+                class="magnetic-btn bg-brand-blue text-white px-10 md:px-12 py-5 md:py-6 text-[11px] md:text-xs uppercase tracking-widest font-bold w-full sm:w-auto"
+              >
+                <span class="z-10 relative">Send</span>
+                <div class="fill bg-white"></div>
+              </button>
+              <button
+                type="reset"
+                class="px-10 md:px-12 py-5 md:py-6 text-[11px] md:text-xs uppercase tracking-widest font-bold text-white border border-brand-border hover:bg-white hover:text-black transition-colors duration-300 rounded-full w-full sm:w-auto text-center"
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      TESTIMONIALS: Custom Parallax Grid
+      =============================================================== 
+    -->
+    <section class="py-24 md:py-40 bg-brand-black relative overflow-hidden">
+      <div
+        class="max-w-[1600px] mx-auto px-4 md:px-8 flex flex-col lg:flex-row gap-16 md:gap-24"
+      >
+        <div class="w-full lg:w-4/12 relative z-20">
+          <div class="lg:sticky lg:top-40">
+            <h3
+              class="text-brand-accent text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold mb-6 md:mb-8"
+            >
+              Testimonials
+            </h3>
+            <h2
+              class="font-display text-fluid-h3 font-bold text-white mb-8 md:mb-10 tracking-tighter uppercase leading-[0.9]"
+            >
+              Netziah Works With
+            </h2>
+
+            <div
+              class="text-brand-text text-base md:text-lg leading-relaxed space-y-6 mb-10 md:mb-12 font-medium"
+            >
+              <p>
+                Founders, operators, and leadership teams where revenue matters
+                and sales execution cannot be left to chance.
+              </p>
+              <p>
+                Organizations that already generate opportunities — but need
+                structure, discipline, and operational ownership to turn
+                pipeline into predictable revenue.
+              </p>
+              <p>
+                If deals exist but closing is inconsistent, Netziah is built for
+                you.
+              </p>
+            </div>
+
+            <a
+              href="#"
+              class="magnetic-btn border border-brand-border text-white px-8 md:px-10 py-4 md:py-5 text-[11px] md:text-xs uppercase tracking-widest font-bold btn-white"
+            >
+              <span class="z-10 relative">See How Netziah Works</span>
+              <div class="fill"></div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Parallax Scrolling Grid -->
+        <div
+          class="w-full lg:w-8/12 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative z-10 parallax-container"
+        >
+          <!-- Column 1 (Scrolls faster up) -->
+          <div class="flex flex-col gap-6 md:gap-8 parallax-col-1 md:mt-24">
+            <div
+              class="group bg-brand-gray p-8 md:p-12 rounded-2xl border border-brand-border hover:border-brand-blue/50 transition-colors duration-500 card-reveal"
+            >
+              <div
+                class="overflow-hidden w-16 h-16 md:w-20 md:h-20 mb-8 rounded-full border border-brand-border"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200"
+                  class="w-full h-full object-cover img-premium"
+                  alt="Profile"
+                />
+              </div>
+              <h4
+                class="text-xl md:text-2xl font-display font-bold text-white mb-4 uppercase tracking-tight"
+              >
+                Operational Ownership
+              </h4>
+              <p class="text-brand-text text-sm md:text-base leading-relaxed">
+                Sales execution moved from ad-hoc activity to a structured
+                operating system with clear accountability.
+              </p>
+            </div>
+            <div
+              class="group bg-brand-gray p-8 md:p-12 rounded-2xl border border-brand-border hover:border-brand-blue/50 transition-colors duration-500 card-reveal"
+            >
+              <div
+                class="overflow-hidden w-16 h-16 md:w-20 md:h-20 mb-8 rounded-full border border-brand-border"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&h=200"
+                  class="w-full h-full object-cover img-premium"
+                  alt="Profile"
+                />
+              </div>
+              <h4
+                class="text-xl md:text-2xl font-display font-bold text-white mb-4 uppercase tracking-tight"
+              >
+                Revenue Visibility
+              </h4>
+              <p class="text-brand-text text-sm md:text-base leading-relaxed">
+                Leadership gained reliable forecasting and visibility across the
+                full sales pipeline.
+              </p>
+            </div>
+          </div>
+
+          <!-- Column 2 (Scrolls slightly slower) -->
+          <div class="flex flex-col gap-6 md:gap-8 parallax-col-2">
+            <div
+              class="group bg-brand-gray p-8 md:p-12 rounded-2xl border border-brand-border hover:border-brand-blue/50 transition-colors duration-500 card-reveal"
+            >
+              <div
+                class="overflow-hidden w-16 h-16 md:w-20 md:h-20 mb-8 rounded-full border border-brand-border"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200"
+                  class="w-full h-full object-cover img-premium"
+                  alt="Profile"
+                />
+              </div>
+              <h4
+                class="text-xl md:text-2xl font-display font-bold text-white mb-4 uppercase tracking-tight"
+              >
+                Pipeline Discipline
+              </h4>
+              <p class="text-brand-text text-sm md:text-base leading-relaxed">
+                Lead management, follow-ups, and pipeline stages became
+                structured and consistently enforced.
+              </p>
+            </div>
+            <div
+              class="group bg-brand-gray p-8 md:p-12 rounded-2xl border border-brand-border hover:border-brand-blue/50 transition-colors duration-500 card-reveal"
+            >
+              <div
+                class="overflow-hidden w-16 h-16 md:w-20 md:h-20 mb-8 rounded-full border border-brand-border"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&h=200"
+                  class="w-full h-full object-cover img-premium"
+                  alt="Profile"
+                />
+              </div>
+              <h4
+                class="text-xl md:text-2xl font-display font-bold text-white mb-4 uppercase tracking-tight"
+              >
+                Execution Accountability
+              </h4>
+              <p class="text-brand-text text-sm md:text-base leading-relaxed">
+                Sales stopped relying on individual effort and began operating
+                as a disciplined revenue system.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      NEW CTA SECTION: Sleek, High-Contrast Premium Card
+      =============================================================== 
+    -->
+    <section
+      class="py-32 md:py-48 relative bg-[#0a0a0a] border-t border-brand-border overflow-hidden"
+    >
+      <!-- Subtle grid background -->
+      <div
+        class="absolute inset-0 grid-lines opacity-20 pointer-events-none"
+      ></div>
+
+      <div class="max-w-[1400px] mx-auto px-4 md:px-8 relative z-10">
+        <div class="flex flex-col items-center text-center cta-reveal">
+          <!-- Inner High-End Card -->
+          <div
+            class="w-full bg-[#121212] border border-brand-border rounded-[2rem] md:rounded-[4rem] p-10 md:p-24 relative overflow-hidden group shadow-2xl"
+          >
+            <!-- Interactive Hover Glow -->
+            <div
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-brand-blue/20 rounded-full blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
+            ></div>
+
+            <h3
+              class="text-brand-accent text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold mb-8 flex items-center gap-4 justify-center relative z-10"
+            >
+              <span class="w-8 h-[1px] bg-brand-accent"></span> Take Action
+              <span class="w-8 h-[1px] bg-brand-accent"></span>
+            </h3>
+
+            <h2
+              class="font-display font-bold text-fluid-h3 md:text-[5vw] leading-[1] uppercase tracking-tighter text-white mb-8 relative z-10"
+            >
+              Ready to operate sales <br />
+              <span class="text-brand-text">like a real revenue system?</span>
+            </h2>
+
+            <p
+              class="text-brand-text text-base md:text-xl leading-relaxed max-w-2xl mx-auto mb-12 font-medium relative z-10"
+            >
+              Schedule a discovery call to discuss your current sales execution,
+              pipeline performance, and how Netziah can help build the structure
+              needed for predictable revenue growth.
+            </p>
+
+            <div class="relative z-10">
+              <a
+                href="#"
+                class="magnetic-btn bg-brand-blue text-white px-10 md:px-14 py-5 md:py-6 text-[11px] md:text-xs uppercase tracking-widest font-bold shadow-[0_0_30px_rgba(0,85,255,0.2)] hover:shadow-[0_0_50px_rgba(0,85,255,0.4)] transition-shadow"
+              >
+                <span class="z-10 relative">Book a Discovery Call</span>
+                <div class="fill bg-white"></div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      ARCHITECTURAL FOOTER
+      =============================================================== 
+    -->
+    <footer
+      class="bg-[#020202] pt-24 md:pt-40 pb-10 border-t border-brand-border text-white relative z-10"
+    >
+      <div
+        class="max-w-[1600px] mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 mb-24 md:mb-32 footer-reveal"
+      >
+        <div class="col-span-1 md:col-span-4 flex flex-col justify-between">
+          <div>
+            <div
+              class="flex items-center gap-3 mb-6 group cursor-pointer w-fit"
+            >
+              <svg
+                class="w-8 h-8 text-white transition-transform duration-700 group-hover:rotate-180"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                />
+              </svg>
+              <span
+                class="font-display font-bold text-3xl tracking-tighter uppercase"
+                >Netziah</span
+              >
+            </div>
+            <p
+              class="text-brand-text font-display text-lg md:text-xl uppercase tracking-tight font-medium max-w-[200px]"
+            >
+              Performance Powered by Intelligence
+            </p>
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 flex flex-col gap-6 md:gap-8">
+          <h4
+            class="text-brand-text text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Navigation
+          </h4>
+          <div
+            class="flex flex-col gap-3 md:gap-4 font-display font-bold text-base md:text-lg uppercase tracking-tight"
+          >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Solutions</a
+            >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >About Us</a
+            >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Careers</a
+            >
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 flex flex-col gap-6 md:gap-8">
+          <h4
+            class="text-brand-text text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Legal
+          </h4>
+          <div
+            class="flex flex-col gap-3 md:gap-4 font-display font-bold text-base md:text-lg uppercase tracking-tight"
+          >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Privacy Policy</a
+            >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Terms & Conditions</a
+            >
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-4 flex flex-col gap-6 md:gap-8">
+          <h4
+            class="text-brand-text text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Subscribe to Our Newsletter
+          </h4>
+          <div
+            class="flex flex-col gap-4 border-b border-brand-border pb-4 md:pb-6 relative group"
+          >
+            <input
+              type="email"
+              placeholder="ENTER YOUR EMAIL"
+              class="w-full bg-transparent text-white font-display text-xl md:text-2xl uppercase font-bold focus:outline-none placeholder:text-gray-700"
+            />
+            <button
+              class="absolute right-0 top-1/2 -translate-y-1/2 text-[10px] md:text-xs uppercase tracking-widest font-bold text-brand-blue hover:text-white transition-colors"
+            >
+              Subscribe
+            </button>
+          </div>
+          <p
+            class="text-brand-text text-[10px] uppercase tracking-widest leading-relaxed"
+          >
+            I agree to my email being stored and used to receive...
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="max-w-[1600px] mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-brand-border pt-8 md:pt-10 text-[10px] uppercase tracking-[0.2em] font-bold text-brand-text"
+      >
+        <div>© 2026 Netziah. All Rights Reserved.</div>
+        <div class="flex flex-wrap justify-center gap-6 md:gap-8">
+          <a href="#" class="hover:text-white transition-colors">Home</a>
+          <a href="#" class="hover:text-white transition-colors">About Us</a>
+          <a href="#" class="hover:text-white transition-colors">Solutions</a>
+          <a href="#" class="hover:text-white transition-colors">Insights</a>
+          <a href="#" class="hover:text-white transition-colors"
+            >Contact Sales</a
+          >
+        </div>
+      </div>
+
+      <!-- Massive Background Text -->
+      <div
+        class="absolute bottom-[-5%] left-0 w-full overflow-hidden pointer-events-none opacity-[0.03] flex justify-center z-[-1]"
+      >
+        <span
+          class="font-display font-bold text-[25vw] leading-none uppercase tracking-tighter whitespace-nowrap"
+          >NETZIAH</span
+        >
+      </div>
+    </footer>
+
+    <!-- Modern Redesigned Floating Widget -->
+    <div class="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-[100] group">
+      <div
+        class="bg-[#121212] border border-brand-border rounded-full md:rounded-[24px] p-1.5 md:p-2 flex flex-col gap-2 shadow-[0_15px_40px_rgba(0,0,0,0.6)] backdrop-blur-xl transform transition-transform duration-300 hover:scale-[1.05]"
+      >
+        <div class="hidden md:flex items-center gap-3 px-3 py-1">
+          <div
+            class="w-6 h-6 rounded-full bg-gradient-to-br from-[#0055ff] to-[#00ffcc] shadow-inner flex-shrink-0 animate-[spin_4s_linear_infinite]"
+          ></div>
+          <span
+            class="text-white text-[12px] font-semibold tracking-tight font-sans"
+            >Need help?</span
+          >
+        </div>
+        <button
+          class="w-12 h-12 md:w-full md:h-auto bg-brand-blue hover:bg-blue-600 text-white rounded-full md:rounded-[16px] md:py-3 text-[13px] font-semibold transition-colors flex items-center justify-center gap-2 font-sans shadow-lg shadow-blue-500/30"
+        >
+          <svg
+            class="w-5 h-5 md:w-4 md:h-4"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1.02 1.02 0 00-1.02.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1A11.36 11.36 0 018.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1zM19 12h2a9 9 0 00-9-9v2c3.87 0 7 3.13 7 7z"
+            />
+          </svg>
+          <span class="hidden md:inline">Start a call</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+      // Check for Mobile
+      const isMobile = window.innerWidth <= 768;
+
+      // Lenis Smooth Scroll
+      const lenis = new Lenis({
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: "vertical",
+        gestureDirection: "vertical",
+        smooth: true,
+        smoothTouch: false, // Prevents weird behavior on mobile touch
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      // Custom Cursor Logic (Desktop Only)
+      if (!isMobile) {
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-outline");
+        let mouseX = 0,
+          mouseY = 0,
+          outlineX = 0,
+          outlineY = 0;
+
+        window.addEventListener("mousemove", (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          cursorDot.style.left = `${mouseX}px`;
+          cursorDot.style.top = `${mouseY}px`;
+        });
+
+        gsap.ticker.add(() => {
+          outlineX += (mouseX - outlineX) * 0.15;
+          outlineY += (mouseY - outlineY) * 0.15;
+          gsap.set(cursorOutline, { left: outlineX, top: outlineY });
+        });
+      }
+
+      // Initialize GSAP
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Awwwards Preloader Sequence
+      const tlPreloader = gsap.timeline();
+      tlPreloader
+        .to(".loader-text span", {
+          y: "0%",
+          duration: 1,
+          ease: "power4.out",
+          stagger: 0.2,
+        })
+        .to(".loader-text span", {
+          y: "-100%",
+          duration: 1,
+          ease: "power4.in",
+          stagger: 0.1,
+          delay: 0.6,
+        })
+        .to(
+          ".panel-left",
+          { xPercent: -100, duration: 1.2, ease: "power4.inOut" },
+          "-=0.2",
+        )
+        .to(
+          ".panel-right",
+          { xPercent: 100, duration: 1.2, ease: "power4.inOut" },
+          "-=1.2",
+        )
+        .set(".preloader", { display: "none" })
+
+        // Hero Reveal Sequence
+        .to(
+          ".nav-reveal",
+          { opacity: 1, y: 0, duration: 1, ease: "power3.out" },
+          "-=0.5",
+        )
+        .to(
+          ".hero-text-anim",
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.5,
+            ease: "power4.out",
+            stagger: 0.15,
+          },
+          "-=1",
+        )
+        .to(
+          ".hero-details",
+          { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" },
+          "-=1",
+        )
+        .to(
+          ".hero-img-anim",
+          { opacity: 1, y: 0, scale: 1, duration: 1.5, ease: "power3.out" },
+          "-=1.2",
+        );
+
+      // --- SCROLL ANIMATIONS ---
+
+      // Hero Parallax out
+      gsap.to(".hero-title", {
+        yPercent: -20,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "header",
+          start: "top top",
+          end: "bottom -100%",
+          scrub: true,
+        },
+      });
+
+      // The Problem We Fix: Sticky Cards Effect
+      const cards = gsap.utils.toArray(".stacked-card");
+      cards.forEach((card, i) => {
+        if (i !== cards.length - 1) {
+          gsap.to(card, {
+            scale: 0.92,
+            opacity: 0.5,
+            scrollTrigger: {
+              trigger: card,
+              start: "top 15%",
+              end: "top -50%",
+              scrub: true,
+            },
+          });
+        }
+      });
+
+      gsap.from(".section-header > *", {
+        scrollTrigger: { trigger: ".section-header", start: "top 80%" },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power4.out",
+      });
+
+      // About Split Screen Reveals
+      gsap.utils.toArray(".content-reveal").forEach((block) => {
+        gsap.from(block.querySelectorAll("h4, p, a, div"), {
+          scrollTrigger: { trigger: block, start: "top 75%" },
+          y: 50,
+          opacity: 0,
+          duration: 1.2,
+          stagger: 0.1,
+          ease: "power3.out",
+        });
+      });
+
+      // Form/List Reveals
+      gsap.from(".list-reveal", {
+        scrollTrigger: { trigger: ".list-reveal", start: "top 85%" },
+        x: -50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+      });
+
+      gsap.from(".form-reveal form > div", {
+        scrollTrigger: { trigger: ".form-reveal", start: "top 75%" },
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power3.out",
+      });
+
+      // Testimonials Parallax
+      if (!isMobile) {
+        gsap.to(".parallax-col-1", {
+          yPercent: -20,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".parallax-container",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+        gsap.to(".parallax-col-2", {
+          yPercent: -5,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".parallax-container",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      }
+
+      gsap.from(".card-reveal", {
+        scrollTrigger: { trigger: ".parallax-container", start: "top 80%" },
+        y: 80,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: "power4.out",
+      });
+
+      // New CTA Reveal
+      gsap.from(".cta-reveal > div", {
+        scrollTrigger: { trigger: ".cta-reveal", start: "top 80%" },
+        y: 80,
+        opacity: 0,
+        duration: 1.5,
+        ease: "power3.out",
+      });
+
+      // Footer Reveal
+      gsap.from(".footer-reveal > div", {
+        scrollTrigger: { trigger: "footer", start: "top 90%" },
+        y: 60,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "power3.out",
+      });
+
+      // Mobile Menu Logic
+      const mobileBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileLinks = document.querySelectorAll(".mobile-link");
+      const mobileBtnSpans = mobileBtn.querySelectorAll("span");
+      let isMobileMenuOpen = false;
+
+      function toggleMobileMenu() {
+        isMobileMenuOpen = !isMobileMenuOpen;
+        if (isMobileMenuOpen) {
+          mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+          mobileMenu.classList.add("opacity-100", "pointer-events-auto");
+          lenis.stop(); // Stop background scrolling
+          gsap.to(mobileBtnSpans[0], { y: 4, rotate: 45, duration: 0.3 });
+          gsap.to(mobileBtnSpans[1], { y: -4, rotate: -45, duration: 0.3 });
+        } else {
+          mobileMenu.classList.add("opacity-0", "pointer-events-none");
+          mobileMenu.classList.remove("opacity-100", "pointer-events-auto");
+          lenis.start(); // Resume background scrolling
+          gsap.to(mobileBtnSpans[0], { y: 0, rotate: 0, duration: 0.3 });
+          gsap.to(mobileBtnSpans[1], { y: 0, rotate: 0, duration: 0.3 });
+        }
+      }
+
+      mobileBtn.addEventListener("click", toggleMobileMenu);
+      mobileLinks.forEach((link) =>
+        link.addEventListener("click", () => {
+          if (isMobileMenuOpen) toggleMobileMenu();
+        }),
+      );
+
+      // Magnetic Button Logic (Desktop Only)
+      if (!isMobile) {
+        document.querySelectorAll(".magnetic-btn").forEach((btn) => {
+          btn.addEventListener("mousemove", (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            gsap.to(btn, {
+              duration: 0.3,
+              x: x * 0.3,
+              y: y * 0.3,
+              ease: "power2.out",
+            });
+          });
+          btn.addEventListener("mouseleave", () => {
+            gsap.to(btn, {
+              duration: 0.6,
+              x: 0,
+              y: 0,
+              ease: "elastic.out(1, 0.3)",
+            });
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
