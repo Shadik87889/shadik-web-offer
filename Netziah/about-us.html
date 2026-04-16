@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-[#000000]">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>About Us | Netziah - Revenue Engine</title>
+
+    <!-- Ultra Premium Fonts: Syne (Display) & Manrope (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Manrope", "sans-serif"],
+              display: ["Syne", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                black: "#000000",
+                dark: "#050505",
+                gray: "#0a0a0a",
+                border: "rgba(255,255,255,0.1)",
+                blue: "#0055FF",
+                accent: "#00D1FF",
+                text: "#888890",
+              },
+            },
+            fontSize: {
+              "fluid-h1": "clamp(2.5rem, 8vw, 8rem)",
+              "fluid-h2": "clamp(2rem, 6vw, 6rem)",
+            },
+            letterSpacing: {
+              tight: "-0.02em",
+              tighter: "-0.04em",
+              widest: "0.25em",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Smooth Scrolling */
+      html.lenis {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto;
+      }
+      .lenis.lenis-smooth[data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+
+      body {
+        background-color: #000000;
+        color: #ffffff;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      @media (min-width: 768px) {
+        body {
+          cursor: none;
+        }
+      }
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Cinematic Grain */
+      .noise-bg {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0.04;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* Liquid Custom Cursor */
+      .cursor-dot,
+      .cursor-outline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9999;
+        pointer-events: none;
+      }
+      .cursor-dot {
+        width: 6px;
+        height: 6px;
+        background-color: white;
+        mix-blend-mode: difference;
+      }
+      .cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+          height 0.3s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s,
+          border-color 0.3s;
+        mix-blend-mode: difference;
+      }
+      body:has(a:hover) .cursor-outline,
+      body:has(button:hover) .cursor-outline,
+      body:has(.hover-trigger:hover) .cursor-outline {
+        width: 80px;
+        height: 80px;
+        background-color: white;
+        border-color: transparent;
+        mix-blend-mode: difference;
+      }
+
+      /* Typography Setup */
+      .text-mask {
+        overflow: hidden;
+        display: block;
+      }
+      .text-mask span {
+        display: block;
+        transform: translateY(110%);
+      }
+
+      .text-stroke {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+        transition: color 0.4s ease, -webkit-text-stroke 0.4s ease;
+      }
+      .text-stroke:hover {
+        color: #ffffff;
+        -webkit-text-stroke: 1px transparent;
+      }
+
+      @media (max-width: 768px) {
+        .text-stroke {
+          -webkit-text-stroke: 1px rgba(255, 255, 255, 0.6);
+        }
+      }
+
+      /* Editorial Image Filters */
+      .img-premium {
+        filter: grayscale(100%) contrast(1.15) brightness(0.85);
+        transition: filter 1.2s cubic-bezier(0.19, 1, 0.22, 1),
+          transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      @media (min-width: 768px) {
+        .group:hover .img-premium,
+        .img-premium:hover {
+          filter: grayscale(0%) contrast(1) brightness(1);
+          transform: scale(1.05);
+        }
+      }
+
+      /* Magnetic Buttons */
+      .magnetic-btn {
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        transition: color 0.4s ease;
+      }
+      .magnetic-btn .fill {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        border-radius: 50%;
+        transition: top 0.6s cubic-bezier(0.19, 1, 0.22, 1), border-radius 0.6s;
+        z-index: -1;
+      }
+      .magnetic-btn:hover {
+        color: #000;
+      }
+      .magnetic-btn:hover .fill {
+        top: 0;
+        border-radius: 0;
+      }
+      .btn-blue .fill {
+        background: #0055ff;
+      }
+      .btn-blue:hover {
+        color: #fff;
+      }
+
+      /* Grid Blueprint */
+      .blueprint {
+        background-image: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          );
+        background-size: 80px 80px;
+      }
+      @media (max-width: 768px) {
+        .blueprint {
+          background-size: 40px 40px;
+        }
+      }
+
+      /* Hover Image Reveal for Pillars (Awwwards Style) */
+      .hover-img-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 380px;
+        height: 480px;
+        pointer-events: none;
+        z-index: 100;
+        opacity: 0;
+        transform: scale(0.8);
+        overflow: hidden;
+        border-radius: 1.5rem;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+        will-change: transform, opacity;
+      }
+      .hover-img-inner {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        transform: scale(1.2);
+      }
+      .hover-active .hover-img-wrapper {
+        opacity: 1;
+        transition: opacity 0.4s ease;
+      }
+      .hover-active .hover-img-inner {
+        transform: scale(1);
+      }
+
+      /* Pillar Dimming Effect (Desktop Only) */
+      @media (min-width: 1024px) {
+        .pillars-container:hover .pillar-row:not(:hover) {
+          opacity: 0.2;
+        }
+      }
+      .pillar-row {
+        transition: opacity 0.4s ease, transform 0.4s ease;
+      }
+
+      /* Blend Mode For Hero Text */
+      .blend-diff {
+        mix-blend-mode: difference;
+        color: white;
+      }
+
+      /* Mobile Menu Styles */
+      .mobile-link-wrap {
+        overflow: hidden;
+      }
+      .mobile-link {
+        display: block;
+        transform: translateY(100%);
+      }
+    </style>
+  </head>
+  <body class="antialiased selection:bg-brand-blue selection:text-white">
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+    <div class="noise-bg"></div>
+
+    <!-- Hover Image Follower (Pillars Section - Desktop Only) -->
+    <div class="hover-img-wrapper hidden lg:block">
+      <div class="hover-img-inner"></div>
+    </div>
+
+    <!-- Cinematic Preloader -->
+    <div class="preloader fixed inset-0 z-[10000] flex bg-[#000]">
+      <div
+        class="absolute inset-0 flex flex-col items-center justify-center z-20 preloader-content"
+      >
+        <div class="overflow-hidden mb-2">
+          <span
+            class="font-display font-bold text-4xl md:text-7xl uppercase tracking-tighter text-white loader-word block translate-y-[110%]"
+            >Netziah</span
+          >
+        </div>
+        <div class="overflow-hidden">
+          <span
+            class="font-sans text-[9px] md:text-[10px] uppercase tracking-widest text-brand-text loader-word block translate-y-[110%]"
+            >System Initialization // 2026</span
+          >
+        </div>
+      </div>
+      <div class="w-1/2 h-full bg-[#050505] panel-left origin-left"></div>
+      <div class="w-1/2 h-full bg-[#050505] panel-right origin-right"></div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 bg-[#050505] z-[90] flex flex-col justify-center px-8 opacity-0 pointer-events-none transition-opacity duration-500"
+    >
+      <nav
+        class="flex flex-col gap-6 text-4xl font-display font-bold uppercase tracking-tighter text-white mt-12"
+      >
+        <div class="mobile-link-wrap">
+          <a
+            href="home"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >Home</a
+          >
+        </div>
+        <div class="mobile-link-wrap">
+          <a href="#" class="mobile-link text-brand-blue">About Us</a>
+        </div>
+        <div class="mobile-link-wrap">
+          <a
+            href="solutions"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >Solutions</a
+          >
+        </div>
+        <div class="mobile-link-wrap">
+          <a
+            href="insights"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >Insights</a
+          >
+        </div>
+      </nav>
+
+      <div
+        class="mt-16 flex flex-col gap-6 mobile-meta opacity-0 translate-y-4"
+      >
+        <a
+          href="contact"
+          class="magnetic-btn border border-white/30 text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-bold w-fit"
+        >
+          <span class="relative z-10">Contact Sales</span>
+          <div class="fill"></div>
+        </a>
+        <div
+          class="flex flex-col gap-2 mt-4 text-[11px] font-sans text-brand-text uppercase tracking-widest"
+        >
+          <a
+            href="mailto:hello@netziah.com"
+            class="text-white hover:text-brand-blue"
+            >hello@netziah.com</a
+          >
+          <a href="tel:+13072248500" class="text-white hover:text-brand-blue"
+            >+1 (307) 224-8500</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Fixed Premium Navigation (Solid black to prevent scroll clashing with text) -->
+    <header
+      class="fixed top-0 left-0 w-full z-[100] px-6 md:px-12 py-5 md:py-6 bg-[#000] border-b border-brand-border nav-reveal opacity-0"
+    >
+      <div
+        class="flex justify-between items-center w-full max-w-[1800px] mx-auto"
+      >
+        <!-- Brand Logo -->
+        <a href="home" class="flex items-center group cursor-pointer z-10">
+          <img
+            src="https://i.postimg.cc/Dzk04hSg/logo-w.png"
+            alt="Netziah Logo"
+            class="h-14 md:h-16 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+          />
+        </a>
+
+        <!-- Links (Desktop) -->
+        <nav
+          class="hidden lg:flex items-center gap-12 text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-white"
+        >
+          <a
+            href="#"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >Home</a
+          >
+          <a
+            href="#"
+            class="text-white relative after:absolute after:-bottom-2 after:left-0 after:w-full after:h-[2px] after:bg-brand-blue"
+            >About Us</a
+          >
+          <a
+            href="solutions"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >Solutions</a
+          >
+          <a
+            href="insights"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >Insights</a
+          >
+        </nav>
+
+        <!-- Contact & CTA -->
+        <div class="flex items-center gap-6 md:gap-8">
+          <div
+            class="hidden md:flex flex-col items-end text-[9px] font-sans text-gray-400 uppercase tracking-widest border-r border-white/20 pr-8"
+          >
+            <a
+              href="mailto:hello@netziah.com"
+              class="hover:text-white transition-colors duration-300"
+              >hello@netziah.com</a
+            >
+            <a
+              href="tel:+13072248500"
+              class="hover:text-white transition-colors duration-300 mt-1"
+              >+13072248500</a
+            >
+          </div>
+          <a
+            href="contact"
+            class="magnetic-btn border border-white/30 text-white px-8 py-4 text-[9px] uppercase tracking-[0.2em] font-bold hidden sm:flex"
+          >
+            <span class="relative z-10">Contact Sales</span>
+            <div class="fill"></div>
+          </a>
+          <!-- Hamburger Button -->
+          <button
+            id="mobile-menu-btn"
+            class="lg:hidden text-white flex flex-col justify-center gap-2 w-8 h-8 z-[110] relative"
+          >
+            <span
+              class="w-full h-[2px] bg-white block transition-all duration-300 absolute top-2 origin-center"
+            ></span>
+            <span
+              class="w-full h-[2px] bg-white block transition-all duration-300 absolute bottom-2 origin-center"
+            ></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 
+      ===============================================================
+      HERO SECTION: Fully Responsive Magazine Layout
+      =============================================================== 
+    -->
+    <section
+      class="relative w-full h-[100svh] min-h-[700px] md:min-h-[800px] flex items-center overflow-hidden bg-[#000]"
+    >
+      <!-- Background Structure -->
+      <div class="absolute inset-0 flex w-full h-full z-0">
+        <!-- Mobile Background (Darkened edge-to-edge image) -->
+        <div class="md:hidden absolute inset-0 w-full h-full overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80"
+            alt="Architecture"
+            class="w-full h-full object-cover opacity-[0.25] scale-110"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-[#000] via-[#000]/60 to-transparent"
+          ></div>
+        </div>
+
+        <!-- Desktop Split Background -->
+        <div class="hidden md:block w-[40%] h-full bg-[#000] relative">
+          <div
+            class="absolute right-0 top-0 w-[1px] h-full bg-brand-border"
+          ></div>
+          <div
+            class="absolute bottom-[20%] w-full h-[1px] bg-brand-border"
+          ></div>
+        </div>
+        <div class="hidden md:block w-[60%] h-full overflow-hidden relative">
+          <img
+            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80"
+            alt="Architecture"
+            class="w-full h-full object-cover hero-bg-img img-premium opacity-80 scale-125 origin-center"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-[#000] via-transparent to-transparent"
+          ></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-[#000] via-transparent to-transparent opacity-80"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Content Container with strict pt-32 to protect from Header overlap -->
+      <div
+        class="relative z-10 w-full px-6 md:px-12 flex flex-col justify-center h-full max-w-[1800px] mx-auto pt-32 pb-16 md:pb-24"
+      >
+        <!-- Massive Typographic Overlap (Calibrated sizes to PREVENT clipping) -->
+        <div
+          class="w-full relative blend-diff pointer-events-none mb-10 md:mb-16"
+        >
+          <h1
+            class="font-display font-extrabold text-[10.5vw] sm:text-[9vw] md:text-[7.5vw] lg:text-[7vw] leading-[0.85] tracking-tight uppercase m-0 p-0 flex flex-col w-full"
+          >
+            <span class="text-mask"
+              ><span class="hero-anim block">Performance</span></span
+            >
+            <span class="text-mask md:pl-[4%]"
+              ><span class="hero-anim text-transparent text-stroke block"
+                >Powered by</span
+              ></span
+            >
+            <span class="text-mask md:pl-[8%]"
+              ><span class="hero-anim block">Intelligence.</span></span
+            >
+          </h1>
+        </div>
+
+        <!-- Lower Information Grid -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 mt-auto items-end hero-fade opacity-0 translate-y-8"
+        >
+          <div class="col-span-1 md:col-span-4 hidden md:block">
+            <div class="flex flex-col gap-2">
+              <span
+                class="text-brand-text text-[9px] uppercase tracking-[0.25em] font-bold"
+                >About Netziah // 2026</span
+              >
+              <div class="w-full h-[1px] bg-brand-border mt-2"></div>
+            </div>
+          </div>
+          <div
+            class="col-span-1 md:col-span-4 font-sans text-brand-text text-[13px] md:text-base leading-relaxed font-medium md:pr-8"
+          >
+            <p>
+              Netziah is a
+              <strong class="text-white">revenue growth consulting firm</strong>
+              focused on helping businesses turn opportunities into measurable
+              results.
+            </p>
+          </div>
+          <div
+            class="col-span-1 md:col-span-4 font-sans text-brand-text text-[13px] md:text-base leading-relaxed font-medium"
+          >
+            <p>
+              We design disciplined, data-driven revenue systems that help
+              companies convert more leads into paying clients and scale with
+              confidence.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      SCROLL SCRUB BRIDGE
+      =============================================================== 
+    -->
+    <section
+      class="py-24 md:py-64 bg-[#000] relative border-b border-brand-border flex items-center justify-center"
+    >
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12 text-center">
+        <h2
+          class="bridge-text font-display text-2xl md:text-6xl font-bold uppercase tracking-tighter leading-[1.2] text-[#1a1a1a]"
+        >
+          Many businesses generate opportunities but lack the structure and
+          operational systems needed to fully capture that potential.
+          <br class="hidden md:block" /><br class="hidden md:block" />
+          <span class="text-brand-blue block mt-4 md:inline md:mt-0"
+            >That's where Netziah comes in.</span
+          >
+        </h2>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      THE ORIGIN: Premium Editorial Museum Layout
+      =============================================================== 
+    -->
+    <section
+      class="relative bg-[#050505] w-full border-b border-brand-border blueprint overflow-hidden"
+    >
+      <div
+        class="max-w-[1800px] mx-auto px-6 md:px-12 py-24 md:py-48 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 relative"
+      >
+        <!-- Ambient Glow Background -->
+        <div
+          class="absolute top-1/2 left-0 -translate-y-1/2 w-[50vw] h-[50vw] bg-brand-blue/5 rounded-full blur-[120px] pointer-events-none z-0 hidden md:block"
+        ></div>
+
+        <!-- Left: Refined High-End Typography & Story -->
+        <div
+          class="col-span-1 lg:col-span-6 flex flex-col justify-center order-2 lg:order-1 relative z-10"
+        >
+          <div class="mb-10 md:mb-20 text-reveal">
+            <p
+              class="text-brand-text font-sans text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-bold mb-6 md:mb-8 flex items-center gap-4"
+            >
+              <span class="w-8 md:w-12 h-[1px] bg-brand-blue"></span> The Origin
+            </p>
+            <h2
+              class="font-display text-5xl md:text-fluid-h1 text-white font-bold uppercase tracking-tighter leading-[0.85] mb-8 md:mb-12"
+            >
+              Meet Our<br /><span
+                class="text-stroke text-transparent"
+                style="-webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);"
+                >Founder</span
+              >
+            </h2>
+
+            <!-- Heroic Quote Block -->
+            <div class="mb-8 md:mb-16">
+              <h3
+                class="font-display text-xl md:text-4xl text-white leading-[1.2] tracking-tighter uppercase border-l-4 border-brand-blue pl-5 md:pl-10 shadow-lg"
+              >
+                "We don't sit on the sidelines. We build the systems needed to
+                close deals and scale revenue."
+              </h3>
+            </div>
+          </div>
+
+          <div class="space-y-8 md:space-y-12">
+            <div
+              class="w-full h-[1px] bg-brand-border text-reveal hidden md:block"
+            ></div>
+
+            <div class="text-reveal">
+              <p
+                class="text-brand-text text-sm md:text-xl leading-relaxed font-medium"
+              >
+                After working closely with growing organizations, it became
+                clear that the real challenge wasn't strategy — it was
+                execution. Joshua Pineda founded Netziah to help businesses
+                build disciplined, scalable revenue systems that transform
+                fragmented sales efforts into consistent performance.
+              </p>
+            </div>
+
+            <div class="text-reveal">
+              <p
+                class="text-white/90 text-sm md:text-xl leading-relaxed font-medium"
+              >
+                Today, Netziah works as a strategic operating partner, helping
+                companies improve how they manage opportunities, convert leads,
+                and drive sustainable revenue growth.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Epic Portrait w/ Badges -->
+        <div
+          class="col-span-1 lg:col-span-6 order-1 lg:order-2 relative group mt-4 lg:mt-0 flex items-center justify-center"
+        >
+          <!-- Decorative Architectural Lines (Desktop Only) -->
+          <div
+            class="absolute -inset-6 border border-brand-border rounded-xl z-0 pointer-events-none hidden lg:block"
+          ></div>
+          <div
+            class="absolute -right-12 -top-12 w-24 h-24 border-t border-r border-brand-blue z-0 pointer-events-none hidden lg:block opacity-50"
+          ></div>
+          <div
+            class="absolute -left-12 -bottom-12 w-24 h-24 border-b border-l border-brand-blue z-0 pointer-events-none hidden lg:block opacity-50"
+          ></div>
+
+          <!-- Main Image Wrapper -->
+          <div
+            class="w-full md:w-[80%] aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-2xl relative z-10 shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+          >
+            <img
+              src="https://i.postimg.cc/g2t1t1B3/netziah-founder.png"
+              alt="Joshua Pineda"
+              class="w-full h-full object-cover img-premium parallax-portrait md:scale-125 origin-center"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-[#000] via-transparent to-transparent opacity-90"
+            ></div>
+          </div>
+
+          <!-- Floating High-End Info Badge (Desktop) -->
+          <div
+            class="absolute bottom-10 right-[5%] md:right-0 bg-[#121212]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hidden md:flex flex-col gap-2 shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-30 transform translate-y-12 badge-reveal"
+          >
+            <div class="flex items-center gap-3 mb-2">
+              <div
+                class="w-2 h-2 rounded-full bg-brand-accent animate-pulse shadow-[0_0_8px_#00D1FF]"
+              ></div>
+              <span
+                class="text-[9px] uppercase tracking-[0.2em] text-brand-text font-bold"
+                >Systems</span
+              >
+            </div>
+            <span
+              class="text-xl font-display font-bold text-white uppercase tracking-tight"
+              >Execution Ready</span
+            >
+          </div>
+
+          <!-- Data Overlay Bottom Left -->
+          <div
+            class="absolute bottom-6 left-6 md:bottom-12 md:left-[10%] z-20 text-white flex flex-col"
+          >
+            <p
+              class="font-display text-2xl md:text-5xl font-bold uppercase tracking-tighter mb-1 md:mb-2"
+            >
+              Joshua Pineda
+            </p>
+            <p
+              class="font-sans text-[8px] md:text-[10px] uppercase tracking-[0.25em] font-bold text-brand-blue"
+            >
+              Founder & CEO, Netziah
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      CORE PILLARS: Responsive Foundation Directory
+      =============================================================== 
+    -->
+    <section class="py-24 md:py-48 relative bg-[#000]">
+      <div class="w-full px-6 md:px-12 max-w-[1800px] mx-auto">
+        <div
+          class="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-24 text-reveal border-b border-brand-border pb-6 md:pb-8 gap-4"
+        >
+          <h2
+            class="font-display text-4xl md:text-7xl text-white font-bold uppercase tracking-tighter leading-none"
+          >
+            The Foundation
+          </h2>
+          <span
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold md:mb-2"
+            >Core Pillars [04]</span
+          >
+        </div>
+
+        <!-- Directory List with Hover Dimming (Desktop) & Full Visibility (Mobile) -->
+        <div class="flex flex-col pillars-container">
+          <!-- Pillar 01 -->
+          <div
+            class="border-b border-brand-border py-8 md:py-16 flex flex-col lg:flex-row lg:items-center justify-between cursor-pointer pillar-row hover-trigger group"
+            data-img="https://images.unsplash.com/photo-1554774853-719586f82d77?auto=format&fit=crop&w=800&q=80"
+          >
+            <div
+              class="flex items-center gap-6 md:gap-16 w-full lg:w-[50%] relative"
+            >
+              <span
+                class="font-display text-xl md:text-4xl font-bold text-brand-text group-hover:text-brand-blue transition-colors duration-500"
+                >01</span
+              >
+              <h4
+                class="font-display text-4xl md:text-7xl text-stroke font-bold uppercase tracking-tighter lg:group-hover:translate-x-6 transition-transform duration-700 ease-out z-10 relative"
+              >
+                Mission
+              </h4>
+            </div>
+            <div class="w-full lg:w-[40%] mt-4 lg:mt-0">
+              <p
+                class="text-brand-text text-[13px] md:text-lg leading-relaxed font-sans opacity-100 md:opacity-60 md:group-hover:opacity-100 md:group-hover:text-white transition-all duration-500"
+              >
+                Help businesses turn opportunities into measurable revenue by
+                building disciplined, data-driven growth systems.
+              </p>
+            </div>
+          </div>
+
+          <!-- Pillar 02 -->
+          <div
+            class="border-b border-brand-border py-8 md:py-16 flex flex-col lg:flex-row lg:items-center justify-between cursor-pointer pillar-row hover-trigger group"
+            data-img="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80"
+          >
+            <div
+              class="flex items-center gap-6 md:gap-16 w-full lg:w-[50%] relative"
+            >
+              <span
+                class="font-display text-xl md:text-4xl font-bold text-brand-text group-hover:text-brand-blue transition-colors duration-500"
+                >02</span
+              >
+              <h4
+                class="font-display text-4xl md:text-7xl text-stroke font-bold uppercase tracking-tighter lg:group-hover:translate-x-6 transition-transform duration-700 ease-out z-10 relative"
+              >
+                Vision
+              </h4>
+            </div>
+            <div class="w-full lg:w-[40%] mt-4 lg:mt-0">
+              <p
+                class="text-brand-text text-[13px] md:text-lg leading-relaxed font-sans opacity-100 md:opacity-60 md:group-hover:opacity-100 md:group-hover:text-white transition-all duration-500"
+              >
+                To become the trusted revenue growth partner for companies that
+                want scalable performance without building complex systems
+                internally.
+              </p>
+            </div>
+          </div>
+
+          <!-- Pillar 03 -->
+          <div
+            class="border-b border-brand-border py-8 md:py-16 flex flex-col lg:flex-row lg:items-center justify-between cursor-pointer pillar-row hover-trigger group"
+            data-img="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
+          >
+            <div
+              class="flex items-center gap-6 md:gap-16 w-full lg:w-[50%] relative"
+            >
+              <span
+                class="font-display text-xl md:text-4xl font-bold text-brand-text group-hover:text-brand-blue transition-colors duration-500"
+                >03</span
+              >
+              <h4
+                class="font-display text-4xl md:text-7xl text-stroke font-bold uppercase tracking-tighter lg:group-hover:translate-x-6 transition-transform duration-700 ease-out z-10 relative"
+              >
+                Culture
+              </h4>
+            </div>
+            <div class="w-full lg:w-[40%] mt-4 lg:mt-0">
+              <p
+                class="text-brand-text text-[13px] md:text-lg leading-relaxed font-sans opacity-100 md:opacity-60 md:group-hover:opacity-100 md:group-hover:text-white transition-all duration-500"
+              >
+                We value ownership, discipline, and intelligent execution. Our
+                work is driven by data, accountability, and long-term impact.
+              </p>
+            </div>
+          </div>
+
+          <!-- Pillar 04 -->
+          <div
+            class="border-b border-brand-border py-8 md:py-16 flex flex-col lg:flex-row lg:items-center justify-between cursor-pointer pillar-row hover-trigger group"
+            data-img="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80"
+          >
+            <div
+              class="flex items-center gap-6 md:gap-16 w-full lg:w-[50%] relative"
+            >
+              <span
+                class="font-display text-xl md:text-4xl font-bold text-brand-text group-hover:text-brand-blue transition-colors duration-500"
+                >04</span
+              >
+              <h4
+                class="font-display text-3xl md:text-6xl text-stroke font-bold uppercase tracking-tighter lg:group-hover:translate-x-6 transition-transform duration-700 ease-out z-10 relative"
+              >
+                Work At Netziah
+              </h4>
+            </div>
+            <div
+              class="w-full lg:w-[40%] mt-4 lg:mt-0 flex flex-col items-start gap-4"
+            >
+              <p
+                class="text-brand-text text-[13px] md:text-lg leading-relaxed font-sans opacity-100 md:opacity-60 md:group-hover:opacity-100 md:group-hover:text-white transition-all duration-500"
+              >
+                Join a team focused on building the systems that drive real
+                business growth.
+              </p>
+              <span
+                class="text-brand-blue text-[10px] uppercase tracking-[0.2em] font-bold border-b border-brand-blue pb-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 transform translate-y-0 md:translate-y-2 md:group-hover:translate-y-0"
+                >Learn More</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      LOCATIONS: Ultra-Premium Responsive Cards
+      =============================================================== 
+    -->
+    <section
+      class="py-24 md:py-48 bg-[#050505] relative border-t border-brand-border"
+    >
+      <div class="w-full px-6 md:px-12 max-w-[1800px] mx-auto">
+        <h2
+          class="font-display text-4xl md:text-fluid-h2 text-white font-bold uppercase tracking-tighter leading-none mb-16 md:mb-40 text-reveal md:text-center"
+        >
+          Global <span class="text-stroke">Presence</span>
+        </h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
+          <!-- Location 1: Mexico City -->
+          <div class="flex flex-col group location-card">
+            <!-- Massive Image Frame with hidden overflow -->
+            <div
+              class="w-full aspect-[4/5] overflow-hidden relative rounded-xl mb-6 md:mb-10 shadow-2xl"
+            >
+              <img
+                src="https://i.postimg.cc/PJ06hkYV/mex.avif"
+                alt="Mexico City, Polanco"
+                class="w-full h-full object-cover img-premium parallax-location md:scale-[1.3] origin-center"
+              />
+              <div
+                class="absolute inset-0 border border-brand-border pointer-events-none rounded-xl z-10"
+              ></div>
+              <!-- Coordinate Badge -->
+              <div
+                class="absolute top-4 left-4 md:top-6 md:left-6 bg-[#0a0a0a]/80 backdrop-blur-md border border-white/10 px-4 py-2 md:px-5 md:py-3 rounded-full z-20 shadow-lg"
+              >
+                <span
+                  class="font-sans text-[8px] md:text-[9px] uppercase tracking-[0.2em] text-white font-bold"
+                  >LAT: 19.4326° N / LON: 99.1332° W</span
+                >
+              </div>
+            </div>
+
+            <!-- Technical Info Panel -->
+            <div class="flex flex-col">
+              <h4
+                class="font-display text-3xl md:text-5xl text-white font-bold uppercase tracking-tighter mb-6 md:mb-8"
+              >
+                Mexico City
+                <span
+                  class="text-stroke block text-xl md:text-3xl mt-1 md:mt-2 text-transparent"
+                  style="-webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);"
+                  >Polanco</span
+                >
+              </h4>
+              <div
+                class="flex flex-col border-t border-brand-border font-sans text-[9px] md:text-xs uppercase tracking-widest font-bold text-brand-text"
+              >
+                <div
+                  class="flex items-center justify-between border-b border-brand-border py-4 md:py-6"
+                >
+                  <span>Email</span>
+                  <a
+                    href="mailto:hello@netziah.com"
+                    class="text-white hover:text-brand-blue lowercase tracking-normal transition-colors"
+                    >hello@netziah.com</a
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-between border-b border-brand-border py-4 md:py-6"
+                >
+                  <span>Phone</span>
+                  <a
+                    href="tel:+13072248500"
+                    class="text-white hover:text-brand-blue tracking-normal transition-colors"
+                    >+1 (307) 224-8500 ext. 0</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Location 2: Cheyenne, Wyoming -->
+          <div class="flex flex-col group location-card lg:mt-40">
+            <!-- Massive Image Frame with hidden overflow -->
+            <div
+              class="w-full aspect-[4/5] overflow-hidden relative rounded-xl mb-6 md:mb-10 shadow-2xl"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80"
+                alt="Cheyenne, Wyoming"
+                class="w-full h-full object-cover img-premium parallax-location md:scale-[1.3] origin-center"
+              />
+              <div
+                class="absolute inset-0 border border-brand-border pointer-events-none rounded-xl z-10"
+              ></div>
+              <!-- Coordinate Badge -->
+              <div
+                class="absolute top-4 left-4 md:top-6 md:left-6 bg-[#0a0a0a]/80 backdrop-blur-md border border-white/10 px-4 py-2 md:px-5 md:py-3 rounded-full z-20 shadow-lg"
+              >
+                <span
+                  class="font-sans text-[8px] md:text-[9px] uppercase tracking-[0.2em] text-white font-bold"
+                  >LAT: 41.1400° N / LON: 104.8202° W</span
+                >
+              </div>
+            </div>
+
+            <!-- Technical Info Panel -->
+            <div class="flex flex-col">
+              <h4
+                class="font-display text-3xl md:text-5xl text-white font-bold uppercase tracking-tighter mb-6 md:mb-8"
+              >
+                Cheyenne
+                <span
+                  class="text-stroke block text-xl md:text-3xl mt-1 md:mt-2 text-transparent"
+                  style="-webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);"
+                  >Wyoming</span
+                >
+              </h4>
+              <div
+                class="flex flex-col border-t border-brand-border font-sans text-[9px] md:text-xs uppercase tracking-widest font-bold text-brand-text"
+              >
+                <div
+                  class="flex items-center justify-between border-b border-brand-border py-4 md:py-6"
+                >
+                  <span>Email</span>
+                  <a
+                    href="mailto:hello@netziah.com"
+                    class="text-white hover:text-brand-blue lowercase tracking-normal transition-colors"
+                    >hello@netziah.com</a
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-between border-b border-brand-border py-4 md:py-6"
+                >
+                  <span>Phone</span>
+                  <a
+                    href="tel:+13072248500"
+                    class="text-white hover:text-brand-blue tracking-normal transition-colors"
+                    >+1 (307) 224-8500</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      CTA SECTION: Massive Empty Void Button
+      =============================================================== 
+    -->
+    <section
+      class="py-32 md:py-64 relative bg-[#000] border-t border-brand-border overflow-hidden flex flex-col items-center justify-center text-center"
+    >
+      <div
+        class="absolute inset-0 bg-brand-blue/5 blur-[100px] md:blur-[120px] rounded-full pointer-events-none w-[100vw] h-[100vw] md:w-[80vw] md:h-[80vw] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      ></div>
+
+      <div
+        class="max-w-[1200px] mx-auto px-6 md:px-12 relative z-10 cta-reveal"
+      >
+        <p
+          class="text-brand-text font-sans text-[8px] md:text-[10px] uppercase tracking-[0.4em] font-bold mb-6 md:mb-8"
+        >
+          Ready to unlock more revenue?
+        </p>
+        <h2
+          class="font-display font-bold text-4xl md:text-fluid-h2 leading-[1] uppercase tracking-tighter text-white mb-10 md:mb-16"
+        >
+          Schedule a <br class="hidden md:block" /><span class="text-brand-blue"
+            >Conversation</span
+          >
+        </h2>
+        <a
+          href="discovery-call"
+          class="magnetic-btn border border-white/20 text-white px-10 md:px-16 py-5 md:py-8 text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold btn-blue hover:border-transparent"
+        >
+          <span class="z-10 relative">Book a Discovery Call</span>
+          <div class="fill"></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      ARCHITECTURAL FOOTER
+      =============================================================== 
+    -->
+    <footer
+      class="bg-[#020202] pt-20 md:pt-40 pb-10 border-t border-brand-border text-white relative z-10 overflow-hidden"
+    >
+      <div
+        class="max-w-[1600px] mx-auto px-6 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 mb-20 md:mb-32 footer-reveal"
+      >
+        <div class="col-span-1 md:col-span-4 flex flex-col justify-between">
+          <div>
+            <!-- Brand Logo -->
+            <a href="home" class="flex items-center group cursor-pointer z-10">
+              <img
+                src="https://i.postimg.cc/Dzk04hSg/logo-w.png"
+                alt="Netziah Logo"
+                class="h-14 md:h-16 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+              />
+            </a>
+            <p
+              class="text-brand-text font-display text-base md:text-xl uppercase tracking-tight font-medium max-w-[200px]"
+            >
+              Performance Powered by Intelligence
+            </p>
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 flex flex-col gap-6">
+          <h4
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Navigation
+          </h4>
+          <div
+            class="flex flex-col gap-3 font-display font-bold text-sm md:text-lg uppercase tracking-tight"
+          >
+            <a
+              href="solutions"
+              class="hover:text-brand-accent transition-colors w-fit"
+              >Solutions</a
+            >
+            <a
+              href="#"
+              class="text-white w-fit border-b border-brand-accent pb-1"
+              >About Us</a
+            >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Careers</a
+            >
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 flex flex-col gap-6">
+          <h4
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Legal
+          </h4>
+          <div
+            class="flex flex-col gap-3 font-display font-bold text-sm md:text-lg uppercase tracking-tight"
+          >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Privacy Policy</a
+            >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Terms & Conditions</a
+            >
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-4 flex flex-col gap-6">
+          <h4
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Subscribe to Our Newsletter
+          </h4>
+          <div
+            class="flex flex-col gap-4 border-b border-brand-border pb-4 md:pb-6 relative group"
+          >
+            <input
+              type="email"
+              placeholder="ENTER YOUR EMAIL"
+              class="w-full bg-transparent text-white font-display text-lg md:text-2xl uppercase font-bold focus:outline-none placeholder:text-gray-700"
+            />
+            <button
+              class="absolute right-0 top-1/2 -translate-y-1/2 text-[9px] md:text-xs uppercase tracking-widest font-bold text-brand-blue hover:text-white transition-colors"
+            >
+              Submit
+            </button>
+          </div>
+          <p
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-widest leading-relaxed"
+          >
+            I agree to my email being stored and used to receive...
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="max-w-[1600px] mx-auto px-6 md:px-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-t border-brand-border pt-8 md:pt-10 text-[8px] md:text-[10px] uppercase tracking-[0.2em] font-bold text-brand-text"
+      >
+        <div>© 2026 Netziah. All Rights Reserved.</div>
+        <div
+          class="flex flex-wrap justify-start md:justify-center gap-4 md:gap-8"
+        >
+          <a href="home" class="hover:text-white transition-colors">Home</a>
+          <a href="#" class="text-white transition-colors">About Us</a>
+          <a href="solutions" class="hover:text-white transition-colors"
+            >Solutions</a
+          >
+          <a href="insights" class="hover:text-white transition-colors"
+            >Insights</a
+          >
+          <a href="contact" class="hover:text-white transition-colors"
+            >Contact Sales</a
+          >
+        </div>
+      </div>
+
+      <!-- Massive Background Text -->
+      <div
+        class="absolute bottom-[2%] md:bottom-[-5%] left-0 w-full overflow-hidden pointer-events-none opacity-[0.03] flex justify-center z-[-1]"
+      >
+        <span
+          class="font-display font-bold text-[28vw] md:text-[25vw] leading-none uppercase tracking-tighter whitespace-nowrap"
+          >NETZIAH</span
+        >
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+      const isMobile = window.innerWidth <= 768;
+
+      // Lenis Setup (Buttery Smooth)
+      const lenis = new Lenis({
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: "vertical",
+        gestureDirection: "vertical",
+        smooth: true,
+        smoothTouch: false, // Prevents native touch fight
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      // GSAP Initializations
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Custom Liquid Cursor & High-End Physics Hover Image (Desktop Only)
+      if (!isMobile) {
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-outline");
+        const hoverWrapper = document.querySelector(".hover-img-wrapper");
+        const hoverInner = document.querySelector(".hover-img-inner");
+
+        let mouseX = 0,
+          mouseY = 0,
+          outlineX = 0,
+          outlineY = 0,
+          lastX = 0;
+
+        // Using quickTo for absolute 0-lag cursor following
+        const xTo = gsap.quickTo(hoverWrapper, "x", {
+          duration: 0.4,
+          ease: "power3",
+        });
+        const yTo = gsap.quickTo(hoverWrapper, "y", {
+          duration: 0.4,
+          ease: "power3",
+        });
+        const rotateTo = gsap.quickTo(hoverWrapper, "rotation", {
+          duration: 0.6,
+          ease: "power2.out",
+        });
+
+        window.addEventListener("mousemove", (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          cursorDot.style.left = `${mouseX}px`;
+          cursorDot.style.top = `${mouseY}px`;
+
+          // Active hover follow logic
+          if (document.body.classList.contains("hover-active")) {
+            xTo(mouseX - 190); // Centered offset for 380px width
+            yTo(mouseY - 240); // Centered offset for 480px height
+
+            // Velocity calculation for dynamic rotation tilt
+            let velX = mouseX - lastX;
+            rotateTo(velX * 0.12);
+            lastX = mouseX;
+          }
+        });
+
+        gsap.ticker.add(() => {
+          outlineX += (mouseX - outlineX) * 0.15;
+          outlineY += (mouseY - outlineY) * 0.15;
+          gsap.set(cursorOutline, { left: outlineX, top: outlineY });
+        });
+
+        // Hover Logic for Core Pillars
+        const triggers = document.querySelectorAll(".hover-trigger");
+        triggers.forEach((trigger) => {
+          trigger.addEventListener("mouseenter", (e) => {
+            const imgUrl = e.currentTarget.getAttribute("data-img");
+            hoverInner.style.backgroundImage = `url(${imgUrl})`;
+
+            if (!document.body.classList.contains("hover-active")) {
+              gsap.set(hoverWrapper, {
+                x: mouseX - 190,
+                y: mouseY - 240,
+                rotation: 0,
+              });
+            }
+            document.body.classList.add("hover-active");
+          });
+          trigger.addEventListener("mouseleave", () => {
+            document.body.classList.remove("hover-active");
+            rotateTo(0);
+          });
+        });
+
+        // Magnetic Buttons
+        document.querySelectorAll(".magnetic-btn").forEach((btn) => {
+          btn.addEventListener("mousemove", (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
+            const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+            gsap.to(btn, { duration: 0.4, x: x, y: y, ease: "power3.out" });
+          });
+          btn.addEventListener("mouseleave", () => {
+            gsap.to(btn, {
+              duration: 0.8,
+              x: 0,
+              y: 0,
+              ease: "elastic.out(1, 0.3)",
+            });
+          });
+        });
+      }
+
+      // Preloader & Hero Sequence
+      const tlPreloader = gsap.timeline();
+      tlPreloader
+        .to(".loader-word", {
+          y: "0%",
+          duration: 1.2,
+          ease: "expo.out",
+          stagger: 0.1,
+        })
+        .to(".loader-word", {
+          y: "-110%",
+          duration: 1,
+          ease: "expo.in",
+          stagger: 0.05,
+          delay: 0.6,
+        })
+        .to(
+          ".panel-left",
+          { xPercent: -100, duration: 1.5, ease: "expo.inOut" },
+          "-=0.2",
+        )
+        .to(
+          ".panel-right",
+          { xPercent: 100, duration: 1.5, ease: "expo.inOut" },
+          "-=1.5",
+        )
+        .set(".preloader", { display: "none" })
+        .to(
+          ".nav-reveal",
+          { opacity: 1, duration: 1.5, ease: "power2.out" },
+          "-=0.5",
+        )
+        .to(
+          ".hero-anim",
+          { y: "0%", duration: 2, ease: "expo.out", stagger: 0.1 },
+          "-=1",
+        )
+        .from(
+          ".hero-bg-img",
+          {
+            scale: 1.4,
+            filter: "grayscale(100%) brightness(0.2)",
+            duration: 2.5,
+            ease: "expo.out",
+          },
+          "-=2",
+        )
+        .to(
+          ".hero-fade",
+          { opacity: 1, y: 0, duration: 1.5, ease: "expo.out" },
+          "-=1.5",
+        );
+
+      // --- SCROLL ANIMATIONS ---
+
+      gsap.to(".bridge-text", {
+        color: "#ffffff",
+        scrollTrigger: {
+          trigger: ".bridge-text",
+          start: "top 80%",
+          end: "bottom 40%",
+          scrub: true,
+        },
+      });
+
+      gsap.utils.toArray(".text-reveal").forEach((elem) => {
+        gsap.from(elem, {
+          scrollTrigger: { trigger: elem, start: "top 90%" },
+          y: 40,
+          opacity: 0,
+          duration: 1.2,
+          ease: "expo.out",
+        });
+      });
+
+      gsap.to(".badge-reveal", {
+        scrollTrigger: { trigger: ".badge-reveal", start: "top 90%" },
+        y: 0,
+        opacity: 1,
+        duration: 1.5,
+        ease: "back.out(1.5)",
+      });
+
+      gsap.utils.toArray(".pillar-row").forEach((row) => {
+        gsap.from(row, {
+          scrollTrigger: { trigger: row, start: "top 95%" },
+          y: 30,
+          opacity: 0,
+          duration: 1.2,
+          ease: "expo.out",
+        });
+      });
+
+      gsap.utils.toArray(".location-card").forEach((card) => {
+        gsap.from(card, {
+          scrollTrigger: { trigger: card, start: "top 85%" },
+          y: 60,
+          opacity: 0,
+          duration: 1.5,
+          ease: "expo.out",
+        });
+      });
+
+      // Premium Parallax Effects (Disabled on mobile to ensure smoothness/battery)
+      if (!isMobile) {
+        gsap.to(".hero-bg-img", {
+          yPercent: 15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".hero-bg-img",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.5,
+          },
+        });
+
+        gsap.to(".parallax-portrait", {
+          y: 80,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".parallax-portrait",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.5,
+          },
+        });
+
+        gsap.utils.toArray(".parallax-location").forEach((img) => {
+          gsap.to(img, {
+            y: 80,
+            ease: "none",
+            scrollTrigger: {
+              trigger: img.parentElement,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.5,
+            },
+          });
+        });
+      }
+
+      gsap.from(".cta-reveal > *", {
+        scrollTrigger: { trigger: ".cta-reveal", start: "top 85%" },
+        y: 50,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "expo.out",
+      });
+
+      gsap.from(".footer-reveal > div", {
+        scrollTrigger: { trigger: "footer", start: "top 95%" },
+        y: 30,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "power3.out",
+      });
+
+      // Flawless Mobile Nav Toggle & Animation
+      const mobileBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileBtnSpans = mobileBtn.querySelectorAll("span");
+      let isMobileMenuOpen = false;
+
+      mobileBtn.addEventListener("click", () => {
+        isMobileMenuOpen = !isMobileMenuOpen;
+        if (isMobileMenuOpen) {
+          // Open
+          mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+          mobileMenu.classList.add("opacity-100", "pointer-events-auto");
+          lenis.stop(); // Disable background scrolling
+
+          // Animate Burger to X
+          mobileBtnSpans[0].style.transform = "translateY(5px) rotate(45deg)";
+          mobileBtnSpans[1].style.transform = "translateY(-5px) rotate(-45deg)";
+
+          // Stagger reveal links
+          gsap.to("#mobile-menu .mobile-link", {
+            y: "0%",
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.1,
+            delay: 0.1,
+          });
+          gsap.to("#mobile-menu .mobile-meta", {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            delay: 0.3,
+          });
+        } else {
+          // Close
+          mobileMenu.classList.add("opacity-0", "pointer-events-none");
+          mobileMenu.classList.remove("opacity-100", "pointer-events-auto");
+          lenis.start(); // Enable background scrolling
+
+          // Revert Burger
+          mobileBtnSpans[0].style.transform = "translateY(0) rotate(0)";
+          mobileBtnSpans[1].style.transform = "translateY(0) rotate(0)";
+
+          // Reset Links immediately for next open
+          gsap.set("#mobile-menu .mobile-link", { y: "100%" });
+          gsap.set("#mobile-menu .mobile-meta", { y: 16, opacity: 0 });
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -271,6 +271,15 @@
           );
         background-size: 5vw 5vw;
       }
+
+      /* Mobile Menu */
+      .mobile-link-wrap {
+        overflow: hidden;
+      }
+      .mobile-link {
+        display: block;
+        transform: translateY(100%);
+      }
     </style>
   </head>
   <body class="antialiased selection:bg-brand-blue selection:text-white">
@@ -299,45 +308,39 @@
 
     <!-- Navigation (Sticky & Blend Mode) -->
     <header
-      class="fixed top-0 left-0 w-full z-50 px-4 md:px-8 py-6 mix-blend-difference nav-reveal opacity-0"
+      class="fixed top-0 left-0 w-full z-[100] px-4 md:px-8 py-6 mix-blend-difference nav-reveal opacity-0"
     >
       <div class="max-w-[1800px] mx-auto flex justify-between items-center">
         <!-- Brand Logo -->
-        <div class="flex items-center gap-3 group cursor-pointer text-white">
-          <svg
-            class="w-6 h-6 md:w-8 md:h-8 transition-transform duration-700 group-hover:rotate-180"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-          </svg>
-          <span
-            class="font-display font-bold text-xl md:text-2xl tracking-tighter uppercase"
-            >Netziah</span
-          >
-        </div>
+        <a href="/" class="flex items-center group cursor-pointer z-10">
+          <img
+            src="https://i.postimg.cc/Dzk04hSg/logo-w.png"
+            alt="Netziah Logo"
+            class="h-14 md:h-16 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+          />
+        </a>
 
         <!-- Desktop Links -->
         <nav
           class="hidden lg:flex items-center gap-12 text-xs font-sans font-bold uppercase tracking-widest text-white"
         >
           <a
-            href="#"
+            href=""
             class="hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
             >Home</a
           >
           <a
-            href="#"
+            href="about-us"
             class="hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
             >About Us</a
           >
           <a
-            href="#"
+            href="solutions"
             class="hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
             >Solutions</a
           >
           <a
-            href="#"
+            href="insights"
             class="hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
             >Insights</a
           >
@@ -360,7 +363,7 @@
             >
           </div>
           <a
-            href="#"
+            href="contact"
             class="magnetic-btn border border-white text-white px-6 py-3 text-[11px] md:text-xs uppercase tracking-widest font-bold hidden sm:flex btn-white"
           >
             <span class="relative z-10">Contact Sales</span>
@@ -369,10 +372,14 @@
           <!-- Mobile Menu Toggle -->
           <button
             id="mobile-menu-btn"
-            class="lg:hidden text-white flex flex-col gap-1.5 z-50"
+            class="lg:hidden text-white flex flex-col justify-center gap-2 w-8 h-8 z-[110] relative"
           >
-            <span class="w-6 h-[2px] bg-white block"></span>
-            <span class="w-6 h-[2px] bg-white block"></span>
+            <span
+              class="w-full h-[2px] bg-white block transition-all duration-300 absolute top-2 origin-center"
+            ></span>
+            <span
+              class="w-full h-[2px] bg-white block transition-all duration-300 absolute bottom-2 origin-center"
+            ></span>
           </button>
         </div>
       </div>
@@ -381,39 +388,60 @@
     <!-- Mobile Menu Overlay -->
     <div
       id="mobile-menu"
-      class="fixed inset-0 bg-[#050505] z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-500"
+      class="fixed inset-0 bg-[#050505] z-[90] flex flex-col justify-center px-8 opacity-0 pointer-events-none transition-opacity duration-500"
     >
       <nav
-        class="flex flex-col items-center gap-8 text-2xl font-display font-bold uppercase tracking-widest text-white"
+        class="flex flex-col gap-6 text-4xl font-display font-bold uppercase tracking-tighter text-white mt-12"
+      >
+        <div class="mobile-link-wrap">
+          <a href="" class="mobile-link text-brand-blue">Home</a>
+        </div>
+        <div class="mobile-link-wrap">
+          <a
+            href="about-us"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >About Us</a
+          >
+        </div>
+        <div class="mobile-link-wrap">
+          <a
+            href="solutions"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >Solutions</a
+          >
+        </div>
+        <div class="mobile-link-wrap">
+          <a
+            href="insights"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >Insights</a
+          >
+        </div>
+      </nav>
+
+      <div
+        class="mt-16 flex flex-col gap-6 mobile-meta opacity-0 translate-y-4"
       >
         <a
-          href="#"
-          class="mobile-link hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
-          >Home</a
-        >
-        <a
-          href="#"
-          class="mobile-link hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
-          >About Us</a
-        >
-        <a
-          href="#"
-          class="mobile-link hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
-          >Solutions</a
-        >
-        <a
-          href="#"
-          class="mobile-link hover:text-brand-accent transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[2px] after:bg-brand-accent after:transition-all hover:after:w-full"
-          >Insights</a
-        >
-        <a
-          href="#"
-          class="mobile-link mt-8 magnetic-btn border border-white text-white px-8 py-4 text-xs uppercase tracking-widest font-bold btn-white"
+          href="contact"
+          class="magnetic-btn border border-white/30 text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-bold w-fit btn-white"
         >
           <span class="relative z-10">Contact Sales</span>
           <div class="fill"></div>
         </a>
-      </nav>
+        <div
+          class="flex flex-col gap-2 mt-4 text-[11px] font-sans text-brand-text uppercase tracking-widest"
+        >
+          <a
+            href="mailto:hello@netziah.com"
+            class="text-white hover:text-brand-blue"
+            >hello@netziah.com</a
+          >
+          <a href="tel:+13072248500" class="text-white hover:text-brand-blue"
+            >+1 (307) 224-8500</a
+          >
+        </div>
+      </div>
     </div>
 
     <!-- 
@@ -735,7 +763,7 @@
             </div>
             <div class="mt-12">
               <a
-                href="#"
+                href="contact"
                 class="magnetic-btn bg-black text-white px-8 py-4 text-[11px] md:text-xs uppercase tracking-widest font-bold btn-white"
               >
                 <span class="z-10 relative">Learn more</span>
@@ -1009,7 +1037,7 @@
             </div>
 
             <a
-              href="#"
+              href="solutions"
               class="magnetic-btn border border-brand-border text-white px-8 md:px-10 py-4 md:py-5 text-[11px] md:text-xs uppercase tracking-widest font-bold btn-white"
             >
               <span class="z-10 relative">See How Netziah Works</span>
@@ -1169,7 +1197,7 @@
 
             <div class="relative z-10">
               <a
-                href="#"
+                href="discovery-call"
                 class="magnetic-btn bg-brand-blue text-white px-10 md:px-14 py-5 md:py-6 text-[11px] md:text-xs uppercase tracking-widest font-bold shadow-[0_0_30px_rgba(0,85,255,0.2)] hover:shadow-[0_0_50px_rgba(0,85,255,0.4)] transition-shadow"
               >
                 <span class="z-10 relative">Book a Discovery Call</span>
@@ -1194,23 +1222,16 @@
       >
         <div class="col-span-1 md:col-span-4 flex flex-col justify-between">
           <div>
-            <div
-              class="flex items-center gap-3 mb-6 group cursor-pointer w-fit"
+            <a
+              href="/"
+              class="flex items-center mb-6 group cursor-pointer w-fit"
             >
-              <svg
-                class="w-8 h-8 text-white transition-transform duration-700 group-hover:rotate-180"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path
-                  d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-                />
-              </svg>
-              <span
-                class="font-display font-bold text-3xl tracking-tighter uppercase"
-                >Netziah</span
-              >
-            </div>
+              <img
+                src="https://i.postimg.cc/Dzk04hSg/logo-w.png"
+                alt="Netziah Logo"
+                class="h-14 md:h-16 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+              />
+            </a>
             <p
               class="text-brand-text font-display text-lg md:text-xl uppercase tracking-tight font-medium max-w-[200px]"
             >
@@ -1228,10 +1249,14 @@
           <div
             class="flex flex-col gap-3 md:gap-4 font-display font-bold text-base md:text-lg uppercase tracking-tight"
           >
-            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+            <a
+              href="solutions"
+              class="hover:text-brand-accent transition-colors w-fit"
               >Solutions</a
             >
-            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+            <a
+              href="about-us"
+              class="hover:text-brand-accent transition-colors w-fit"
               >About Us</a
             >
             <a href="#" class="hover:text-brand-accent transition-colors w-fit"
@@ -1291,11 +1316,17 @@
       >
         <div>© 2026 Netziah. All Rights Reserved.</div>
         <div class="flex flex-wrap justify-center gap-6 md:gap-8">
-          <a href="#" class="hover:text-white transition-colors">Home</a>
-          <a href="#" class="hover:text-white transition-colors">About Us</a>
-          <a href="#" class="hover:text-white transition-colors">Solutions</a>
-          <a href="#" class="hover:text-white transition-colors">Insights</a>
-          <a href="#" class="hover:text-white transition-colors"
+          <a href="about-us" class="hover:text-white transition-colors">Home</a>
+          <a href="about-us" class="hover:text-white transition-colors"
+            >About Us</a
+          >
+          <a href="solutions" class="hover:text-white transition-colors"
+            >Solutions</a
+          >
+          <a href="insights" class="hover:text-white transition-colors"
+            >Insights</a
+          >
+          <a href="contact" class="hover:text-white transition-colors"
             >Contact Sales</a
           >
         </div>
@@ -1573,36 +1604,44 @@
         ease: "power3.out",
       });
 
-      // Mobile Menu Logic
+      // Mobile Nav Toggle
       const mobileBtn = document.getElementById("mobile-menu-btn");
       const mobileMenu = document.getElementById("mobile-menu");
-      const mobileLinks = document.querySelectorAll(".mobile-link");
       const mobileBtnSpans = mobileBtn.querySelectorAll("span");
       let isMobileMenuOpen = false;
 
-      function toggleMobileMenu() {
+      mobileBtn.addEventListener("click", () => {
         isMobileMenuOpen = !isMobileMenuOpen;
         if (isMobileMenuOpen) {
           mobileMenu.classList.remove("opacity-0", "pointer-events-none");
           mobileMenu.classList.add("opacity-100", "pointer-events-auto");
-          lenis.stop(); // Stop background scrolling
-          gsap.to(mobileBtnSpans[0], { y: 4, rotate: 45, duration: 0.3 });
-          gsap.to(mobileBtnSpans[1], { y: -4, rotate: -45, duration: 0.3 });
+          lenis.stop();
+          mobileBtnSpans[0].style.transform = "translateY(5px) rotate(45deg)";
+          mobileBtnSpans[1].style.transform = "translateY(-5px) rotate(-45deg)";
+          gsap.to("#mobile-menu .mobile-link", {
+            y: "0%",
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.1,
+            delay: 0.1,
+          });
+          gsap.to("#mobile-menu .mobile-meta", {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            delay: 0.3,
+          });
         } else {
           mobileMenu.classList.add("opacity-0", "pointer-events-none");
           mobileMenu.classList.remove("opacity-100", "pointer-events-auto");
-          lenis.start(); // Resume background scrolling
-          gsap.to(mobileBtnSpans[0], { y: 0, rotate: 0, duration: 0.3 });
-          gsap.to(mobileBtnSpans[1], { y: 0, rotate: 0, duration: 0.3 });
+          lenis.start();
+          mobileBtnSpans[0].style.transform = "translateY(0) rotate(0)";
+          mobileBtnSpans[1].style.transform = "translateY(0) rotate(0)";
+          gsap.set("#mobile-menu .mobile-link", { y: "100%" });
+          gsap.set("#mobile-menu .mobile-meta", { y: 16, opacity: 0 });
         }
-      }
-
-      mobileBtn.addEventListener("click", toggleMobileMenu);
-      mobileLinks.forEach((link) =>
-        link.addEventListener("click", () => {
-          if (isMobileMenuOpen) toggleMobileMenu();
-        }),
-      );
+      });
 
       // Magnetic Button Logic (Desktop Only)
       if (!isMobile) {

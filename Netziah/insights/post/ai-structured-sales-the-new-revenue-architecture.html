@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-[#000000]">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>AI-Structured Sales: The New Revenue Architecture | Netziah</title>
+
+    <!-- Ultra Premium Fonts: Syne (Display) & Manrope (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Manrope", "sans-serif"],
+              display: ["Syne", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                black: "#000000",
+                dark: "#050505",
+                gray: "#0a0a0a",
+                border: "rgba(255,255,255,0.1)",
+                blue: "#0055FF",
+                accent: "#00D1FF",
+                text: "#888890",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Smooth Scrolling */
+      html.lenis {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto;
+      }
+      .lenis.lenis-smooth[data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+
+      body {
+        background-color: #000000;
+        color: #ffffff;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      @media (min-width: 768px) {
+        body {
+          cursor: none;
+        }
+      }
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Cinematic Grain */
+      .noise-bg {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0.04;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* Liquid Custom Cursor */
+      .cursor-dot,
+      .cursor-outline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9999;
+        pointer-events: none;
+        mix-blend-mode: difference;
+      }
+      .cursor-dot {
+        width: 6px;
+        height: 6px;
+        background-color: white;
+      }
+      .cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+          height 0.3s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s,
+          border-color 0.3s;
+      }
+      body:has(a:hover) .cursor-outline,
+      body:has(button:hover) .cursor-outline {
+        width: 80px;
+        height: 80px;
+        background-color: white;
+        border-color: transparent;
+      }
+
+      /* Reading Progress Bar */
+      #progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: #0055ff;
+        width: 0%;
+        z-index: 99999;
+        transition: width 0.1s ease;
+        box-shadow: 0 0 10px rgba(0, 85, 255, 0.8);
+      }
+
+      /* Magnetic Buttons */
+      .magnetic-btn {
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        transition: color 0.4s ease;
+      }
+      .magnetic-btn .fill {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        border-radius: 50%;
+        transition: top 0.6s cubic-bezier(0.19, 1, 0.22, 1), border-radius 0.6s;
+        z-index: -1;
+      }
+      .magnetic-btn:hover {
+        color: #000;
+      }
+      .magnetic-btn:hover .fill {
+        top: 0;
+        border-radius: 0;
+      }
+      .btn-blue .fill {
+        background: #0055ff;
+      }
+      .btn-blue:hover {
+        color: #fff;
+      }
+
+      /* Editorial Formatting */
+      .prose p {
+        color: #b3b3b8; /* Richer than generic gray for deep reading */
+        font-size: 1.125rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        font-family: "Manrope", sans-serif;
+        font-weight: 500;
+      }
+      @media (min-width: 768px) {
+        .prose p {
+          font-size: 1.25rem;
+          line-height: 2;
+          margin-bottom: 2.5rem;
+        }
+      }
+      .prose h2 {
+        font-family: "Syne", sans-serif;
+        color: #ffffff;
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-top: 5rem;
+        margin-bottom: 2rem;
+        line-height: 1.1;
+      }
+      @media (min-width: 768px) {
+        .prose h2 {
+          font-size: 3.5rem;
+          margin-top: 6rem;
+          margin-bottom: 2.5rem;
+        }
+      }
+
+      .prose strong {
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      /* Mobile Menu */
+      .mobile-link-wrap {
+        overflow: hidden;
+      }
+      .mobile-link {
+        display: block;
+        transform: translateY(100%);
+      }
+    </style>
+  </head>
+  <body class="antialiased selection:bg-brand-blue selection:text-white">
+    <div id="progress-bar"></div>
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+    <div class="noise-bg"></div>
+
+    <!-- Cinematic Preloader -->
+    <div class="preloader fixed inset-0 z-[10000] flex bg-[#000]">
+      <div
+        class="absolute inset-0 flex flex-col items-center justify-center z-20 preloader-content"
+      >
+        <div class="overflow-hidden mb-2">
+          <span
+            class="font-display font-bold text-4xl md:text-7xl uppercase tracking-tighter text-white loader-word block translate-y-[110%]"
+            >Netziah</span
+          >
+        </div>
+        <div class="overflow-hidden">
+          <span
+            class="font-sans text-[9px] md:text-[10px] uppercase tracking-widest text-brand-text loader-word block translate-y-[110%]"
+            >Decrypting Ledger // 2026</span
+          >
+        </div>
+      </div>
+      <div class="w-1/2 h-full bg-[#050505] panel-left origin-left"></div>
+      <div class="w-1/2 h-full bg-[#050505] panel-right origin-right"></div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 bg-[#050505] z-[90] flex flex-col justify-center px-8 opacity-0 pointer-events-none transition-opacity duration-500"
+    >
+      <nav
+        class="flex flex-col gap-6 text-4xl font-display font-bold uppercase tracking-tighter text-white mt-12"
+      >
+        <div class="mobile-link-wrap">
+          <a
+            href="/"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >Home</a
+          >
+        </div>
+        <div class="mobile-link-wrap">
+          <a
+            href="/about-us"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >About Us</a
+          >
+        </div>
+        <div class="mobile-link-wrap">
+          <a
+            href="/solutions"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >Solutions</a
+          >
+        </div>
+        <div class="mobile-link-wrap">
+          <a href="/insights" class="mobile-link text-brand-blue">Insights</a>
+        </div>
+      </nav>
+
+      <div
+        class="mt-16 flex flex-col gap-6 mobile-meta opacity-0 translate-y-4"
+      >
+        <a
+          href="/contact"
+          class="magnetic-btn border border-white/30 text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-bold w-fit"
+        >
+          <span class="relative z-10">Contact Sales</span>
+          <div class="fill"></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Fixed Premium Navigation (Root Relative Paths) -->
+    <header
+      class="fixed top-0 left-0 w-full z-[100] px-6 md:px-12 py-5 md:py-6 bg-gradient-to-b from-black/90 to-transparent backdrop-blur-sm border-b border-white/5 nav-reveal opacity-0"
+    >
+      <div
+        class="flex justify-between items-center w-full max-w-[1800px] mx-auto"
+      >
+        <!-- Logo -->
+        <!-- Brand Logo -->
+        <a
+          href="/Netziah/home"
+          class="flex items-center group cursor-pointer z-10"
+        >
+          <img
+            src="https://i.postimg.cc/Dzk04hSg/logo-w.png"
+            alt="Netziah Logo"
+            class="h-14 md:h-16 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+          />
+        </a>
+
+        <!-- Links (Desktop) -->
+        <nav
+          class="hidden lg:flex items-center gap-12 text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-white"
+        >
+          <a
+            href="/Netziah/home"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >Home</a
+          >
+          <a
+            href="/Netziah/about-us"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >About Us</a
+          >
+          <a
+            href="/Netziah/solutions"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >Solutions</a
+          >
+          <a
+            href="/Netziah/insights"
+            class="text-white relative after:absolute after:-bottom-2 after:left-0 after:w-full after:h-[2px] after:bg-brand-blue"
+            >Insights</a
+          >
+        </nav>
+
+        <!-- Contact & CTA -->
+        <div class="flex items-center gap-6 md:gap-8">
+          <div
+            class="hidden md:flex flex-col items-end text-[9px] font-sans text-gray-400 uppercase tracking-widest border-r border-white/20 pr-8"
+          >
+            <a
+              href="mailto:hello@netziah.com"
+              class="hover:text-white transition-colors duration-300"
+              >hello@netziah.com</a
+            >
+            <a
+              href="tel:+13072248500"
+              class="hover:text-white transition-colors duration-300 mt-1"
+              >+13072248500</a
+            >
+          </div>
+          <a
+            href="/contact"
+            class="magnetic-btn border border-white text-black bg-white px-8 py-4 text-[9px] uppercase tracking-[0.2em] font-bold hidden sm:flex"
+          >
+            <span class="relative z-10">Contact Sales</span>
+            <div class="fill bg-black !text-white"></div>
+          </a>
+          <button
+            id="mobile-menu-btn"
+            class="lg:hidden text-white flex flex-col justify-center gap-2 w-8 h-8 z-[110] relative"
+          >
+            <span
+              class="w-full h-[2px] bg-white block transition-all duration-300 absolute top-2 origin-center"
+            ></span>
+            <span
+              class="w-full h-[2px] bg-white block transition-all duration-300 absolute bottom-2 origin-center"
+            ></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 
+      ===============================================================
+      ARTICLE HERO SECTION
+      =============================================================== 
+    -->
+    <section
+      class="relative w-full pt-40 md:pt-48 pb-16 md:pb-24 overflow-hidden bg-[#000] flex flex-col items-center border-b border-brand-border"
+    >
+      <!-- Background Parallax Image -->
+      <div class="absolute inset-0 z-0 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=2000&q=80"
+          alt="Abstract AI Wave"
+          class="w-full h-full object-cover opacity-30 scale-125 origin-center hero-img-parallax filter grayscale contrast-125"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-[#000] via-[#000]/80 to-transparent"
+        ></div>
+        <div class="absolute inset-0 bg-[#0055FF]/5 mix-blend-overlay"></div>
+      </div>
+
+      <div
+        class="max-w-[1000px] mx-auto px-6 md:px-12 w-full relative z-10 flex flex-col items-center text-center mt-12 md:mt-24 hero-reveal"
+      >
+        <!-- Breadcrumb / Meta -->
+        <div
+          class="flex items-center gap-4 text-brand-blue font-sans text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold mb-8"
+        >
+          <a href="/insights" class="hover:text-white transition-colors"
+            >Insights</a
+          >
+          <span class="w-1 h-1 rounded-full bg-brand-blue"></span>
+          <span>AI Revenue Systems</span>
+        </div>
+
+        <h1
+          class="font-display font-bold text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tighter text-white mb-10 text-balance"
+        >
+          AI-Structured Sales: The New Revenue Architecture
+        </h1>
+
+        <!-- Sub Title / Intro -->
+        <p
+          class="font-display text-xl md:text-3xl text-[#a0a0a5] leading-[1.3] tracking-tight max-w-3xl mb-12"
+        >
+          How artificial intelligence is transforming the structure of modern
+          revenue systems.
+        </p>
+
+        <!-- Meta Info -->
+        <div
+          class="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 font-sans text-[10px] md:text-xs uppercase tracking-widest font-bold text-brand-text border-t border-white/10 pt-8 w-full max-w-lg"
+        >
+          <span>03.03.26 &nbsp; 04:00 PM</span>
+          <span class="w-1 h-1 rounded-full bg-brand-border"></span>
+          <span class="text-white">By Joshua Pineda</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      ARTICLE BODY
+      =============================================================== 
+    -->
+    <article class="w-full bg-[#000] relative z-10 py-16 md:py-32">
+      <!-- Glow Accent -->
+      <div
+        class="absolute top-[20%] left-[-10%] w-[40vw] h-[40vw] bg-brand-blue/5 rounded-full blur-[150px] pointer-events-none"
+      ></div>
+
+      <div class="max-w-[800px] mx-auto px-6 md:px-12 w-full prose">
+        <p
+          class="para-reveal text-white !text-xl md:!text-2xl !leading-[1.7] !font-normal"
+        >
+          For decades, sales organizations have focused on improving processes
+          that were fundamentally designed for a different era. CRM systems were
+          added to track activity, marketing automation platforms were
+          introduced to scale campaigns, and analytics tools attempted to make
+          sense of increasingly complex funnels.
+        </p>
+
+        <p class="para-reveal">
+          Yet the underlying structure of commercial execution remained largely
+          unchanged: human teams manually navigating leads through fragmented
+          systems.
+        </p>
+
+        <p class="para-reveal">
+          Artificial intelligence is beginning to change that foundation.
+        </p>
+
+        <p class="para-reveal">
+          At Netziah, we believe the next evolution of commercial growth will
+          not come from adding more tools or expanding headcount. It will come
+          from redesigning the revenue architecture itself — building sales
+          systems where intelligent models participate directly in the
+          commercial process.
+        </p>
+
+        <p class="para-reveal">
+          This approach is what we call <strong>AI-Structured Sales</strong>.
+        </p>
+
+        <p class="para-reveal">
+          It represents a shift from isolated automation toward intelligent
+          commercial infrastructure.
+        </p>
+
+        <!-- Section 2 -->
+        <h2 class="para-reveal">From Sales Process to Revenue System</h2>
+
+        <p class="para-reveal">
+          Traditional sales funnels depend heavily on manual intervention. Leads
+          are captured, qualified, followed up, and advanced through stages
+          largely through human coordination. Even with modern tools, much of
+          the process still relies on repetitive operational work.
+        </p>
+
+        <p class="para-reveal">
+          AI makes it possible to rethink this structure.
+        </p>
+
+        <p class="para-reveal">
+          Instead of supporting the sales team from the outside, intelligent
+          systems can now operate inside the funnel — listening to interactions,
+          detecting buying signals, adapting messaging, and helping guide
+          prospects toward the next stage of engagement.
+        </p>
+
+        <p class="para-reveal">
+          This does not eliminate the role of the sales professional. Quite the
+          opposite. It allows commercial teams to focus on the moments where
+          human expertise creates the most value: strategic guidance,
+          negotiation, trust building, and complex decision-making.
+        </p>
+
+        <p class="para-reveal">
+          AI handles scale.<br />
+          Humans handle relationships.
+        </p>
+
+        <p class="para-reveal">
+          Together, they create a far more efficient commercial engine.
+        </p>
+
+        <!-- Section 3 -->
+        <h2 class="para-reveal">
+          A Commercial Architecture Built Around Intelligence
+        </h2>
+
+        <p class="para-reveal">
+          At Netziah, our campaigns are increasingly designed with AI integrated
+          from the beginning. Intelligent systems participate in multiple stages
+          of the commercial journey, from early lead engagement to qualification
+          and conversion readiness.
+        </p>
+
+        <p class="para-reveal">
+          These models can analyze conversation patterns, identify signals of
+          intent, personalize communication in real time, and help guide
+          prospects through structured funnels designed for conversion.
+        </p>
+
+        <p class="para-reveal">
+          The result is a sales environment that becomes progressively more
+          adaptive.
+        </p>
+
+        <p class="para-reveal">
+          Rather than relying solely on static playbooks, campaigns evolve based
+          on behavioral data. Qualification becomes more precise. Follow-ups
+          become contextual. Prospects receive relevant interactions at the
+          right moment instead of generic sequences.
+        </p>
+
+        <p class="para-reveal">
+          The funnel becomes less mechanical and more intelligent.
+        </p>
+
+        <p class="para-reveal">
+          In certain workflows, AI systems can even assist in preparing
+          prospects for the final purchasing stage — helping transition
+          qualified opportunities toward secure transaction processes once
+          intent has been clearly established.<br />
+          This represents a major shift in how revenue operations function.
+        </p>
+
+        <!-- Section 4 -->
+        <h2 class="para-reveal">Creative AI and Scalable Engagement</h2>
+
+        <p class="para-reveal">
+          Another dimension of this transformation is the rise of creative AI
+          technologies capable of producing high-quality customer interactions
+          at scale.
+        </p>
+
+        <p class="para-reveal">
+          Platforms such as ElevenLabs have demonstrated how realistic,
+          multilingual voice generation can dramatically expand the ways
+          companies communicate with their audiences. Personalized voice
+          interactions, localized messaging, and dynamic content production are
+          becoming increasingly accessible.
+        </p>
+
+        <p class="para-reveal">
+          When integrated into a structured revenue strategy, these capabilities
+          allow organizations to deliver highly personalized engagement without
+          sacrificing scalability.<br />
+          Creative output, once constrained by time and production resources,
+          becomes part of a flexible and adaptive communication system.
+        </p>
+
+        <p class="para-reveal">
+          However, the creative layer alone does not define the
+          transformation.<br />
+          The real change occurs when AI is embedded into the operational
+          structure of revenue generation.
+        </p>
+
+        <!-- Section 5 -->
+        <h2 class="para-reveal">Why AI-Structured Sales Matters</h2>
+
+        <p class="para-reveal">
+          Organizations that simply experiment with AI tools may see incremental
+          improvements in efficiency. But companies that redesign their
+          commercial architecture around AI capabilities can unlock something
+          far more powerful: a revenue system that continuously learns, adapts,
+          and scales.
+        </p>
+
+        <p class="para-reveal">
+          When intelligent systems are integrated across the funnel, several
+          structural benefits emerge.<br />
+          Sales cycles can shorten as prospects are guided through clearer
+          engagement paths. Lead qualification becomes more accurate as
+          predictive signals are detected earlier. Operational costs decrease as
+          repetitive tasks are absorbed by automated processes. And perhaps most
+          importantly, revenue becomes more predictable as the system itself
+          becomes more data-driven.
+        </p>
+
+        <p class="para-reveal">
+          In other words, the commercial engine becomes stronger over time.<br />
+          This is the promise of AI-structured sales.
+        </p>
+
+        <!-- Section 6 -->
+        <h2 class="para-reveal">The Future of Revenue Operations</h2>
+
+        <p class="para-reveal">
+          The transition toward AI-driven commercial infrastructure is still in
+          its early stages. Many organizations are experimenting with isolated
+          solutions, testing new tools, or applying AI in limited areas of their
+          workflow.<br />
+          But the larger opportunity lies in architectural change.
+        </p>
+
+        <p class="para-reveal">
+          The companies that will lead the next generation of growth are those
+          willing to rethink the structure of their revenue systems entirely.
+        </p>
+
+        <p class="para-reveal">
+          At Netziah, we are actively building this new model — combining
+          intelligent automation, creative AI capabilities, and structured
+          Revenue Operations to create scalable commercial engines.
+        </p>
+
+        <p class="para-reveal">
+          Sales acceleration is no longer just about activity.<br />
+          It is about intelligent system design.
+        </p>
+
+        <p class="para-reveal">
+          And the organizations that understand this shift today will be better
+          positioned to lead tomorrow's markets.
+        </p>
+
+        <!-- Section 7 -->
+        <h2 class="para-reveal">A Final Thought</h2>
+
+        <p class="para-reveal">
+          Artificial intelligence will not replace sales teams.
+        </p>
+
+        <p class="para-reveal">
+          But it will fundamentally reshape how modern revenue organizations
+          operate.
+        </p>
+
+        <p class="para-reveal">
+          The question for companies is no longer whether AI will play a role in
+          sales. The question is how deeply it will be integrated into the
+          architecture of growth.
+        </p>
+
+        <p class="para-reveal">
+          At Netziah, we believe the future belongs to organizations that build
+          their revenue systems accordingly.
+        </p>
+
+        <!-- Internal Conversion Block -->
+        <div
+          class="my-16 p-8 md:p-12 border border-brand-border bg-[#050505] rounded-[1.5rem] relative overflow-hidden group para-reveal"
+        >
+          <!-- Subtle glow effect -->
+          <div
+            class="absolute inset-0 bg-brand-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+          ></div>
+
+          <h4
+            class="font-display text-xl md:text-2xl text-brand-blue font-bold mb-4"
+          >
+            Build Your AI-Structured Revenue System
+          </h4>
+          <p
+            class="text-white text-lg md:text-xl font-bold font-sans leading-relaxed mb-6"
+          >
+            If your organization is exploring how AI can transform lead
+            generation, qualification, and commercial execution, our team would
+            be glad to help.
+          </p>
+          <p class="text-brand-text text-base mb-8">
+            Contact <strong>Netziah</strong> to explore how AI-driven revenue
+            systems can accelerate your growth.
+          </p>
+          <a
+            href="/discovery-call"
+            class="magnetic-btn bg-brand-blue text-white px-8 py-4 text-[10px] md:text-[11px] uppercase tracking-[0.2em] font-bold"
+          >
+            <span class="relative z-10">Book a Discovery Call</span>
+            <div class="fill bg-white"></div>
+          </a>
+        </div>
+
+        <!-- Author Box -->
+        <div
+          class="mt-24 pt-12 border-t border-brand-border flex flex-col md:flex-row items-start md:items-center gap-6 para-reveal"
+        >
+          <img
+            src="https://i.postimg.cc/g2t1t1B3/netziah-founder.png"
+            alt="Joshua Pineda"
+            class="w-20 h-20 rounded-full object-cover border border-white/20"
+          />
+          <div class="flex flex-col">
+            <h4
+              class="font-display text-2xl text-brand-blue font-bold tracking-tight mb-1"
+            >
+              Joshua Pineda
+            </h4>
+            <span
+              class="font-sans text-[10px] uppercase tracking-widest text-brand-text font-bold mb-3"
+              >CEO & Founder Netziah</span
+            >
+            <p class="text-brand-text text-sm leading-relaxed font-medium">
+              Founder & CEO of Netziah, a firm focused on building structured
+              sales and revenue systems for growing organizations. His work
+              centers on sales operations, execution, and designing scalable
+              commercial engines that drive predictable growth.
+            </p>
+          </div>
+        </div>
+
+        <!-- Share Actions -->
+        <div
+          class="mt-12 pt-8 border-t border-brand-border flex items-center gap-6 text-brand-text para-reveal"
+        >
+          <span
+            class="font-sans text-[10px] uppercase tracking-widest font-bold"
+            >Share:</span
+          >
+          <div class="flex items-center gap-4">
+            <a href="#" class="hover:text-brand-blue transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"
+                />
+              </svg>
+            </a>
+            <a href="#" class="hover:text-white transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                />
+              </svg>
+            </a>
+            <a href="#" class="hover:text-[#E60023] transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.951-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.366 18.605 0 12.017 0z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 
+      ===============================================================
+      ARCHITECTURAL FOOTER
+      =============================================================== 
+    -->
+    <footer
+      class="bg-[#020202] pt-20 md:pt-32 pb-10 border-t border-brand-border text-white relative z-10 overflow-hidden"
+    >
+      <div
+        class="max-w-[1600px] mx-auto px-6 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 mb-20 md:mb-32 footer-reveal"
+      >
+        <div class="col-span-1 md:col-span-4 flex flex-col justify-between">
+          <div>
+            <!-- Brand Logo -->
+            <a href="home" class="flex items-center group cursor-pointer z-10">
+              <img
+                src="https://i.postimg.cc/Dzk04hSg/logo-w.png"
+                alt="Netziah Logo"
+                class="h-14 md:h-16 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+              />
+            </a>
+            <p
+              class="text-brand-text font-display text-base md:text-xl uppercase tracking-tight font-medium max-w-[200px]"
+            >
+              Performance Powered by Intelligence
+            </p>
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 flex flex-col gap-6">
+          <h4
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Navigation
+          </h4>
+          <div
+            class="flex flex-col gap-3 font-display font-bold text-sm md:text-lg uppercase tracking-tight"
+          >
+            <a
+              href="/solutions"
+              class="hover:text-brand-accent transition-colors w-fit"
+              >Solutions</a
+            >
+            <a
+              href="/about-us"
+              class="hover:text-brand-accent transition-colors w-fit"
+              >About Us</a
+            >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Careers</a
+            >
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 flex flex-col gap-6">
+          <h4
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Legal
+          </h4>
+          <div
+            class="flex flex-col gap-3 font-display font-bold text-sm md:text-lg uppercase tracking-tight"
+          >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Privacy Policy</a
+            >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Terms & Conditions</a
+            >
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-4 flex flex-col gap-6">
+          <h4
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Subscribe to Our Newsletter
+          </h4>
+          <div
+            class="flex flex-col gap-4 border-b border-brand-border pb-4 md:pb-6 relative group"
+          >
+            <input
+              type="email"
+              placeholder="ENTER YOUR EMAIL"
+              class="w-full bg-transparent text-white font-display text-lg md:text-2xl uppercase font-bold focus:outline-none placeholder:text-gray-700"
+            />
+            <button
+              class="absolute right-0 top-1/2 -translate-y-1/2 text-[9px] md:text-xs uppercase tracking-widest font-bold text-brand-blue hover:text-white transition-colors"
+            >
+              Submit
+            </button>
+          </div>
+          <p
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-widest leading-relaxed"
+          >
+            I agree to my email being stored and used to receive...
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="max-w-[1600px] mx-auto px-6 md:px-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-t border-brand-border pt-8 md:pt-10 text-[8px] md:text-[10px] uppercase tracking-[0.2em] font-bold text-brand-text"
+      >
+        <div>© 2026 Netziah. All Rights Reserved.</div>
+        <div
+          class="flex flex-wrap justify-start md:justify-center gap-4 md:gap-8"
+        >
+          <a href="/" class="hover:text-white transition-colors">Home</a>
+          <a href="/about-us" class="hover:text-white transition-colors"
+            >About Us</a
+          >
+          <a href="/solutions" class="hover:text-white transition-colors"
+            >Solutions</a
+          >
+          <a href="/insights" class="hover:text-white transition-colors"
+            >Insights</a
+          >
+          <a href="/contact" class="hover:text-white transition-colors"
+            >Contact Sales</a
+          >
+        </div>
+      </div>
+
+      <!-- Massive Background Text -->
+      <div
+        class="absolute bottom-[2%] md:bottom-[-5%] left-0 w-full overflow-hidden pointer-events-none opacity-[0.03] flex justify-center z-[-1]"
+      >
+        <span
+          class="font-display font-bold text-[28vw] md:text-[25vw] leading-none uppercase tracking-tighter whitespace-nowrap"
+          >NETZIAH</span
+        >
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+      const isMobile = window.innerWidth <= 768;
+
+      // Lenis Smooth Scroll
+      const lenis = new Lenis({
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: "vertical",
+        gestureDirection: "vertical",
+        smooth: true,
+        smoothTouch: false,
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Reading Progress Bar Setup
+      window.addEventListener("scroll", () => {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progress-bar").style.width = scrolled + "%";
+      });
+
+      // Custom Cursor Tracking (Desktop Only)
+      if (!isMobile) {
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-outline");
+        let mouseX = 0,
+          mouseY = 0,
+          outlineX = 0,
+          outlineY = 0;
+
+        window.addEventListener("mousemove", (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          cursorDot.style.left = `${mouseX}px`;
+          cursorDot.style.top = `${mouseY}px`;
+        });
+
+        gsap.ticker.add(() => {
+          outlineX += (mouseX - outlineX) * 0.15;
+          outlineY += (mouseY - outlineY) * 0.15;
+          gsap.set(cursorOutline, { left: outlineX, top: outlineY });
+        });
+
+        // Magnetic Buttons
+        document.querySelectorAll(".magnetic-btn").forEach((btn) => {
+          btn.addEventListener("mousemove", (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
+            const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+            gsap.to(btn, { duration: 0.4, x: x, y: y, ease: "power3.out" });
+          });
+          btn.addEventListener("mouseleave", () => {
+            gsap.to(btn, {
+              duration: 0.8,
+              x: 0,
+              y: 0,
+              ease: "elastic.out(1, 0.3)",
+            });
+          });
+        });
+      }
+
+      // Preloader & Hero Sequence
+      const tlPreloader = gsap.timeline();
+      tlPreloader
+        .to(".loader-word", {
+          y: "0%",
+          duration: 1.2,
+          ease: "expo.out",
+          stagger: 0.1,
+        })
+        .to(".loader-word", {
+          y: "-110%",
+          duration: 1,
+          ease: "expo.in",
+          stagger: 0.05,
+          delay: 0.6,
+        })
+        .to(
+          ".panel-left",
+          { xPercent: -100, duration: 1.5, ease: "expo.inOut" },
+          "-=0.2",
+        )
+        .to(
+          ".panel-right",
+          { xPercent: 100, duration: 1.5, ease: "expo.inOut" },
+          "-=1.5",
+        )
+        .set(".preloader", { display: "none" })
+        .to(
+          ".nav-reveal",
+          { opacity: 1, duration: 1.5, ease: "power2.out" },
+          "-=0.5",
+        )
+        .to(
+          ".hero-reveal",
+          { y: 0, opacity: 1, duration: 1.5, ease: "expo.out" },
+          "-=1",
+        );
+
+      // --- SCROLL ANIMATIONS ---
+
+      // Parallax Hero Image
+      if (!isMobile) {
+        gsap.to(".hero-img-parallax", {
+          yPercent: 20,
+          ease: "none",
+          scrollTrigger: {
+            trigger: "header",
+            start: "top top",
+            end: "bottom -100%",
+            scrub: true,
+          },
+        });
+      }
+
+      // Read Animation (Fade up elements as they enter viewport)
+      gsap.utils.toArray(".para-reveal").forEach((elem) => {
+        gsap.from(elem, {
+          scrollTrigger: { trigger: elem, start: "top 90%" },
+          y: 40,
+          opacity: 0,
+          duration: 1.2,
+          ease: "expo.out",
+        });
+      });
+
+      // Footer Reveal
+      gsap.from(".footer-reveal > div", {
+        scrollTrigger: { trigger: "footer", start: "top 95%" },
+        y: 30,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "power3.out",
+      });
+
+      // Mobile Nav Toggle
+      const mobileBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileBtnSpans = mobileBtn.querySelectorAll("span");
+      let isMobileMenuOpen = false;
+
+      mobileBtn.addEventListener("click", () => {
+        isMobileMenuOpen = !isMobileMenuOpen;
+        if (isMobileMenuOpen) {
+          mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+          mobileMenu.classList.add("opacity-100", "pointer-events-auto");
+          lenis.stop();
+          mobileBtnSpans[0].style.transform = "translateY(5px) rotate(45deg)";
+          mobileBtnSpans[1].style.transform = "translateY(-5px) rotate(-45deg)";
+          gsap.to("#mobile-menu .mobile-link", {
+            y: "0%",
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.1,
+            delay: 0.1,
+          });
+          gsap.to("#mobile-menu .mobile-meta", {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            delay: 0.3,
+          });
+        } else {
+          mobileMenu.classList.add("opacity-0", "pointer-events-none");
+          mobileMenu.classList.remove("opacity-100", "pointer-events-auto");
+          lenis.start();
+          mobileBtnSpans[0].style.transform = "translateY(0) rotate(0)";
+          mobileBtnSpans[1].style.transform = "translateY(0) rotate(0)";
+          gsap.set("#mobile-menu .mobile-link", { y: "100%" });
+          gsap.set("#mobile-menu .mobile-meta", { y: 16, opacity: 0 });
+        }
+      });
+    </script>
+  </body>
+</html>

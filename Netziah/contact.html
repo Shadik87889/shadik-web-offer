@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-[#000000]">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Contact | Netziah - Revenue Engine</title>
+
+    <!-- Ultra Premium Fonts: Syne (Display) & Manrope (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Manrope", "sans-serif"],
+              display: ["Syne", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                black: "#000000",
+                dark: "#050505",
+                gray: "#0a0a0a",
+                border: "rgba(255,255,255,0.1)",
+                blue: "#0055FF",
+                accent: "#00D1FF",
+                text: "#888890",
+              },
+            },
+            fontSize: {
+              "fluid-massive": "clamp(3.5rem, 12vw, 13rem)",
+            },
+            letterSpacing: {
+              tight: "-0.02em",
+              tighter: "-0.04em",
+              widest: "0.25em",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Smooth Scrolling */
+      html.lenis {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto;
+      }
+      .lenis.lenis-smooth[data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+
+      body {
+        background-color: #000000;
+        color: #ffffff;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      @media (min-width: 768px) {
+        body {
+          cursor: none;
+        }
+      }
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Cinematic Grain */
+      .noise-bg {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0.04;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* Liquid Custom Cursor */
+      .cursor-dot,
+      .cursor-outline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9999;
+        pointer-events: none;
+        mix-blend-mode: difference;
+      }
+      .cursor-dot {
+        width: 6px;
+        height: 6px;
+        background-color: white;
+      }
+      .cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+          height 0.3s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s,
+          border-color 0.3s;
+      }
+      body:has(a:hover) .cursor-outline,
+      body:has(button:hover) .cursor-outline,
+      body:has(.bento-card:hover) .cursor-outline {
+        width: 80px;
+        height: 80px;
+        background-color: white;
+        border-color: transparent;
+      }
+
+      /* Typography Setup */
+      .text-mask {
+        overflow: hidden;
+        display: inline-block;
+      }
+      .text-mask span {
+        display: block;
+        transform: translateY(110%);
+      }
+      .text-stroke {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+      }
+      @media (max-width: 768px) {
+        .text-stroke {
+          -webkit-text-stroke: 1px rgba(255, 255, 255, 0.7);
+        }
+      }
+
+      /* Magnetic Buttons */
+      .magnetic-btn {
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        transition: color 0.4s ease;
+      }
+      .magnetic-btn .fill {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        border-radius: 50%;
+        transition: top 0.6s cubic-bezier(0.19, 1, 0.22, 1), border-radius 0.6s;
+        z-index: -1;
+      }
+      .magnetic-btn:hover {
+        color: #000;
+      }
+      .magnetic-btn:hover .fill {
+        top: 0;
+        border-radius: 0;
+      }
+
+      /* Perfected Bento Card Mouse Glow Tracker */
+      .bento-card {
+        position: relative;
+        background: #080808; /* Slightly lighter than pure black for depth */
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 2rem;
+        overflow: hidden;
+        transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+          border-color 0.5s ease;
+      }
+      .bento-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(255, 255, 255, 0.25); /* Border brightens on hover */
+      }
+      .bento-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        z-index: 0;
+        background: radial-gradient(
+          800px circle at var(--mouse-x) var(--mouse-y),
+          var(--card-glow),
+          transparent 40%
+        );
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+      }
+      .bento-card:hover::before {
+        opacity: 1;
+      }
+
+      /* Mobile Menu */
+      .mobile-link-wrap {
+        overflow: hidden;
+      }
+      .mobile-link {
+        display: block;
+        transform: translateY(100%);
+      }
+
+      /* Grid Blueprint */
+      .blueprint {
+        background-image: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          );
+        background-size: 80px 80px;
+      }
+      @media (max-width: 768px) {
+        .blueprint {
+          background-size: 40px 40px;
+        }
+      }
+    </style>
+  </head>
+  <body class="antialiased selection:bg-brand-blue selection:text-white">
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+    <div class="noise-bg"></div>
+
+    <!-- Preloader -->
+    <div class="preloader fixed inset-0 z-[10000] flex bg-[#000]">
+      <div
+        class="absolute inset-0 flex flex-col items-center justify-center z-20 preloader-content"
+      >
+        <div class="overflow-hidden mb-2">
+          <span
+            class="font-display font-bold text-4xl md:text-7xl uppercase tracking-tighter text-white loader-word block translate-y-[110%]"
+            >Netziah</span
+          >
+        </div>
+        <div class="overflow-hidden">
+          <span
+            class="font-sans text-[9px] md:text-[10px] uppercase tracking-widest text-brand-text loader-word block translate-y-[110%]"
+            >Secure Connection // 2026</span
+          >
+        </div>
+      </div>
+      <div class="w-1/2 h-full bg-[#050505] panel-left origin-left"></div>
+      <div class="w-1/2 h-full bg-[#050505] panel-right origin-right"></div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 bg-[#050505] z-[90] flex flex-col justify-center px-8 opacity-0 pointer-events-none transition-opacity duration-500"
+    >
+      <nav
+        class="flex flex-col gap-6 text-4xl font-display font-bold uppercase tracking-tighter text-white mt-12"
+      >
+        <div class="mobile-link-wrap">
+          <a
+            href="home"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >Home</a
+          >
+        </div>
+        <div class="mobile-link-wrap">
+          <a
+            href="about-us"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >About Us</a
+          >
+        </div>
+        <div class="mobile-link-wrap">
+          <a
+            href="solutions"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >Solutions</a
+          >
+        </div>
+        <div class="mobile-link-wrap">
+          <a href="contact" class="mobile-link text-brand-blue"
+            >Contact Sales</a
+          >
+        </div>
+      </nav>
+
+      <div
+        class="mt-16 flex flex-col gap-6 mobile-meta opacity-0 translate-y-4"
+      >
+        <a
+          href="mailto:hello@netziah.com"
+          class="magnetic-btn border border-brand-blue bg-brand-blue text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-bold w-fit"
+        >
+          <span class="relative z-10">Email Us</span>
+          <div class="fill bg-white"></div>
+        </a>
+        <div
+          class="flex flex-col gap-2 mt-4 text-[11px] font-sans text-brand-text uppercase tracking-widest"
+        >
+          <a
+            href="mailto:hello@netziah.com"
+            class="text-white hover:text-brand-blue"
+            >hello@netziah.com</a
+          >
+          <a href="tel:+13072248500" class="text-white hover:text-brand-blue"
+            >+1 (307) 224-8500</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Fixed Premium Navigation -->
+    <header
+      class="fixed top-0 left-0 w-full z-[100] px-6 md:px-12 py-5 md:py-6 bg-[#000]/90 backdrop-blur-md border-b border-white/5 nav-reveal opacity-0"
+    >
+      <div
+        class="flex justify-between items-center w-full max-w-[1800px] mx-auto"
+      >
+        <!-- Logo -->
+        <a href="home" class="flex items-center gap-2 md:gap-3 group">
+          <svg
+            class="w-6 h-6 md:w-8 md:h-8 transition-transform duration-1000 group-hover:rotate-180 text-white"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+          </svg>
+          <span
+            class="font-display font-bold text-lg md:text-2xl tracking-tighter uppercase text-white"
+            >Netziah</span
+          >
+        </a>
+
+        <!-- Links (Desktop) -->
+        <nav
+          class="hidden lg:flex items-center gap-12 text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-white"
+        >
+          <a
+            href="home"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >Home</a
+          >
+          <a
+            href="about-us"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >About Us</a
+          >
+          <a
+            href="solutions"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >Solutions</a
+          >
+          <a
+            href="insights"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >Insights</a
+          >
+        </nav>
+
+        <!-- Contact & CTA -->
+        <div class="flex items-center gap-6 md:gap-8">
+          <div
+            class="hidden md:flex flex-col items-end text-[9px] font-sans text-gray-400 uppercase tracking-widest border-r border-white/20 pr-8"
+          >
+            <a
+              href="mailto:hello@netziah.com"
+              class="hover:text-white transition-colors duration-300"
+              >hello@netziah.com</a
+            >
+            <a
+              href="tel:+13072248500"
+              class="hover:text-white transition-colors duration-300 mt-1"
+              >+13072248500</a
+            >
+          </div>
+          <a
+            href=""
+            class="magnetic-btn border border-white text-black bg-white px-8 py-4 text-[9px] uppercase tracking-[0.2em] font-bold hidden sm:flex"
+          >
+            <span class="relative z-10">Contact Sales</span>
+            <div class="fill bg-black !text-white"></div>
+          </a>
+          <button
+            id="mobile-menu-btn"
+            class="lg:hidden text-white flex flex-col justify-center gap-2 w-8 h-8 z-[110] relative"
+          >
+            <span
+              class="w-full h-[2px] bg-white block transition-all duration-300 absolute top-2 origin-center"
+            ></span>
+            <span
+              class="w-full h-[2px] bg-white block transition-all duration-300 absolute bottom-2 origin-center"
+            ></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 
+      ===============================================================
+      HERO & BENTO GRID SECTION
+      =============================================================== 
+    -->
+    <section
+      class="relative w-full pt-40 md:pt-56 pb-24 md:pb-48 bg-[#000] blueprint overflow-hidden min-h-[100svh] flex flex-col"
+    >
+      <!-- Subtle Background Glows -->
+      <div
+        class="absolute top-[10%] left-[10%] w-[50vw] h-[50vw] bg-brand-blue/10 rounded-full blur-[150px] pointer-events-none z-0"
+      ></div>
+      <div
+        class="absolute bottom-[10%] right-[10%] w-[40vw] h-[40vw] bg-[#FF4500]/5 rounded-full blur-[150px] pointer-events-none z-0"
+      ></div>
+
+      <div
+        class="max-w-[1600px] mx-auto px-6 md:px-12 w-full relative z-10 flex-grow flex flex-col"
+      >
+        <!-- Hero Intro -->
+        <div
+          class="flex flex-col items-center md:items-start text-center md:text-left mb-16 md:mb-24"
+        >
+          <div
+            class="inline-flex items-center gap-3 px-5 py-2 md:px-6 md:py-3 rounded-full border border-brand-blue/30 bg-brand-blue/10 backdrop-blur-xl mb-8 hero-fade opacity-0 translate-y-4"
+          >
+            <div
+              class="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-brand-accent animate-pulse shadow-[0_0_12px_#00D1FF]"
+            ></div>
+            <span
+              class="text-[9px] md:text-[10px] uppercase tracking-[0.25em] text-brand-accent font-bold"
+              >We help you grow your sales.</span
+            >
+          </div>
+
+          <h1
+            class="font-display font-extrabold text-[15vw] md:text-[9vw] leading-[0.85] tracking-tighter uppercase m-0 p-0 mb-6"
+          >
+            <span class="text-mask"><span class="hero-anim">Let's</span></span>
+            <span class="text-mask"
+              ><span class="hero-anim text-transparent text-stroke"
+                >Talk.</span
+              ></span
+            >
+          </h1>
+
+          <div class="hero-fade opacity-0 translate-y-4 max-w-xl">
+            <p
+              class="text-brand-text text-sm md:text-xl leading-relaxed font-medium"
+            >
+              Choose the way that works best for you. We're here to help build
+              your predictable revenue engine.
+            </p>
+          </div>
+        </div>
+
+        <!-- Premium Bento Grid -->
+        <div
+          class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 w-full mt-auto"
+        >
+          <!-- Large Card: Schedule a Meeting -->
+          <!-- The text-stroke class has been removed to ensure the text stays solidly visible -->
+          <a
+            href="#"
+            class="bento-card group col-span-1 lg:col-span-7 p-8 md:p-16 flex flex-col justify-between min-h-[400px] md:min-h-[500px] card-reveal"
+            style="--card-glow: rgba(255, 255, 255, 0.08);"
+          >
+            <!-- Starry Background Texture -->
+            <div
+              class="absolute inset-0 opacity-[0.15] mix-blend-screen bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%221.5%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E')] z-0 pointer-events-none"
+            ></div>
+
+            <div class="relative z-10 flex justify-between items-start w-full">
+              <!-- Icon Container -->
+              <div
+                class="w-16 h-16 md:w-20 md:h-20 rounded-full border border-white/20 bg-[#121212] backdrop-blur-md flex items-center justify-center group-hover:scale-110 group-hover:bg-white transition-all duration-500 text-white group-hover:text-black"
+              >
+                <svg
+                  class="w-8 h-8 md:w-10 md:h-10"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  ></path>
+                </svg>
+              </div>
+              <!-- Hover Arrow -->
+              <div
+                class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500"
+              >
+                <svg
+                  class="w-5 h-5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Text Content: Fixed Visibility -->
+            <div
+              class="relative z-10 mt-12 md:mt-0 transition-transform duration-500 origin-left group-hover:scale-[1.02]"
+            >
+              <h3
+                class="font-display text-4xl md:text-6xl text-white font-bold uppercase tracking-tighter mb-4"
+              >
+                Schedule a<br />Meeting
+              </h3>
+              <p
+                class="text-brand-text text-sm md:text-lg font-medium group-hover:text-white/90 transition-colors duration-500 max-w-sm"
+              >
+                Select a time on our calendar to discuss your current sales
+                execution and operational goals.
+              </p>
+            </div>
+          </a>
+
+          <!-- Right Column Stack -->
+          <div class="col-span-1 lg:col-span-5 flex flex-col gap-6 md:gap-8">
+            <!-- Call Sales Card -->
+            <a
+              href="#"
+              class="bento-card group flex-1 p-8 md:p-10 flex flex-col justify-between min-h-[250px] card-reveal"
+              style="--card-glow: rgba(0, 209, 255, 0.12);"
+            >
+              <div
+                class="relative z-10 flex justify-between items-start w-full"
+              >
+                <!-- Icon Container -->
+                <div
+                  class="w-14 h-14 md:w-16 md:h-16 rounded-full border border-brand-accent/30 bg-[#121212] flex items-center justify-center group-hover:scale-110 group-hover:bg-brand-accent transition-all duration-500 text-brand-accent group-hover:text-black"
+                >
+                  <svg
+                    class="w-6 h-6 md:w-8 md:h-8"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    ></path>
+                  </svg>
+                </div>
+                <!-- Hover Arrow -->
+                <div
+                  class="w-10 h-10 rounded-full bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500"
+                >
+                  <svg
+                    class="w-4 h-4 text-brand-accent"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Text Content: Fixed Visibility -->
+              <div
+                class="relative z-10 mt-8 transition-transform duration-500 origin-left group-hover:scale-[1.02]"
+              >
+                <h3
+                  class="font-display text-3xl md:text-4xl text-white font-bold uppercase tracking-tight mb-2"
+                >
+                  Call Sales
+                </h3>
+                <p
+                  class="text-brand-text text-sm md:text-base font-medium font-sans tracking-wide group-hover:text-brand-accent transition-colors duration-500"
+                >
+                  +1 (307) 224-8500
+                </p>
+              </div>
+            </a>
+
+            <!-- Email Us Card -->
+            <a
+              href="#"
+              class="bento-card group flex-1 p-8 md:p-10 flex flex-col justify-between min-h-[250px] card-reveal"
+              style="--card-glow: rgba(255, 69, 0, 0.15);"
+            >
+              <div
+                class="relative z-10 flex justify-between items-start w-full"
+              >
+                <!-- Icon Container -->
+                <div
+                  class="w-14 h-14 md:w-16 md:h-16 rounded-full border border-[#FF4500]/30 bg-[#121212] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#FF4500] transition-all duration-500 text-[#FF4500] group-hover:text-white"
+                >
+                  <svg
+                    class="w-6 h-6 md:w-8 md:h-8"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    ></path>
+                  </svg>
+                </div>
+                <!-- Hover Arrow -->
+                <div
+                  class="w-10 h-10 rounded-full bg-[#FF4500]/10 border border-[#FF4500]/20 flex items-center justify-center opacity-0 -translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500"
+                >
+                  <svg
+                    class="w-4 h-4 text-[#FF4500]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Text Content: Fixed Visibility -->
+              <div
+                class="relative z-10 mt-8 transition-transform duration-500 origin-left group-hover:scale-[1.02]"
+              >
+                <h3
+                  class="font-display text-3xl md:text-4xl text-white font-bold uppercase tracking-tight mb-2"
+                >
+                  Email Us
+                </h3>
+                <p
+                  class="text-brand-text text-sm md:text-base font-medium font-sans tracking-wide group-hover:text-[#FF4500] transition-colors duration-500"
+                >
+                  hello@netziah.com
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      ARCHITECTURAL FOOTER
+      =============================================================== 
+    -->
+    <footer
+      class="bg-[#020202] pt-20 md:pt-40 pb-10 border-t border-brand-border text-white relative z-10 overflow-hidden"
+    >
+      <div
+        class="max-w-[1600px] mx-auto px-6 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 mb-20 md:mb-32 footer-reveal"
+      >
+        <div class="col-span-1 md:col-span-4 flex flex-col justify-between">
+          <div>
+            <!-- Brand Logo -->
+            <!-- Brand Logo -->
+            <a href="home" class="flex items-center group cursor-pointer z-10">
+              <img
+                src="https://i.postimg.cc/Dzk04hSg/logo-w.png"
+                alt="Netziah Logo"
+                class="h-14 md:h-16 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+              />
+            </a>
+            <p
+              class="text-brand-text font-display text-base md:text-xl uppercase tracking-tight font-medium max-w-[200px]"
+            >
+              Performance Powered by Intelligence
+            </p>
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 flex flex-col gap-6">
+          <h4
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Navigation
+          </h4>
+          <div
+            class="flex flex-col gap-3 font-display font-bold text-sm md:text-lg uppercase tracking-tight"
+          >
+            <a
+              href="solutions"
+              class="hover:text-brand-accent transition-colors w-fit"
+              >Solutions</a
+            >
+            <a
+              href="about-us"
+              class="hover:text-brand-accent transition-colors w-fit"
+              >About Us</a
+            >
+            <a
+              href="solutions"
+              class="hover:text-brand-accent transition-colors w-fit"
+              >Careers</a
+            >
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 flex flex-col gap-6">
+          <h4
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Legal
+          </h4>
+          <div
+            class="flex flex-col gap-3 font-display font-bold text-sm md:text-lg uppercase tracking-tight"
+          >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Privacy Policy</a
+            >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Terms & Conditions</a
+            >
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-4 flex flex-col gap-6">
+          <h4
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Subscribe to Our Newsletter
+          </h4>
+          <div
+            class="flex flex-col gap-4 border-b border-brand-border pb-4 md:pb-6 relative group"
+          >
+            <input
+              type="email"
+              placeholder="ENTER YOUR EMAIL"
+              class="w-full bg-transparent text-white font-display text-lg md:text-2xl uppercase font-bold focus:outline-none placeholder:text-gray-700"
+            />
+            <button
+              class="absolute right-0 top-1/2 -translate-y-1/2 text-[9px] md:text-xs uppercase tracking-widest font-bold text-brand-blue hover:text-white transition-colors"
+            >
+              Submit
+            </button>
+          </div>
+          <p
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-widest leading-relaxed"
+          >
+            I agree to my email being stored and used to receive...
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="max-w-[1600px] mx-auto px-6 md:px-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-t border-brand-border pt-8 md:pt-10 text-[8px] md:text-[10px] uppercase tracking-[0.2em] font-bold text-brand-text"
+      >
+        <div>© 2026 Netziah. All Rights Reserved.</div>
+        <div
+          class="flex flex-wrap justify-start md:justify-center gap-4 md:gap-8"
+        >
+          <a href="home" class="hover:text-white transition-colors">Home</a>
+          <a href="about-us" class="hover:text-white transition-colors"
+            >About Us</a
+          >
+          <a href="solutions" class="hover:text-white transition-colors"
+            >Solutions</a
+          >
+          <a href="insights" class="hover:text-white transition-colors"
+            >Insights</a
+          >
+          <a
+            href=""
+            class="text-white transition-colors border-b border-white pb-[2px]"
+            >Contact Sales</a
+          >
+        </div>
+      </div>
+
+      <!-- Massive Background Text -->
+      <div
+        class="absolute bottom-[2%] md:bottom-[-5%] left-0 w-full overflow-hidden pointer-events-none opacity-[0.03] flex justify-center z-[-1]"
+      >
+        <span
+          class="font-display font-bold text-[28vw] md:text-[25vw] leading-none uppercase tracking-tighter whitespace-nowrap"
+          >NETZIAH</span
+        >
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+      const isMobile = window.innerWidth <= 768;
+
+      // Lenis Smooth Scroll
+      const lenis = new Lenis({
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: "vertical",
+        gestureDirection: "vertical",
+        smooth: true,
+        smoothTouch: false,
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Custom Cursor & Bento Glow Physics (Desktop Only)
+      if (!isMobile) {
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-outline");
+        let mouseX = 0,
+          mouseY = 0,
+          outlineX = 0,
+          outlineY = 0;
+
+        window.addEventListener("mousemove", (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          cursorDot.style.left = `${mouseX}px`;
+          cursorDot.style.top = `${mouseY}px`;
+        });
+
+        gsap.ticker.add(() => {
+          outlineX += (mouseX - outlineX) * 0.15;
+          outlineY += (mouseY - outlineY) * 0.15;
+          gsap.set(cursorOutline, { left: outlineX, top: outlineY });
+        });
+
+        // Bento Grid Hover Gradient Logic (Flawless Mouse Tracking)
+        document.querySelectorAll(".bento-card").forEach((card) => {
+          card.addEventListener("mousemove", (e) => {
+            const rect = card.getBoundingClientRect(),
+              x = e.clientX - rect.left,
+              y = e.clientY - rect.top;
+            card.style.setProperty("--mouse-x", `${x}px`);
+            card.style.setProperty("--mouse-y", `${y}px`);
+          });
+        });
+
+        // Magnetic Buttons
+        document.querySelectorAll(".magnetic-btn").forEach((btn) => {
+          btn.addEventListener("mousemove", (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
+            const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+            gsap.to(btn, { duration: 0.4, x: x, y: y, ease: "power3.out" });
+          });
+          btn.addEventListener("mouseleave", () => {
+            gsap.to(btn, {
+              duration: 0.8,
+              x: 0,
+              y: 0,
+              ease: "elastic.out(1, 0.3)",
+            });
+          });
+        });
+      }
+
+      // Preloader & Hero Sequence
+      const tlPreloader = gsap.timeline();
+      tlPreloader
+        .to(".loader-word", {
+          y: "0%",
+          duration: 1.2,
+          ease: "expo.out",
+          stagger: 0.1,
+        })
+        .to(".loader-word", {
+          y: "-110%",
+          duration: 1,
+          ease: "expo.in",
+          stagger: 0.05,
+          delay: 0.6,
+        })
+        .to(
+          ".panel-left",
+          { xPercent: -100, duration: 1.5, ease: "expo.inOut" },
+          "-=0.2",
+        )
+        .to(
+          ".panel-right",
+          { xPercent: 100, duration: 1.5, ease: "expo.inOut" },
+          "-=1.5",
+        )
+        .set(".preloader", { display: "none" })
+        .to(
+          ".nav-reveal",
+          { opacity: 1, duration: 1.5, ease: "power2.out" },
+          "-=0.5",
+        )
+        .to(
+          ".hero-anim",
+          { y: "0%", duration: 1.5, ease: "expo.out", stagger: 0.1 },
+          "-=1",
+        )
+        .to(
+          ".hero-fade",
+          { opacity: 1, y: 0, duration: 1.5, ease: "expo.out", stagger: 0.1 },
+          "-=1",
+        );
+
+      // --- SCROLL ANIMATIONS ---
+
+      // Reveal Bento Cards Smoothly
+      gsap.utils.toArray(".card-reveal").forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: { trigger: card, start: "top 90%" },
+          y: 60,
+          opacity: 0,
+          duration: 1.5,
+          delay: isMobile ? 0 : i * 0.15, // Stagger on desktop, trigger directly on mobile
+          ease: "expo.out",
+        });
+      });
+
+      // Footer Reveal
+      gsap.from(".footer-reveal > div", {
+        scrollTrigger: { trigger: "footer", start: "top 95%" },
+        y: 30,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "power3.out",
+      });
+
+      // Mobile Nav Toggle
+      const mobileBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileBtnSpans = mobileBtn.querySelectorAll("span");
+      let isMobileMenuOpen = false;
+
+      mobileBtn.addEventListener("click", () => {
+        isMobileMenuOpen = !isMobileMenuOpen;
+        if (isMobileMenuOpen) {
+          mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+          mobileMenu.classList.add("opacity-100", "pointer-events-auto");
+          lenis.stop();
+          mobileBtnSpans[0].style.transform = "translateY(5px) rotate(45deg)";
+          mobileBtnSpans[1].style.transform = "translateY(-5px) rotate(-45deg)";
+          gsap.to("#mobile-menu .mobile-link", {
+            y: "0%",
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.1,
+            delay: 0.1,
+          });
+          gsap.to("#mobile-menu .mobile-meta", {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            delay: 0.3,
+          });
+        } else {
+          mobileMenu.classList.add("opacity-0", "pointer-events-none");
+          mobileMenu.classList.remove("opacity-100", "pointer-events-auto");
+          lenis.start();
+          mobileBtnSpans[0].style.transform = "translateY(0) rotate(0)";
+          mobileBtnSpans[1].style.transform = "translateY(0) rotate(0)";
+          gsap.set("#mobile-menu .mobile-link", { y: "100%" });
+          gsap.set("#mobile-menu .mobile-meta", { y: 16, opacity: 0 });
+        }
+      });
+    </script>
+  </body>
+</html>

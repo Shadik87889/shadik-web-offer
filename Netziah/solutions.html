@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-[#000000]">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Solutions | Netziah - Revenue Engine</title>
+
+    <!-- Ultra Premium Fonts: Syne (Display) & Manrope (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Manrope", "sans-serif"],
+              display: ["Syne", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                black: "#000000",
+                dark: "#050505",
+                gray: "#0a0a0a",
+                border: "rgba(255,255,255,0.1)",
+                blue: "#0055FF",
+                accent: "#00D1FF",
+                text: "#888890",
+              },
+            },
+            fontSize: {
+              "fluid-massive": "clamp(3rem, 9vw, 11rem)",
+              "fluid-h1": "clamp(2.5rem, 8vw, 8rem)",
+              "fluid-h2": "clamp(2rem, 5vw, 5.5rem)",
+              "fluid-h3": "clamp(1.5rem, 4vw, 4rem)",
+            },
+            letterSpacing: {
+              tight: "-0.02em",
+              tighter: "-0.04em",
+              widest: "0.25em",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Smooth Scrolling */
+      html.lenis {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto;
+      }
+      .lenis.lenis-smooth[data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+
+      body {
+        background-color: #000000;
+        color: #ffffff;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      @media (min-width: 768px) {
+        body {
+          cursor: none;
+        }
+      }
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Cinematic Grain */
+      .noise-bg {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0.04;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* Liquid Custom Cursor */
+      .cursor-dot,
+      .cursor-outline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9999;
+        pointer-events: none;
+        mix-blend-mode: difference;
+      }
+      .cursor-dot {
+        width: 6px;
+        height: 6px;
+        background-color: white;
+      }
+      .cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+          height 0.3s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s,
+          border-color 0.3s;
+      }
+      body:has(a:hover) .cursor-outline,
+      body:has(button:hover) .cursor-outline,
+      body:has(.hover-trigger:hover) .cursor-outline {
+        width: 80px;
+        height: 80px;
+        background-color: white;
+        border-color: transparent;
+      }
+
+      /* Typography Setup */
+      .text-mask {
+        overflow: hidden;
+        display: block;
+      }
+      .text-mask span {
+        display: block;
+        transform: translateY(110%);
+      }
+      .text-stroke {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+        transition: color 0.4s ease, -webkit-text-stroke 0.4s ease;
+      }
+      .text-stroke:hover {
+        color: #ffffff;
+        -webkit-text-stroke: 1px transparent;
+      }
+      @media (max-width: 768px) {
+        .text-stroke {
+          -webkit-text-stroke: 1px rgba(255, 255, 255, 0.6);
+        }
+      }
+
+      /* Editorial Image Filters */
+      .img-premium {
+        filter: grayscale(100%) contrast(1.15) brightness(0.9);
+        transition: filter 1.2s cubic-bezier(0.19, 1, 0.22, 1),
+          transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      @media (min-width: 768px) {
+        .group:hover .img-premium,
+        .img-premium:hover {
+          filter: grayscale(0%) contrast(1) brightness(1);
+          transform: scale(1.05);
+        }
+      }
+
+      /* Magnetic Buttons */
+      .magnetic-btn {
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        transition: color 0.4s ease;
+      }
+      .magnetic-btn .fill {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        border-radius: 50%;
+        transition: top 0.6s cubic-bezier(0.19, 1, 0.22, 1), border-radius 0.6s;
+        z-index: -1;
+      }
+      .magnetic-btn:hover {
+        color: #000;
+      }
+      .magnetic-btn:hover .fill {
+        top: 0;
+        border-radius: 0;
+      }
+      .btn-blue .fill {
+        background: #0055ff;
+      }
+      .btn-blue:hover {
+        color: #fff;
+      }
+
+      /* Grid Blueprint */
+      .blueprint {
+        background-image: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          );
+        background-size: 80px 80px;
+      }
+      @media (max-width: 768px) {
+        .blueprint {
+          background-size: 40px 40px;
+        }
+      }
+
+      /* Solution Cards Hover Glow */
+      .solution-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: radial-gradient(
+          800px circle at var(--mouse-x) var(--mouse-y),
+          rgba(0, 85, 255, 0.1),
+          transparent 40%
+        );
+        opacity: 0;
+        transition: opacity 0.5s;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .solution-card:hover::before {
+        opacity: 1;
+      }
+
+      /* Mobile Menu Styles */
+      .mobile-link-wrap {
+        overflow: hidden;
+      }
+      .mobile-link {
+        display: block;
+        transform: translateY(100%);
+      }
+
+      .blend-diff {
+        mix-blend-mode: difference;
+        color: white;
+      }
+    </style>
+  </head>
+  <body class="antialiased selection:bg-brand-blue selection:text-white">
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+    <div class="noise-bg"></div>
+
+    <!-- Cinematic Preloader -->
+    <div class="preloader fixed inset-0 z-[10000] flex bg-[#000]">
+      <div
+        class="absolute inset-0 flex flex-col items-center justify-center z-20 preloader-content"
+      >
+        <div class="overflow-hidden mb-2">
+          <span
+            class="font-display font-bold text-4xl md:text-7xl uppercase tracking-tighter text-white loader-word block translate-y-[110%]"
+            >Netziah</span
+          >
+        </div>
+        <div class="overflow-hidden">
+          <span
+            class="font-sans text-[9px] md:text-[10px] uppercase tracking-widest text-brand-text loader-word block translate-y-[110%]"
+            >System Initialization // 2026</span
+          >
+        </div>
+      </div>
+      <div class="w-1/2 h-full bg-[#050505] panel-left origin-left"></div>
+      <div class="w-1/2 h-full bg-[#050505] panel-right origin-right"></div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 bg-[#050505] z-[90] flex flex-col justify-center px-8 opacity-0 pointer-events-none transition-opacity duration-500"
+    >
+      <nav
+        class="flex flex-col gap-6 text-4xl font-display font-bold uppercase tracking-tighter text-white mt-12"
+      >
+        <div class="mobile-link-wrap">
+          <a
+            href="home.html"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >Home</a
+          >
+        </div>
+        <div class="mobile-link-wrap">
+          <a
+            href="about-us.html"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >About Us</a
+          >
+        </div>
+        <div class="mobile-link-wrap">
+          <a href="#" class="mobile-link text-brand-blue">Solutions</a>
+        </div>
+        <div class="mobile-link-wrap">
+          <a
+            href="#"
+            class="mobile-link hover:text-brand-accent transition-colors"
+            >Insights</a
+          >
+        </div>
+      </nav>
+
+      <div
+        class="mt-16 flex flex-col gap-6 mobile-meta opacity-0 translate-y-4"
+      >
+        <a
+          href="#"
+          class="magnetic-btn border border-white/30 text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-bold w-fit"
+        >
+          <span class="relative z-10">Contact Sales</span>
+          <div class="fill"></div>
+        </a>
+        <div
+          class="flex flex-col gap-2 mt-4 text-[11px] font-sans text-brand-text uppercase tracking-widest"
+        >
+          <a
+            href="mailto:hello@netziah.com"
+            class="text-white hover:text-brand-blue"
+            >hello@netziah.com</a
+          >
+          <a href="tel:+13072248500" class="text-white hover:text-brand-blue"
+            >+1 (307) 224-8500</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Fixed Premium Navigation -->
+    <header
+      class="fixed top-0 left-0 w-full z-[100] px-6 md:px-12 py-5 md:py-6 bg-[#000] border-b border-brand-border nav-reveal opacity-0"
+    >
+      <div
+        class="flex justify-between items-center w-full max-w-[1800px] mx-auto"
+      >
+        <!-- Brand Logo -->
+        <a href="home" class="flex items-center group cursor-pointer z-10">
+          <img
+            src="https://i.postimg.cc/Dzk04hSg/logo-w.png"
+            alt="Netziah Logo"
+            class="h-14 md:h-16 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+          />
+        </a>
+
+        <!-- Links (Desktop) -->
+        <nav
+          class="hidden lg:flex items-center gap-12 text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-white"
+        >
+          <a
+            href="home.html"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >Home</a
+          >
+          <a
+            href="about-us.html"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >About Us</a
+          >
+          <a
+            href="#"
+            class="text-white relative after:absolute after:-bottom-2 after:left-0 after:w-full after:h-[2px] after:bg-brand-blue"
+            >Solutions</a
+          >
+          <a
+            href="#"
+            class="hover:text-brand-accent transition-colors duration-300"
+            >Insights</a
+          >
+        </nav>
+
+        <!-- Contact & CTA -->
+        <div class="flex items-center gap-6 md:gap-8">
+          <div
+            class="hidden md:flex flex-col items-end text-[9px] font-sans text-gray-400 uppercase tracking-widest border-r border-white/20 pr-8"
+          >
+            <a
+              href="mailto:hello@netziah.com"
+              class="hover:text-white transition-colors duration-300"
+              >hello@netziah.com</a
+            >
+            <a
+              href="tel:+13072248500"
+              class="hover:text-white transition-colors duration-300 mt-1"
+              >+13072248500</a
+            >
+          </div>
+          <a
+            href="#"
+            class="magnetic-btn border border-white/30 text-white px-8 py-4 text-[9px] uppercase tracking-[0.2em] font-bold hidden sm:flex"
+          >
+            <span class="relative z-10">Contact Sales</span>
+            <div class="fill"></div>
+          </a>
+          <button
+            id="mobile-menu-btn"
+            class="lg:hidden text-white flex flex-col justify-center gap-2 w-8 h-8 z-[110] relative"
+          >
+            <span
+              class="w-full h-[2px] bg-white block transition-all duration-300 absolute top-2 origin-center"
+            ></span>
+            <span
+              class="w-full h-[2px] bg-white block transition-all duration-300 absolute bottom-2 origin-center"
+            ></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 
+      ===============================================================
+      HERO SECTION: Majestic Cinematic Typography
+      =============================================================== 
+    -->
+    <section
+      class="relative w-full h-[100svh] min-h-[700px] md:min-h-[850px] flex items-center overflow-hidden bg-[#000]"
+    >
+      <!-- Deep Abstract Background -->
+      <div class="absolute inset-0 flex w-full h-full z-0 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1633526543814-9718c8922b7a?auto=format&fit=crop&w=2000&q=80"
+          alt="Abstract Data Flow"
+          class="w-full h-full object-cover hero-bg-img img-premium opacity-75 scale-125 origin-center"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-[#000] via-[#000]/40 to-transparent"
+        ></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-[#000] via-transparent to-transparent opacity-80"
+        ></div>
+
+        <!-- Glowing Ambient Orb -->
+        <div
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-brand-blue/10 rounded-full blur-[120px] pointer-events-none"
+        ></div>
+      </div>
+
+      <div
+        class="relative z-10 w-full px-6 md:px-12 flex flex-col justify-center h-full max-w-[1800px] mx-auto pt-32 pb-16 md:pb-24"
+      >
+        <!-- Massive Typographic Overlap -->
+        <div
+          class="w-full relative blend-diff pointer-events-none mb-10 md:mb-16"
+        >
+          <p
+            class="font-sans text-[10px] md:text-xs uppercase tracking-[0.4em] font-bold text-white mb-6 md:mb-10 hero-fade opacity-0 translate-y-4"
+          >
+            Performance Powered by Intelligence
+          </p>
+          <h1
+            class="font-display font-extrabold text-[12vw] sm:text-[9vw] md:text-[8vw] leading-[0.85] tracking-tighter uppercase m-0 p-0 flex flex-col w-full"
+          >
+            <span class="text-mask"
+              ><span class="hero-anim block">Revenue</span></span
+            >
+            <span class="text-mask md:pl-[4%]"
+              ><span class="hero-anim text-transparent text-stroke block"
+                >Systems,</span
+              ></span
+            >
+            <span class="text-mask md:pl-[8%]"
+              ><span class="hero-anim block">Professionally</span></span
+            >
+            <span class="text-mask md:pl-[12%]"
+              ><span class="hero-anim text-transparent text-stroke block"
+                >Operated.</span
+              ></span
+            >
+          </h1>
+        </div>
+
+        <!-- Lower Information Grid -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 mt-auto items-end hero-fade opacity-0 translate-y-8"
+        >
+          <div
+            class="col-span-1 md:col-span-6 font-sans text-brand-text text-sm md:text-xl leading-relaxed font-medium md:pr-8 border-l-2 border-brand-blue pl-6 md:pl-8"
+          >
+            <p>
+              We design and operate disciplined, data-driven revenue systems
+              that help companies convert more opportunities into measurable
+              growth.
+            </p>
+          </div>
+          <div
+            class="col-span-1 md:col-span-6 flex justify-start md:justify-end"
+          >
+            <a
+              href="#"
+              class="magnetic-btn bg-white text-black px-10 py-5 text-[10px] uppercase tracking-[0.2em] font-bold"
+            >
+              <span class="relative z-10">Book a Discovery Call</span>
+              <div class="fill bg-brand-blue"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      SCROLL SCRUB BRIDGE: Governance Statement
+      =============================================================== 
+    -->
+    <section
+      class="py-32 md:py-64 bg-[#050505] relative border-b border-brand-border flex items-center justify-center blueprint"
+    >
+      <div
+        class="max-w-[1400px] mx-auto px-6 md:px-12 text-center relative z-10"
+      >
+        <h2
+          class="bridge-text font-display text-3xl md:text-fluid-h2 font-bold uppercase tracking-tighter leading-[1.1] text-[#1a1a1a]"
+        >
+          Netziah brings governance, ownership, visibility, and
+          <span class="text-brand-blue">revenue discipline</span> to sales
+          execution.
+        </h2>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      WHAT WE DO: Sleek Glassmorphic Grid
+      =============================================================== 
+    -->
+    <section class="py-32 md:py-48 relative bg-[#000]">
+      <div class="w-full px-6 md:px-12 max-w-[1800px] mx-auto">
+        <div
+          class="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 text-reveal border-b border-brand-border pb-8 gap-6"
+        >
+          <div>
+            <span
+              class="text-brand-blue text-[10px] uppercase tracking-[0.3em] font-bold block mb-4"
+              >Our Solutions</span
+            >
+            <h2
+              class="font-display text-5xl md:text-7xl text-white font-bold uppercase tracking-tighter leading-none"
+            >
+              What We Do
+            </h2>
+          </div>
+          <p class="text-brand-text text-sm md:text-lg max-w-md font-medium">
+            We design and operate disciplined revenue systems that help
+            companies convert opportunities into predictable growth.
+          </p>
+        </div>
+
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"
+          id="solutions-grid"
+        >
+          <!-- Card 1 -->
+          <div
+            class="solution-card group relative bg-[#050505] border border-brand-border rounded-[2rem] p-10 md:p-16 overflow-hidden flex flex-col justify-between min-h-[400px] card-reveal"
+          >
+            <div class="relative z-10">
+              <span
+                class="font-display text-5xl md:text-7xl font-bold text-transparent text-stroke mb-8 block opacity-100 md:opacity-50 md:group-hover:opacity-100 transition-opacity"
+                >01</span
+              >
+              <h3
+                class="font-display text-3xl md:text-4xl text-white font-bold uppercase tracking-tight mb-6"
+              >
+                Sales Operations<br />Ownership
+              </h3>
+              <p
+                class="text-brand-text text-base md:text-lg leading-relaxed font-medium"
+              >
+                We design and operate the sales function as a disciplined system
+                bringing structure, accountability, and consistent execution
+                across the full revenue lifecycle.
+              </p>
+            </div>
+            <!-- Minimalist geometric element -->
+            <div
+              class="absolute top-12 right-12 w-12 h-12 border border-brand-blue/30 rounded-full flex items-center justify-center group-hover:border-brand-blue transition-colors"
+            >
+              <div class="w-2 h-2 bg-brand-blue rounded-full"></div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div
+            class="solution-card group relative bg-[#050505] border border-brand-border rounded-[2rem] p-10 md:p-16 overflow-hidden flex flex-col justify-between min-h-[400px] card-reveal lg:mt-16"
+          >
+            <div class="relative z-10">
+              <span
+                class="font-display text-5xl md:text-7xl font-bold text-transparent text-stroke mb-8 block opacity-100 md:opacity-50 md:group-hover:opacity-100 transition-opacity"
+                >02</span
+              >
+              <h3
+                class="font-display text-3xl md:text-4xl text-white font-bold uppercase tracking-tight mb-6"
+              >
+                Data, Intelligence &<br />Decision Systems
+              </h3>
+              <p
+                class="text-brand-text text-base md:text-lg leading-relaxed font-medium"
+              >
+                We build the data and intelligence layer that transforms
+                reporting into clear operational insight and actionable
+                decisions for leadership.
+              </p>
+            </div>
+            <div
+              class="absolute top-12 right-12 w-12 h-12 border border-brand-blue/30 rounded-full flex items-center justify-center group-hover:border-brand-blue transition-colors"
+            >
+              <div class="w-2 h-2 bg-brand-blue rounded-full"></div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div
+            class="solution-card group relative bg-[#050505] border border-brand-border rounded-[2rem] p-10 md:p-16 overflow-hidden flex flex-col justify-between min-h-[400px] card-reveal"
+          >
+            <div class="relative z-10">
+              <span
+                class="font-display text-5xl md:text-7xl font-bold text-transparent text-stroke mb-8 block opacity-100 md:opacity-50 md:group-hover:opacity-100 transition-opacity"
+                >03</span
+              >
+              <h3
+                class="font-display text-3xl md:text-4xl text-white font-bold uppercase tracking-tight mb-6"
+              >
+                Revenue Operations<br />Alignment
+              </h3>
+              <p
+                class="text-brand-text text-base md:text-lg leading-relaxed font-medium"
+              >
+                We align sales, marketing, and customer success under a unified
+                revenue framework designed for predictable growth and reliable
+                forecasting.
+              </p>
+            </div>
+            <div
+              class="absolute top-12 right-12 w-12 h-12 border border-brand-blue/30 rounded-full flex items-center justify-center group-hover:border-brand-blue transition-colors"
+            >
+              <div class="w-2 h-2 bg-brand-blue rounded-full"></div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div
+            class="solution-card group relative bg-[#050505] border border-brand-border rounded-[2rem] p-10 md:p-16 overflow-hidden flex flex-col justify-between min-h-[400px] card-reveal lg:mt-16"
+          >
+            <div class="relative z-10">
+              <span
+                class="font-display text-5xl md:text-7xl font-bold text-transparent text-stroke mb-8 block opacity-100 md:opacity-50 md:group-hover:opacity-100 transition-opacity"
+                >04</span
+              >
+              <h3
+                class="font-display text-3xl md:text-4xl text-white font-bold uppercase tracking-tight mb-6"
+              >
+                Deal Execution<br />& Control
+              </h3>
+              <p
+                class="text-brand-text text-base md:text-lg leading-relaxed font-medium"
+              >
+                We ensure deals move through the pipeline with discipline,
+                visibility, and operational control from opportunity to close.
+              </p>
+            </div>
+            <div
+              class="absolute top-12 right-12 w-12 h-12 border border-brand-blue/30 rounded-full flex items-center justify-center group-hover:border-brand-blue transition-colors"
+            >
+              <div class="w-2 h-2 bg-brand-blue rounded-full"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      HOW WE WORK: Sticky Editorial Timeline
+      =============================================================== 
+    -->
+    <section
+      class="py-32 md:py-48 relative bg-[#050505] border-t border-brand-border"
+    >
+      <div
+        class="w-full px-6 md:px-12 max-w-[1800px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24"
+      >
+        <!-- Left: Sticky Header -->
+        <div class="col-span-1 lg:col-span-5 relative">
+          <div class="lg:sticky lg:top-40 text-reveal">
+            <span
+              class="text-brand-blue text-[10px] uppercase tracking-[0.3em] font-bold block mb-4"
+              >Our Process</span
+            >
+            <h2
+              class="font-display text-5xl md:text-fluid-h2 text-white font-bold uppercase tracking-tighter leading-[0.9] mb-8"
+            >
+              How We <br /><span class="text-stroke text-transparent"
+                >Work</span
+              >
+            </h2>
+            <p
+              class="text-brand-text text-base md:text-xl font-medium max-w-md"
+            >
+              A structured, analytical, and execution-focused approach to
+              building your revenue engine.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: Scrolling Steps -->
+        <div class="col-span-1 lg:col-span-7 relative">
+          <!-- Vertical Line -->
+          <div
+            class="absolute left-[15px] md:left-[27px] top-0 w-[1px] h-full bg-brand-border hidden sm:block"
+          ></div>
+
+          <div class="flex flex-col gap-16 md:gap-24 relative z-10">
+            <!-- Step 1 -->
+            <div class="flex gap-6 md:gap-12 group step-reveal">
+              <div
+                class="w-8 h-8 md:w-14 md:h-14 rounded-full bg-[#0a0a0a] border border-brand-border flex items-center justify-center flex-shrink-0 relative z-10 group-hover:border-brand-blue transition-colors"
+              >
+                <div
+                  class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-white group-hover:bg-brand-blue transition-colors shadow-[0_0_10px_rgba(255,255,255,0.5)] group-hover:shadow-[0_0_15px_#0055FF]"
+                ></div>
+              </div>
+              <div class="pt-1 md:pt-2">
+                <span
+                  class="font-sans text-[10px] uppercase tracking-[0.2em] font-bold text-brand-text mb-2 block"
+                  >Phase 01</span
+                >
+                <h3
+                  class="font-display text-3xl md:text-5xl text-white font-bold uppercase tracking-tighter mb-4"
+                >
+                  Discovery
+                </h3>
+                <p
+                  class="text-brand-text text-base md:text-xl leading-relaxed font-medium max-w-lg"
+                >
+                  We assess how revenue is currently generated, managed, and
+                  executed across your entire organization.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flex gap-6 md:gap-12 group step-reveal">
+              <div
+                class="w-8 h-8 md:w-14 md:h-14 rounded-full bg-[#0a0a0a] border border-brand-border flex items-center justify-center flex-shrink-0 relative z-10 group-hover:border-brand-blue transition-colors"
+              >
+                <div
+                  class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-white group-hover:bg-brand-blue transition-colors shadow-[0_0_10px_rgba(255,255,255,0.5)] group-hover:shadow-[0_0_15px_#0055FF]"
+                ></div>
+              </div>
+              <div class="pt-1 md:pt-2">
+                <span
+                  class="font-sans text-[10px] uppercase tracking-[0.2em] font-bold text-brand-text mb-2 block"
+                  >Phase 02</span
+                >
+                <h3
+                  class="font-display text-3xl md:text-5xl text-white font-bold uppercase tracking-tighter mb-4"
+                >
+                  Revenue Analysis
+                </h3>
+                <p
+                  class="text-brand-text text-base md:text-xl leading-relaxed font-medium max-w-lg"
+                >
+                  We identify structural gaps that prevent opportunities from
+                  converting into revenue and define the exact bottlenecks.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="flex gap-6 md:gap-12 group step-reveal">
+              <div
+                class="w-8 h-8 md:w-14 md:h-14 rounded-full bg-[#0a0a0a] border border-brand-border flex items-center justify-center flex-shrink-0 relative z-10 group-hover:border-brand-blue transition-colors"
+              >
+                <div
+                  class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-white group-hover:bg-brand-blue transition-colors shadow-[0_0_10px_rgba(255,255,255,0.5)] group-hover:shadow-[0_0_15px_#0055FF]"
+                ></div>
+              </div>
+              <div class="pt-1 md:pt-2">
+                <span
+                  class="font-sans text-[10px] uppercase tracking-[0.2em] font-bold text-brand-text mb-2 block"
+                  >Phase 03</span
+                >
+                <h3
+                  class="font-display text-3xl md:text-5xl text-white font-bold uppercase tracking-tighter mb-4"
+                >
+                  System Design
+                </h3>
+                <p
+                  class="text-brand-text text-base md:text-xl leading-relaxed font-medium max-w-lg"
+                >
+                  We design scalable, data-driven revenue systems completely
+                  tailored to your organization's goals and market.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="flex gap-6 md:gap-12 group step-reveal">
+              <div
+                class="w-8 h-8 md:w-14 md:h-14 rounded-full bg-[#0a0a0a] border border-brand-border flex items-center justify-center flex-shrink-0 relative z-10 group-hover:border-brand-blue transition-colors"
+              >
+                <div
+                  class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-white group-hover:bg-brand-blue transition-colors shadow-[0_0_10px_rgba(255,255,255,0.5)] group-hover:shadow-[0_0_15px_#0055FF]"
+                ></div>
+              </div>
+              <div class="pt-1 md:pt-2">
+                <span
+                  class="font-sans text-[10px] uppercase tracking-[0.2em] font-bold text-brand-text mb-2 block"
+                  >Phase 04</span
+                >
+                <h3
+                  class="font-display text-3xl md:text-5xl text-white font-bold uppercase tracking-tighter mb-4"
+                >
+                  Implementation
+                </h3>
+                <p
+                  class="text-brand-text text-base md:text-xl leading-relaxed font-medium max-w-lg"
+                >
+                  We operate and implement the systems required to drive
+                  consistent execution, ownership, and measurable results.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      INDUSTRIES: Architectural Grid
+      =============================================================== 
+    -->
+    <section
+      class="py-32 md:py-48 relative bg-[#000] border-t border-brand-border overflow-hidden"
+    >
+      <div class="w-full px-6 md:px-12 max-w-[1800px] mx-auto relative z-10">
+        <div
+          class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-20 text-reveal"
+        >
+          <div class="col-span-1 lg:col-span-4">
+            <span
+              class="text-brand-blue text-[10px] uppercase tracking-[0.3em] font-bold block mb-4"
+              >Industries</span
+            >
+            <h2
+              class="font-display text-5xl md:text-7xl text-white font-bold uppercase tracking-tighter leading-none mb-6"
+            >
+              We Operate<br /><span class="text-stroke text-transparent"
+                >In</span
+              >
+            </h2>
+          </div>
+          <div
+            class="col-span-1 lg:col-span-8 flex flex-col md:flex-row gap-8 lg:gap-16 items-start lg:pt-8"
+          >
+            <p class="text-brand-text text-base md:text-xl font-medium flex-1">
+              We work with sales-driven organizations where revenue depends on
+              disciplined execution, structured lead management, and scalable
+              revenue systems.
+            </p>
+            <p
+              class="text-brand-text text-base md:text-xl font-medium flex-1 border-l-2 border-brand-blue pl-6"
+            >
+              Our work spans industries where opportunities are generated
+              through sales teams, client inquiries, or inbound & outbound
+              demand.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3 Column Lists -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-0 border-t border-brand-border pt-16 lg:pt-0"
+        >
+          <!-- Column 1 -->
+          <div
+            class="lg:border-r border-brand-border lg:pr-12 lg:py-16 list-reveal"
+          >
+            <h4
+              class="font-display text-2xl md:text-3xl text-white font-bold uppercase tracking-tight mb-8 flex items-center gap-4"
+            >
+              <span class="w-3 h-3 bg-brand-blue"></span>
+              Professional & Regulated
+            </h4>
+            <ul
+              class="flex flex-col gap-5 text-brand-text text-sm md:text-base font-medium"
+            >
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                Immigration law services
+              </li>
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                Labor & employment law
+              </li>
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                Personal injury intake
+              </li>
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                Tax preparation & resolution
+              </li>
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                Insurance & Medicare
+              </li>
+              <li class="hover:text-white transition-colors cursor-default">
+                Loans & mortgage services
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 2 -->
+          <div
+            class="lg:border-r border-brand-border lg:px-12 lg:py-16 list-reveal"
+          >
+            <h4
+              class="font-display text-2xl md:text-3xl text-white font-bold uppercase tracking-tight mb-8 flex items-center gap-4"
+            >
+              <span class="w-3 h-3 bg-brand-accent"></span>
+              Consumer Infrastructure
+            </h4>
+            <ul
+              class="flex flex-col gap-5 text-brand-text text-sm md:text-base font-medium"
+            >
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                Solar panel sales
+              </li>
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                Telecom / phone line sales
+              </li>
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                Internet & cable services
+              </li>
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                Utilities & energy switching
+              </li>
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                Telemarketing operations
+              </li>
+              <li class="hover:text-white transition-colors cursor-default">
+                Home services (HVAC, roofing)
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 3 -->
+          <div class="lg:pl-12 lg:py-16 list-reveal">
+            <h4
+              class="font-display text-2xl md:text-3xl text-white font-bold uppercase tracking-tight mb-8 flex items-center gap-4"
+            >
+              <span class="w-3 h-3 border border-white"></span>
+              High-Growth Sales
+            </h4>
+            <ul
+              class="flex flex-col gap-5 text-brand-text text-sm md:text-base font-medium"
+            >
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                High-ticket consumer services
+              </li>
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                Coaching & consulting
+              </li>
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                Online programs sold via calls
+              </li>
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                B2B services
+              </li>
+              <li
+                class="hover:text-white transition-colors cursor-default border-b border-brand-border pb-4"
+              >
+                SaaS with sales teams
+              </li>
+              <li class="hover:text-white transition-colors cursor-default">
+                Education & training programs
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-20 flex justify-center lg:justify-start list-reveal">
+          <a
+            href="#"
+            class="magnetic-btn border border-brand-blue text-brand-blue hover:text-white px-10 py-5 text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            <span class="relative z-10"
+              >Don't see your industry? Let's talk.</span
+            >
+            <div class="fill bg-brand-blue"></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      RESULTS & IMPACT: Fully Responsive, Visible Content
+      =============================================================== 
+    -->
+    <section
+      class="py-24 md:py-48 relative bg-[#050505] border-t border-brand-border"
+    >
+      <div
+        class="w-full px-6 md:px-12 max-w-[1800px] mx-auto text-center text-reveal mb-12 md:mb-24"
+      >
+        <span
+          class="text-brand-blue text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-bold block mb-4"
+          >Results & Impact</span
+        >
+        <h2
+          class="font-display text-4xl md:text-fluid-h2 text-white font-bold uppercase tracking-tighter leading-none mb-6"
+        >
+          Turn Opportunities Into<br /><span
+            class="text-stroke text-transparent"
+            >Measurable Revenue.</span
+          >
+        </h2>
+      </div>
+
+      <!-- Parallax Grid -->
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-[1800px] mx-auto px-4 md:px-8"
+      >
+        <!-- Result Card 1 -->
+        <div
+          class="relative w-full aspect-[4/5] md:aspect-[4/3] overflow-hidden rounded-2xl group gallery-reveal"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1556761175-5973dc0f32d7?auto=format&fit=crop&w=1200&q=80"
+            alt="Revenue Performance"
+            class="w-full h-full object-cover scale-125 origin-center img-parallax img-premium"
+          />
+
+          <!-- Resting Layer: Always strong enough on mobile for reading, lighter on desktop -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 md:via-black/10 to-transparent z-10 transition-all duration-500"
+          ></div>
+
+          <!-- Hover Layer: Dark glassmorphism blur only on desktop hover -->
+          <div
+            class="absolute inset-0 bg-black/0 md:group-hover:bg-black/60 backdrop-blur-none md:group-hover:backdrop-blur-sm transition-all duration-500 z-10"
+          ></div>
+
+          <!-- Content: Always up on mobile, animates up on desktop -->
+          <div
+            class="absolute inset-0 p-6 md:p-12 flex flex-col justify-end transition-transform duration-500 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 z-20"
+          >
+            <span
+              class="font-display text-3xl md:text-5xl font-bold text-transparent text-stroke mb-2"
+              >01</span
+            >
+            <h3
+              class="font-display text-2xl md:text-4xl text-white font-bold uppercase tracking-tight mb-3 md:mb-4"
+            >
+              Revenue Performance
+            </h3>
+            <div class="overflow-hidden">
+              <!-- Text is 100% visible on mobile, fades in on desktop hover -->
+              <p
+                class="text-white/90 text-sm md:text-base font-medium opacity-100 md:opacity-0 md:group-hover:opacity-100 transform translate-y-0 md:translate-y-8 md:group-hover:translate-y-0 transition-all duration-500 max-w-sm"
+              >
+                Improved conversion across the sales lifecycle by introducing
+                disciplined execution and structured revenue systems.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result Card 2 -->
+        <div
+          class="relative w-full aspect-[4/5] md:aspect-[4/3] overflow-hidden rounded-2xl group gallery-reveal"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
+            alt="Lead Conversion"
+            class="w-full h-full object-cover scale-125 origin-center img-parallax img-premium"
+          />
+
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 md:via-black/10 to-transparent z-10 transition-all duration-500"
+          ></div>
+          <div
+            class="absolute inset-0 bg-black/0 md:group-hover:bg-black/60 backdrop-blur-none md:group-hover:backdrop-blur-sm transition-all duration-500 z-10"
+          ></div>
+
+          <div
+            class="absolute inset-0 p-6 md:p-12 flex flex-col justify-end transition-transform duration-500 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 z-20"
+          >
+            <span
+              class="font-display text-3xl md:text-5xl font-bold text-transparent text-stroke mb-2"
+              >02</span
+            >
+            <h3
+              class="font-display text-2xl md:text-4xl text-white font-bold uppercase tracking-tight mb-3 md:mb-4"
+            >
+              Lead Conversion
+            </h3>
+            <div class="overflow-hidden">
+              <p
+                class="text-white/90 text-sm md:text-base font-medium opacity-100 md:opacity-0 md:group-hover:opacity-100 transform translate-y-0 md:translate-y-8 md:group-hover:translate-y-0 transition-all duration-500 max-w-sm"
+              >
+                Higher lead-to-client conversion through optimized intake,
+                qualification, and follow-up processes.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result Card 3 -->
+        <div
+          class="relative w-full aspect-[4/5] md:aspect-[4/3] overflow-hidden rounded-2xl group gallery-reveal"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=80"
+            alt="Operational Clarity"
+            class="w-full h-full object-cover scale-125 origin-center img-parallax img-premium"
+          />
+
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 md:via-black/10 to-transparent z-10 transition-all duration-500"
+          ></div>
+          <div
+            class="absolute inset-0 bg-black/0 md:group-hover:bg-black/60 backdrop-blur-none md:group-hover:backdrop-blur-sm transition-all duration-500 z-10"
+          ></div>
+
+          <div
+            class="absolute inset-0 p-6 md:p-12 flex flex-col justify-end transition-transform duration-500 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 z-20"
+          >
+            <span
+              class="font-display text-3xl md:text-5xl font-bold text-transparent text-stroke mb-2"
+              >03</span
+            >
+            <h3
+              class="font-display text-2xl md:text-4xl text-white font-bold uppercase tracking-tight mb-3 md:mb-4"
+            >
+              Operational Clarity
+            </h3>
+            <div class="overflow-hidden">
+              <p
+                class="text-white/90 text-sm md:text-base font-medium opacity-100 md:opacity-0 md:group-hover:opacity-100 transform translate-y-0 md:translate-y-8 md:group-hover:translate-y-0 transition-all duration-500 max-w-sm"
+              >
+                Leadership gains visibility into pipeline performance,
+                forecasting, and revenue drivers through data-driven systems.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result Card 4 -->
+        <div
+          class="relative w-full aspect-[4/5] md:aspect-[4/3] overflow-hidden rounded-2xl group gallery-reveal"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=1200&q=80"
+            alt="Scalable Growth"
+            class="w-full h-full object-cover scale-125 origin-center img-parallax img-premium"
+          />
+
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 md:via-black/10 to-transparent z-10 transition-all duration-500"
+          ></div>
+          <div
+            class="absolute inset-0 bg-black/0 md:group-hover:bg-black/60 backdrop-blur-none md:group-hover:backdrop-blur-sm transition-all duration-500 z-10"
+          ></div>
+
+          <div
+            class="absolute inset-0 p-6 md:p-12 flex flex-col justify-end transition-transform duration-500 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 z-20"
+          >
+            <span
+              class="font-display text-3xl md:text-5xl font-bold text-transparent text-stroke mb-2"
+              >04</span
+            >
+            <h3
+              class="font-display text-2xl md:text-4xl text-white font-bold uppercase tracking-tight mb-3 md:mb-4"
+            >
+              Scalable Growth
+            </h3>
+            <div class="overflow-hidden">
+              <p
+                class="text-white/90 text-sm md:text-base font-medium opacity-100 md:opacity-0 md:group-hover:opacity-100 transform translate-y-0 md:translate-y-8 md:group-hover:translate-y-0 transition-all duration-500 max-w-sm"
+              >
+                Build the foundational structures necessary to scale your
+                organization predictably without chaos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      CTA SECTION: Massive Empty Void Button
+      =============================================================== 
+    -->
+    <section
+      class="py-32 md:py-64 relative bg-[#000] border-t border-brand-border overflow-hidden flex flex-col items-center justify-center text-center"
+    >
+      <div
+        class="absolute inset-0 bg-brand-blue/5 blur-[100px] md:blur-[120px] rounded-full pointer-events-none w-[100vw] h-[100vw] md:w-[80vw] md:h-[80vw] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      ></div>
+
+      <div
+        class="max-w-[1200px] mx-auto px-6 md:px-12 relative z-10 cta-reveal"
+      >
+        <p
+          class="text-brand-text font-sans text-[8px] md:text-[10px] uppercase tracking-[0.4em] font-bold mb-6 md:mb-8"
+        >
+          Ready to unlock more revenue?
+        </p>
+        <h2
+          class="font-display font-bold text-4xl md:text-fluid-h2 leading-[1] uppercase tracking-tighter text-white mb-10 md:mb-16"
+        >
+          Schedule a <br class="hidden md:block" /><span class="text-brand-blue"
+            >Conversation</span
+          >
+        </h2>
+        <a
+          href="discovery-call"
+          class="magnetic-btn border border-white/20 text-white px-10 md:px-16 py-5 md:py-8 text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold btn-blue hover:border-transparent"
+        >
+          <span class="z-10 relative">Book a Discovery Call</span>
+          <div class="fill"></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      ARCHITECTURAL FOOTER
+      =============================================================== 
+    -->
+    <footer
+      class="bg-[#020202] pt-20 md:pt-40 pb-10 border-t border-brand-border text-white relative z-10 overflow-hidden"
+    >
+      <div
+        class="max-w-[1600px] mx-auto px-6 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 mb-20 md:mb-32 footer-reveal"
+      >
+        <div class="col-span-1 md:col-span-4 flex flex-col justify-between">
+          <div>
+            <!-- Brand Logo -->
+            <a href="home" class="flex items-center group cursor-pointer z-10">
+              <img
+                src="https://i.postimg.cc/Dzk04hSg/logo-w.png"
+                alt="Netziah Logo"
+                class="h-14 md:h-16 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+              />
+            </a>
+            <p
+              class="text-brand-text font-display text-base md:text-xl uppercase tracking-tight font-medium max-w-[200px]"
+            >
+              Performance Powered by Intelligence
+            </p>
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 flex flex-col gap-6">
+          <h4
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Navigation
+          </h4>
+          <div
+            class="flex flex-col gap-3 font-display font-bold text-sm md:text-lg uppercase tracking-tight"
+          >
+            <a
+              href="#"
+              class="text-white w-fit border-b border-brand-accent pb-1"
+              >Solutions</a
+            >
+            <a
+              href="about-us.html"
+              class="hover:text-brand-accent transition-colors w-fit"
+              >About Us</a
+            >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Careers</a
+            >
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 flex flex-col gap-6">
+          <h4
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Legal
+          </h4>
+          <div
+            class="flex flex-col gap-3 font-display font-bold text-sm md:text-lg uppercase tracking-tight"
+          >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Privacy Policy</a
+            >
+            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
+              >Terms & Conditions</a
+            >
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-4 flex flex-col gap-6">
+          <h4
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+          >
+            Subscribe to Our Newsletter
+          </h4>
+          <div
+            class="flex flex-col gap-4 border-b border-brand-border pb-4 md:pb-6 relative group"
+          >
+            <input
+              type="email"
+              placeholder="ENTER YOUR EMAIL"
+              class="w-full bg-transparent text-white font-display text-lg md:text-2xl uppercase font-bold focus:outline-none placeholder:text-gray-700"
+            />
+            <button
+              class="absolute right-0 top-1/2 -translate-y-1/2 text-[9px] md:text-xs uppercase tracking-widest font-bold text-brand-blue hover:text-white transition-colors"
+            >
+              Submit
+            </button>
+          </div>
+          <p
+            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-widest leading-relaxed"
+          >
+            I agree to my email being stored and used to receive...
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="max-w-[1600px] mx-auto px-6 md:px-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-t border-brand-border pt-8 md:pt-10 text-[8px] md:text-[10px] uppercase tracking-[0.2em] font-bold text-brand-text"
+      >
+        <div>© 2026 Netziah. All Rights Reserved.</div>
+        <div
+          class="flex flex-wrap justify-start md:justify-center gap-4 md:gap-8"
+        >
+          <a href="home.html" class="hover:text-white transition-colors"
+            >Home</a
+          >
+          <a href="about-us.html" class="hover:text-white transition-colors"
+            >About Us</a
+          >
+          <a href="#" class="text-white transition-colors">Solutions</a>
+          <a href="#" class="hover:text-white transition-colors">Insights</a>
+          <a href="#" class="hover:text-white transition-colors"
+            >Contact Sales</a
+          >
+        </div>
+      </div>
+
+      <!-- Massive Background Text -->
+      <div
+        class="absolute bottom-[2%] md:bottom-[-5%] left-0 w-full overflow-hidden pointer-events-none opacity-[0.03] flex justify-center z-[-1]"
+      >
+        <span
+          class="font-display font-bold text-[28vw] md:text-[25vw] leading-none uppercase tracking-tighter whitespace-nowrap"
+          >NETZIAH</span
+        >
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+      const isMobile = window.innerWidth <= 768;
+
+      // Lenis Setup (Buttery Smooth)
+      const lenis = new Lenis({
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: "vertical",
+        gestureDirection: "vertical",
+        smooth: true,
+        smoothTouch: false,
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Custom Liquid Cursor & Hover Image Tracking (Desktop)
+      if (!isMobile) {
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-outline");
+
+        let mouseX = 0,
+          mouseY = 0,
+          outlineX = 0,
+          outlineY = 0;
+
+        window.addEventListener("mousemove", (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          cursorDot.style.left = `${mouseX}px`;
+          cursorDot.style.top = `${mouseY}px`;
+        });
+
+        gsap.ticker.add(() => {
+          outlineX += (mouseX - outlineX) * 0.15;
+          outlineY += (mouseY - outlineY) * 0.15;
+          gsap.set(cursorOutline, { left: outlineX, top: outlineY });
+        });
+
+        // Solution Cards Hover Effect (Mouse Tracking Gradient)
+        document.getElementById("solutions-grid").onmousemove = (e) => {
+          for (const card of document.getElementsByClassName("solution-card")) {
+            const rect = card.getBoundingClientRect(),
+              x = e.clientX - rect.left,
+              y = e.clientY - rect.top;
+            card.style.setProperty("--mouse-x", `${x}px`);
+            card.style.setProperty("--mouse-y", `${y}px`);
+          }
+        };
+
+        // Magnetic Buttons
+        document.querySelectorAll(".magnetic-btn").forEach((btn) => {
+          btn.addEventListener("mousemove", (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
+            const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+            gsap.to(btn, { duration: 0.4, x: x, y: y, ease: "power3.out" });
+          });
+          btn.addEventListener("mouseleave", () => {
+            gsap.to(btn, {
+              duration: 0.8,
+              x: 0,
+              y: 0,
+              ease: "elastic.out(1, 0.3)",
+            });
+          });
+        });
+      }
+
+      // Preloader & Hero Sequence
+      const tlPreloader = gsap.timeline();
+      tlPreloader
+        .to(".loader-word", {
+          y: "0%",
+          duration: 1.2,
+          ease: "expo.out",
+          stagger: 0.1,
+        })
+        .to(".loader-word", {
+          y: "-110%",
+          duration: 1,
+          ease: "expo.in",
+          stagger: 0.05,
+          delay: 0.6,
+        })
+        .to(
+          ".panel-left",
+          { xPercent: -100, duration: 1.5, ease: "expo.inOut" },
+          "-=0.2",
+        )
+        .to(
+          ".panel-right",
+          { xPercent: 100, duration: 1.5, ease: "expo.inOut" },
+          "-=1.5",
+        )
+        .set(".preloader", { display: "none" })
+        .to(
+          ".nav-reveal",
+          { opacity: 1, duration: 1.5, ease: "power2.out" },
+          "-=0.5",
+        )
+        .to(
+          ".hero-anim",
+          { y: "0%", duration: 2, ease: "expo.out", stagger: 0.1 },
+          "-=1",
+        )
+        .from(
+          ".hero-bg-img",
+          {
+            scale: 1.4,
+            filter: "grayscale(100%) brightness(0.2)",
+            duration: 2.5,
+            ease: "expo.out",
+          },
+          "-=2",
+        )
+        .to(
+          ".hero-fade",
+          { opacity: 1, y: 0, duration: 1.5, ease: "expo.out" },
+          "-=1.5",
+        );
+
+      // --- SCROLL ANIMATIONS ---
+
+      gsap.to(".bridge-text", {
+        color: "#ffffff",
+        scrollTrigger: {
+          trigger: ".bridge-text",
+          start: "top 80%",
+          end: "bottom 40%",
+          scrub: true,
+        },
+      });
+
+      gsap.utils.toArray(".text-reveal").forEach((elem) => {
+        gsap.from(elem, {
+          scrollTrigger: { trigger: elem, start: "top 90%" },
+          y: 40,
+          opacity: 0,
+          duration: 1.2,
+          ease: "expo.out",
+        });
+      });
+
+      gsap.utils.toArray(".card-reveal").forEach((card) => {
+        gsap.from(card, {
+          scrollTrigger: { trigger: card, start: "top 90%" },
+          y: 50,
+          opacity: 0,
+          duration: 1.2,
+          ease: "expo.out",
+        });
+      });
+
+      gsap.utils.toArray(".step-reveal").forEach((step) => {
+        gsap.from(step, {
+          scrollTrigger: { trigger: step, start: "top 85%" },
+          x: 40,
+          opacity: 0,
+          duration: 1.2,
+          ease: "expo.out",
+        });
+      });
+
+      gsap.utils.toArray(".list-reveal").forEach((list) => {
+        gsap.from(list, {
+          scrollTrigger: { trigger: list, start: "top 90%" },
+          y: 30,
+          opacity: 0,
+          duration: 1.2,
+          ease: "expo.out",
+        });
+      });
+
+      gsap.utils.toArray(".gallery-reveal").forEach((img) => {
+        gsap.from(img, {
+          scrollTrigger: { trigger: img, start: "top 85%" },
+          y: 60,
+          opacity: 0,
+          duration: 1.5,
+          ease: "expo.out",
+        });
+      });
+
+      // Premium Parallax Effects (Disabled on mobile)
+      if (!isMobile) {
+        gsap.to(".hero-bg-img", {
+          yPercent: 15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".hero-bg-img",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.5,
+          },
+        });
+
+        gsap.utils.toArray(".img-parallax").forEach((img) => {
+          gsap.to(img, {
+            y: 80,
+            ease: "none",
+            scrollTrigger: {
+              trigger: img.parentElement,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.5,
+            },
+          });
+        });
+      }
+
+      gsap.from(".cta-reveal > *", {
+        scrollTrigger: { trigger: ".cta-reveal", start: "top 85%" },
+        y: 50,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "expo.out",
+      });
+
+      gsap.from(".footer-reveal > div", {
+        scrollTrigger: { trigger: "footer", start: "top 95%" },
+        y: 30,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "power3.out",
+      });
+
+      // Mobile Nav Toggle
+      const mobileBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileBtnSpans = mobileBtn.querySelectorAll("span");
+      let isMobileMenuOpen = false;
+
+      mobileBtn.addEventListener("click", () => {
+        isMobileMenuOpen = !isMobileMenuOpen;
+        if (isMobileMenuOpen) {
+          mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+          mobileMenu.classList.add("opacity-100", "pointer-events-auto");
+          lenis.stop();
+          mobileBtnSpans[0].style.transform = "translateY(5px) rotate(45deg)";
+          mobileBtnSpans[1].style.transform = "translateY(-5px) rotate(-45deg)";
+          gsap.to("#mobile-menu .mobile-link", {
+            y: "0%",
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.1,
+            delay: 0.1,
+          });
+          gsap.to("#mobile-menu .mobile-meta", {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            delay: 0.3,
+          });
+        } else {
+          mobileMenu.classList.add("opacity-0", "pointer-events-none");
+          mobileMenu.classList.remove("opacity-100", "pointer-events-auto");
+          lenis.start();
+          mobileBtnSpans[0].style.transform = "translateY(0) rotate(0)";
+          mobileBtnSpans[1].style.transform = "translateY(0) rotate(0)";
+          gsap.set("#mobile-menu .mobile-link", { y: "100%" });
+          gsap.set("#mobile-menu .mobile-meta", { y: 16, opacity: 0 });
+        }
+      });
+    </script>
+  </body>
+</html>
