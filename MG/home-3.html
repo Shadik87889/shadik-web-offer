@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LUMIÈRE | Prime Real Estate</title>
+
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Manrope", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            colors: {
+              brand: {
+                dark: "#0a101f",
+                green: "#10b981",
+                greenDark: "#047857",
+                menuBg: "#f4fbf7",
+              },
+            },
+            animation: {
+              marquee: "marquee 45s linear infinite",
+            },
+            keyframes: {
+              marquee: {
+                "0%": { transform: "translateX(0%)" },
+                "100%": { transform: "translateX(-50%)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Base Resets - Allow vertical scrolling */
+      body {
+        background-color: #ffffff;
+        color: #0a101f;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Lenis Smooth Scroll Recommended CSS */
+      html.lenis,
+      html.lenis body {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+      }
+      .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+      .lenis.lenis-scrolling iframe {
+        pointer-events: none;
+      }
+
+      /* Pill Shadows */
+      .pill-shadow {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04),
+          0 1px 3px rgba(0, 0, 0, 0.02);
+        border: 1px solid rgba(0, 0, 0, 0.02);
+      }
+
+      /* Marquee Hover Pause & Smoothness */
+      .marquee-wrapper:hover .animate-marquee {
+        animation-play-state: paused;
+      }
+
+      .animate-marquee {
+        will-change: transform;
+      }
+
+      /* ==========================================
+           AWWWARDS-STYLE HOVER EFFECTS
+        ========================================== */
+
+      /* 1. Hollow to Solid Typography (Overlay Menu) */
+      .menu-link-text {
+        display: inline-block;
+        color: transparent;
+        -webkit-text-stroke: 1.5px #0a101f;
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        transform-origin: left bottom;
+        will-change: transform, color, -webkit-text-stroke;
+      }
+      .menu-link:hover .menu-link-text {
+        color: #10b981;
+        -webkit-text-stroke: 1.5px transparent;
+        transform: translateX(30px) skewX(-5deg);
+      }
+
+      /* 2. Text Roll (Desktop Nav) */
+      .nav-link {
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+        vertical-align: top;
+        height: 1.2em;
+      }
+      .nav-text-main {
+        display: block;
+        transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .nav-text-hover {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        color: #10b981;
+        transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        width: 100%;
+      }
+      .nav-item:hover .nav-text-main {
+        transform: translateY(-100%);
+      }
+      .nav-item:hover .nav-text-hover {
+        transform: translateY(-100%);
+      }
+
+      /* 3. Epic Liquid Fill Button (Contact Agent) */
+      .btn-epic {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        transition: color 0.4s ease, border-color 0.4s ease;
+      }
+      .btn-epic::after {
+        content: "";
+        position: absolute;
+        width: 150%;
+        height: 150%;
+        background: #10b981;
+        top: 50%;
+        left: 50%;
+        z-index: -1;
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale3d(0, 0, 1);
+        transform-origin: center;
+        transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .btn-epic:hover::after {
+        transform: translate(-50%, -50%) scale3d(1, 1, 1);
+      }
+      .btn-epic:hover {
+        box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
+        border-color: transparent;
+      }
+
+      /* Arrow Shooting Effect inside Epic Button */
+      .arrow-wrap {
+        overflow: hidden;
+        position: relative;
+        display: inline-flex;
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+      .arrow-icon {
+        position: absolute;
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .arrow-icon-main {
+        transform: translate(0, 0);
+      }
+      .arrow-icon-hover {
+        transform: translate(-150%, 150%);
+        color: #ffffff;
+      }
+
+      .btn-epic:hover .arrow-icon-main {
+        transform: translate(150%, -150%);
+      }
+      .btn-epic:hover .arrow-icon-hover {
+        transform: translate(0, 0);
+      }
+
+      /* 4. Directional Swipe Fill (View Details & Socials) */
+      .btn-swipe {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .btn-swipe::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #10b981;
+        z-index: -1;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .btn-swipe:hover::before {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      /* Social Fill Up */
+      .social-link {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .social-link span {
+        position: relative;
+        z-index: 2;
+        transition: color 0.4s ease;
+      }
+      .social-link::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #10b981;
+        z-index: -1;
+        transform: translateY(100%);
+        border-radius: 50%;
+        transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+          border-radius 0.4s ease;
+      }
+      .social-link:hover::before {
+        transform: translateY(0);
+        border-radius: 0;
+      }
+      .social-link:hover span {
+        color: white;
+      }
+      .social-link:hover {
+        border-color: #10b981;
+      }
+
+      /* Magnetic Area Wrapper for smoother calculations */
+      .magnetic-wrap {
+        display: inline-block;
+        padding: 10px; /* Expands hover area for magnetic pull */
+        margin: -10px;
+      }
+
+      /* ==========================================
+           EXISTING ANIMATIONS
+        ========================================== */
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(var(--rot));
+        }
+        50% {
+          transform: translateY(-8px) rotate(calc(var(--rot) + 3deg));
+        }
+      }
+      .animate-float-1 {
+        --rot: -3deg;
+        animation: float 4s ease-in-out infinite;
+      }
+      .animate-float-2 {
+        --rot: 3deg;
+        animation: float 5s ease-in-out infinite 0.5s;
+      }
+
+      @keyframes dance-wrap-1 {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-14px) rotate(1.5deg);
+        }
+      }
+      @keyframes dance-wrap-2 {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(-1.5deg);
+        }
+      }
+      @keyframes dance-wrap-3 {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-12px) rotate(2deg);
+        }
+      }
+      @keyframes dance-wrap-4 {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-18px) rotate(-2deg);
+        }
+      }
+
+      .animate-dance-wrap-1 {
+        animation: dance-wrap-1 4s ease-in-out infinite;
+      }
+      .animate-dance-wrap-2 {
+        animation: dance-wrap-2 5.5s ease-in-out infinite 0.5s;
+      }
+      .animate-dance-wrap-3 {
+        animation: dance-wrap-3 4.5s ease-in-out infinite 1.2s;
+      }
+      .animate-dance-wrap-4 {
+        animation: dance-wrap-4 6s ease-in-out infinite 0.2s;
+      }
+
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .fade-scroll {
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          transparent,
+          black 15%,
+          black 85%,
+          transparent
+        );
+        mask-image: linear-gradient(
+          to bottom,
+          transparent,
+          black 15%,
+          black 85%,
+          transparent
+        );
+      }
+
+      /* Depth Utilities for new About Animation */
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+      .transform-style-3d {
+        transform-style: preserve-3d;
+      }
+    </style>
+  </head>
+  <body
+    class="selection:bg-brand-green/20 selection:text-brand-dark flex flex-col relative"
+  >
+    <!-- Solid Nav Pills Header -->
+    <header
+      class="fixed top-4 md:top-6 left-0 w-full px-4 md:px-12 z-[60] flex justify-between items-center pointer-events-none"
+    >
+      <!-- Logo Pill (Magnetic) -->
+      <div class="magnetic-wrap pointer-events-auto">
+        <a
+          href="#"
+          class="magnetic-btn bg-white rounded-full px-5 py-3 md:px-6 md:py-4 pill-shadow flex items-center gap-2.5 md:gap-3 transition-colors duration-300 hover:text-brand-green"
+        >
+          <span
+            class="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-brand-green transition-transform duration-300 scale-100 group-hover:scale-125"
+          ></span>
+          <span
+            class="font-serif font-bold text-lg md:text-2xl tracking-wide text-brand-dark transition-colors duration-300"
+            >Lumière</span
+          >
+        </a>
+      </div>
+
+      <!-- Center Nav Pill (Desktop) -->
+      <nav
+        id="desktop-nav"
+        class="pointer-events-auto bg-white rounded-full px-10 py-4 pill-shadow hidden xl:flex items-center gap-8 absolute left-1/2 -translate-x-1/2 transition-all"
+      >
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+        >
+          <span class="nav-link"
+            ><span class="nav-text-main">Home</span
+            ><span class="nav-text-hover">Home</span></span
+          >
+        </a>
+        <a
+          href="#about"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+        >
+          <span class="nav-link"
+            ><span class="nav-text-main">About</span
+            ><span class="nav-text-hover">About</span></span
+          >
+        </a>
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+        >
+          <span class="nav-link"
+            ><span class="nav-text-main">Projects</span
+            ><span class="nav-text-hover">Projects</span></span
+          >
+        </a>
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+        >
+          <span class="nav-link"
+            ><span class="nav-text-main">Blog</span
+            ><span class="nav-text-hover">Blog</span></span
+          >
+        </a>
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+        >
+          <span class="nav-link"
+            ><span class="nav-text-main">Gallery</span
+            ><span class="nav-text-hover">Gallery</span></span
+          >
+        </a>
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+        >
+          <span class="nav-link"
+            ><span class="nav-text-main">Career</span
+            ><span class="nav-text-hover">Career</span></span
+          >
+        </a>
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+        >
+          <span class="nav-link"
+            ><span class="nav-text-main">Contact</span
+            ><span class="nav-text-hover">Contact</span></span
+          >
+        </a>
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-green"
+        >
+          <span class="nav-link"
+            ><span class="nav-text-main">Landowner</span
+            ><span class="nav-text-hover text-brand-dark">Landowner</span></span
+          >
+        </a>
+      </nav>
+
+      <!-- Menu Toggle Pill (Magnetic) -->
+      <div class="magnetic-wrap pointer-events-auto">
+        <button
+          id="menu-toggle"
+          class="magnetic-btn bg-white rounded-full px-5 py-3 md:px-6 md:py-4 pill-shadow flex items-center gap-2.5 md:gap-3 transition-colors hover:text-brand-green group"
+        >
+          <span
+            id="menu-text"
+            class="font-sans text-[10px] md:text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark transition-colors group-hover:text-brand-green"
+            >Menu</span
+          >
+
+          <!-- Hamburger Lines -->
+          <div
+            id="menu-icon-burger"
+            class="relative w-4 h-2 md:w-5 md:h-2.5 flex flex-col justify-between overflow-hidden"
+          >
+            <span
+              class="w-full h-[1.5px] bg-brand-dark block transition-colors group-hover:bg-brand-green"
+            ></span>
+            <span
+              class="w-full h-[1.5px] bg-brand-dark block transition-colors group-hover:bg-brand-green transform transition-transform group-hover:translate-x-1"
+            ></span>
+          </div>
+
+          <!-- Close X (Hidden by default) -->
+          <svg
+            id="menu-icon-close"
+            class="hidden w-3.5 h-3.5 md:w-4 md:h-4 text-brand-dark transition-colors group-hover:text-brand-green"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Fullscreen Menu Overlay -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 bg-brand-menuBg z-[50] opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out flex flex-col"
+    >
+      <!-- Scrollable container for mobile, fixed height flex for desktop -->
+      <div
+        class="w-full max-w-7xl mx-auto px-6 md:px-16 lg:px-24 pt-28 pb-12 lg:py-0 h-full overflow-y-auto lg:overflow-hidden flex flex-col lg:flex-row justify-start lg:justify-between items-start lg:items-center scrollbar-hide"
+      >
+        <!-- Left: Massive Navigation Links -->
+        <div
+          class="w-full lg:w-1/2 lg:h-[60vh] lg:overflow-y-auto scrollbar-hide lg:fade-scroll py-4 lg:py-10 shrink-0"
+        >
+          <nav
+            class="flex flex-col font-serif font-bold text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[1.1] text-brand-dark gap-2 md:gap-4"
+          >
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">Home</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a
+                href="#about"
+                class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">About</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">Projects</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">Blog</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">Gallery</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">Career</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">Contact</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span
+                  class="menu-link-text"
+                  style="color: #10b981; -webkit-text-stroke: 0;"
+                  >Landowner</span
+                ></a
+              >
+            </div>
+          </nav>
+        </div>
+
+        <!-- Right: Featured Card & Contact Details (Now visible on mobile via scrolling) -->
+        <div
+          class="flex flex-col sm:flex-row gap-10 lg:gap-12 items-start lg:items-center menu-info opacity-0 translate-y-8 mt-12 lg:mt-0 w-full lg:w-auto pb-8 lg:pb-0"
+        >
+          <!-- Featured Property Card -->
+          <div
+            class="bg-white rounded-[2rem] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.06)] w-full sm:w-80 shrink-0 lg:transform lg:-rotate-2 hover:rotate-0 transition-transform duration-500 border border-gray-100 group"
+          >
+            <div
+              class="rounded-2xl overflow-hidden h-40 sm:h-48 mb-4 sm:mb-5 relative"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="The Grand Madison"
+              />
+            </div>
+            <div class="px-2 pb-2">
+              <h3
+                class="font-sans font-bold text-xl sm:text-[22px] text-brand-dark mb-2 transition-colors group-hover:text-brand-green"
+              >
+                The Grand Madison
+              </h3>
+              <p
+                class="font-sans text-sm text-gray-500 leading-relaxed mb-5 sm:mb-6"
+              >
+                Designed for modern living, smart home tech, chef's kitchen,
+                serene bedrooms
+              </p>
+              <button
+                class="btn-swipe w-full border border-brand-dark bg-brand-dark text-white font-sans font-semibold py-3 sm:py-3.5 rounded-xl transition-colors shadow-md"
+              >
+                <span class="relative z-10 transition-colors"
+                  >View Details</span
+                >
+              </button>
+            </div>
+          </div>
+
+          <!-- Existing Contact Info -->
+          <div
+            class="flex flex-col gap-8 sm:gap-10 font-sans w-full sm:max-w-[200px]"
+          >
+            <div>
+              <h4
+                class="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-greenDark mb-3"
+              >
+                Headquarters
+              </h4>
+              <p
+                class="text-[15px] text-gray-700 leading-relaxed hover:text-brand-dark transition-colors"
+              >
+                124 Avenue des Champs-Élysées<br />75008 Paris, France
+              </p>
+            </div>
+            <div>
+              <h4
+                class="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-greenDark mb-3"
+              >
+                Direct Contact
+              </h4>
+              <a
+                href="mailto:hello@lumiere.com"
+                class="text-xl font-serif text-brand-dark hover:text-brand-green transition-colors break-words"
+                >hello@lumiere.com</a
+              >
+              <p
+                class="text-[15px] text-gray-700 mt-2 hover:text-brand-dark transition-colors"
+              >
+                +33 1 40 70 20 00
+              </p>
+            </div>
+            <div class="flex gap-3 mt-2">
+              <a
+                href="#"
+                class="social-link w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-sm transition-colors"
+                ><span>in</span></a
+              >
+              <a
+                href="#"
+                class="social-link w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-sm transition-colors"
+                ><span>ig</span></a
+              >
+              <a
+                href="#"
+                class="social-link w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-sm transition-colors"
+                ><span>fb</span></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Hero Container -->
+    <main
+      class="relative w-full min-h-screen flex flex-col justify-center pt-36 pb-20 md:pb-32 overflow-visible"
+    >
+      <!-- Concentric Circles Background -->
+      <div class="absolute inset-0 overflow-hidden -z-10 pointer-events-none">
+        <div
+          class="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-[10%] w-[250vw] sm:w-[150vw] md:w-[130vw] aspect-square rounded-full bg-brand-green/[0.03]"
+        ></div>
+        <div
+          class="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-[5%] w-[180vw] sm:w-[110vw] md:w-[95vw] aspect-square rounded-full bg-brand-green/[0.06]"
+        ></div>
+        <div
+          class="absolute left-1/2 top-[50%] -translate-x-1/2 w-[120vw] sm:w-[70vw] md:w-[60vw] aspect-square rounded-full bg-brand-green/[0.09]"
+        ></div>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="flex-shrink-0 w-full px-4 md:px-6 z-10 text-center gs-reveal">
+        <h1
+          class="font-serif text-[2.75rem] leading-[1.1] sm:text-6xl md:text-7xl lg:text-[5.5rem] text-brand-dark tracking-tight max-w-6xl mx-auto"
+        >
+          Explore the best homes,
+          <span
+            class="inline-block w-16 h-10 sm:w-20 sm:h-12 rounded-xl overflow-hidden align-middle mx-1 border-[3px] border-white shadow-sm animate-float-1"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=200&auto=format&fit=crop"
+              alt="Family"
+              class="w-full h-full object-cover"
+            />
+          </span>
+          <br class="hidden sm:block" />
+          <span class="text-brand-greenDark">and condos in</span>
+          <span
+            class="inline-block w-16 h-10 sm:w-20 sm:h-12 rounded-xl overflow-hidden align-middle mx-1 border-[3px] border-white shadow-sm animate-float-2"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=200&auto=format&fit=crop"
+              alt="House"
+              class="w-full h-full object-cover"
+            />
+          </span>
+          <span class="text-brand-greenDark">your favorite city</span>
+        </h1>
+
+        <p
+          class="mt-6 sm:mt-8 text-gray-700 font-sans max-w-2xl mx-auto text-[15px] md:text-base font-medium px-2"
+        >
+          Browse verified listings, view real-time market data,<br
+            class="hidden md:block"
+          />
+          and make confident decisions — all in one place
+        </p>
+
+        <!-- AWWARDS LIQUID MAGNETIC BUTTON -->
+        <div
+          class="flex items-center justify-center mt-10 md:mt-12 magnetic-wrap"
+        >
+          <button
+            class="magnetic-btn btn-epic relative group px-8 md:px-10 py-4 md:py-5 border border-transparent bg-brand-dark text-white rounded-full font-sans font-bold text-sm md:text-base tracking-wide flex items-center gap-4"
+          >
+            <span class="relative z-10">Contact an Agent</span>
+            <div
+              class="relative z-10 bg-white/10 border border-white/20 rounded-full p-2 group-hover:border-transparent transition-all duration-300"
+            >
+              <div class="arrow-wrap">
+                <!-- Outgoing Arrow -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 arrow-icon arrow-icon-main"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                  />
+                </svg>
+                <!-- Incoming Arrow -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 arrow-icon arrow-icon-hover"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                  />
+                </svg>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Anchored Marquee Gallery -->
+    <div
+      class="relative w-full z-30 transform translate-y-1/2 -mt-16 md:-mt-32 gs-reveal"
+    >
+      <div
+        class="w-full overflow-hidden marquee-wrapper pt-12 pb-12 md:pt-16 md:pb-16"
+      >
+        <div class="flex w-max animate-marquee items-center">
+          <!-- Set 1 -->
+          <div class="flex items-center gap-4 md:gap-6 px-2 md:px-3">
+            <div class="shrink-0 animate-dance-wrap-1 hover:z-30">
+              <div
+                class="w-52 h-36 sm:w-64 sm:h-44 lg:w-[22rem] lg:h-52 rounded-2xl overflow-hidden shadow-xl rotate-[-3deg] border-[6px] md:border-[8px] border-white hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop"
+                  class="w-full h-full object-cover"
+                  alt="Property"
+                />
+              </div>
+            </div>
+            <div class="shrink-0 animate-dance-wrap-2 hover:z-30">
+              <div
+                class="w-52 h-36 sm:w-64 sm:h-44 lg:w-[22rem] lg:h-52 rounded-2xl overflow-hidden shadow-xl rotate-[2deg] border-[6px] md:border-[8px] border-white translate-y-4 md:translate-y-6 hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop"
+                  class="w-full h-full object-cover"
+                  alt="Property"
+                />
+              </div>
+            </div>
+            <div class="shrink-0 animate-dance-wrap-3 hover:z-30">
+              <div
+                class="w-52 h-36 sm:w-64 sm:h-44 lg:w-[22rem] lg:h-52 rounded-2xl overflow-hidden shadow-xl rotate-[-4deg] border-[6px] md:border-[8px] border-white -translate-y-2 md:-translate-y-4 hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=800&auto=format&fit=crop"
+                  class="w-full h-full object-cover"
+                  alt="Property"
+                />
+              </div>
+            </div>
+            <div class="shrink-0 animate-dance-wrap-4 hover:z-30">
+              <div
+                class="w-52 h-36 sm:w-64 sm:h-44 lg:w-[22rem] lg:h-52 rounded-2xl overflow-hidden shadow-xl rotate-[3deg] border-[6px] md:border-[8px] border-white translate-y-2 hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop"
+                  class="w-full h-full object-cover"
+                  alt="Property"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Set 2 -->
+          <div class="flex items-center gap-4 md:gap-6 px-2 md:px-3">
+            <div class="shrink-0 animate-dance-wrap-1 hover:z-30">
+              <div
+                class="w-52 h-36 sm:w-64 sm:h-44 lg:w-[22rem] lg:h-52 rounded-2xl overflow-hidden shadow-xl rotate-[-3deg] border-[6px] md:border-[8px] border-white hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop"
+                  class="w-full h-full object-cover"
+                  alt="Property"
+                />
+              </div>
+            </div>
+            <div class="shrink-0 animate-dance-wrap-2 hover:z-30">
+              <div
+                class="w-52 h-36 sm:w-64 sm:h-44 lg:w-[22rem] lg:h-52 rounded-2xl overflow-hidden shadow-xl rotate-[2deg] border-[6px] md:border-[8px] border-white translate-y-4 md:translate-y-6 hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop"
+                  class="w-full h-full object-cover"
+                  alt="Property"
+                />
+              </div>
+            </div>
+            <div class="shrink-0 animate-dance-wrap-3 hover:z-30">
+              <div
+                class="w-52 h-36 sm:w-64 sm:h-44 lg:w-[22rem] lg:h-52 rounded-2xl overflow-hidden shadow-xl rotate-[-4deg] border-[6px] md:border-[8px] border-white -translate-y-2 md:-translate-y-4 hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=800&auto=format&fit=crop"
+                  class="w-full h-full object-cover"
+                  alt="Property"
+                />
+              </div>
+            </div>
+            <div class="shrink-0 animate-dance-wrap-4 hover:z-30">
+              <div
+                class="w-52 h-36 sm:w-64 sm:h-44 lg:w-[22rem] lg:h-52 rounded-2xl overflow-hidden shadow-xl rotate-[3deg] border-[6px] md:border-[8px] border-white translate-y-2 hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop"
+                  class="w-full h-full object-cover"
+                  alt="Property"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About The Merchant Group Section (Mind-Blowing Animation Edit) -->
+    <section
+      id="about"
+      class="relative w-full min-h-screen bg-[#05080f] text-white pt-48 md:pt-56 pb-32 overflow-hidden z-20 transform-style-3d"
+    >
+      <!-- Dynamic Background Ambient Glow -->
+      <div
+        class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"
+      ></div>
+      <div
+        class="gs-ambient-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] bg-brand-green/10 rounded-full blur-[100px] md:blur-[120px] pointer-events-none"
+      ></div>
+
+      <div class="container mx-auto px-6 md:px-12 lg:px-24 relative z-10">
+        <!-- Top Minimal Label -->
+        <div class="flex items-center gap-4 mb-16 md:mb-24 overflow-hidden">
+          <div
+            class="h-[1px] w-12 bg-brand-green gs-about-line origin-left scale-x-0"
+          ></div>
+          <div class="overflow-hidden perspective-1000">
+            <span
+              class="font-sans text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-brand-green font-bold gs-about-label inline-block"
+              >The Merchant Group</span
+            >
+          </div>
+        </div>
+
+        <!-- Main Editorial Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 relative">
+          <!-- Left Column: Typography & Manifesto -->
+          <div
+            class="lg:col-span-7 flex flex-col justify-center relative z-20 perspective-1000"
+          >
+            <h2
+              class="font-serif text-[3.5rem] sm:text-[5.5rem] md:text-[7rem] lg:text-[8.5rem] leading-[0.9] tracking-tight mb-12 transform-style-3d"
+            >
+              <div class="overflow-hidden py-2 perspective-1000">
+                <span class="inline-block gs-word origin-top-left"
+                  >Curating</span
+                >
+              </div>
+              <div
+                class="overflow-hidden py-2 flex items-center gap-4 md:gap-6 perspective-1000"
+              >
+                <span
+                  class="inline-block font-sans font-light italic text-gray-500 text-3xl sm:text-5xl md:text-6xl gs-word origin-top-left"
+                  >the</span
+                >
+                <span
+                  class="inline-block text-brand-green gs-word origin-top-left"
+                  >Unseen.</span
+                >
+              </div>
+            </h2>
+
+            <div
+              class="max-w-md ml-auto lg:ml-0 lg:pl-12 border-l border-white/10 relative"
+            >
+              <p
+                class="font-sans text-gray-400 text-sm md:text-base leading-[1.8] font-light gs-about-fade pl-6 md:pl-8"
+              >
+                We operate in the shadows of the luxury market. A secretive
+                collective of brokers dedicated to securing architectural
+                masterpieces before they ever reach the public eye.
+                Uncompromising discretion meets visionary insight.
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Column: Media Cluster & Stats -->
+          <div class="lg:col-span-5 relative mt-8 lg:mt-0 perspective-1000">
+            <!-- Media Cluster -->
+            <div
+              class="relative w-full aspect-[3/4] md:aspect-[4/5] max-w-[18rem] md:max-w-sm mx-auto lg:ml-auto mt-12 md:mt-0 transform-style-3d"
+            >
+              <!-- Main Video (Aggressive Reveal) -->
+              <div
+                class="absolute inset-0 overflow-hidden gs-about-media-main border-[4px] border-[#05080f] ring-2 ring-brand-green/50 shadow-[0_0_40px_rgba(16,185,129,0.3)] z-10 bg-brand-dark"
+              >
+                <video
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  class="w-full h-full object-cover"
+                >
+                  <source
+                    src="/AQO_NTYgTAH_lXr19iYUTETLdQq3BA4gpAmvZgm23mJ0loE5d2RX_3epHQk6R0CnciHeq0RmkMvn-n4O5MExjYqy1JzYO_JfG-NFaYyamrrd2A.mp4"
+                    type="video/mp4"
+                  />
+                </video>
+                <div
+                  class="absolute inset-0 bg-brand-dark/20 mix-blend-multiply"
+                ></div>
+              </div>
+
+              <!-- Overlapping Floating Image (3D Spin In) -->
+              <div
+                class="absolute -bottom-8 -left-12 md:-bottom-12 md:-left-24 w-40 md:w-64 aspect-[4/3] rounded-lg overflow-hidden gs-about-media-float shadow-[0_30px_60px_rgba(0,0,0,0.5)] border border-white/5 z-20 bg-brand-dark"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=800&auto=format&fit=crop"
+                  class="w-full h-full object-cover gs-parallax-img scale-150"
+                  alt="Interior Detail"
+                />
+              </div>
+
+              <!-- Rotating Circular Text Badge -->
+              <div
+                class="absolute -top-10 -right-10 md:-top-16 md:-right-16 w-32 h-32 md:w-44 md:h-44 z-30 gs-about-badge mix-blend-difference pointer-events-none"
+              >
+                <svg
+                  viewBox="0 0 100 100"
+                  class="w-full h-full animate-[spin_20s_linear_infinite]"
+                >
+                  <path
+                    id="circlePath"
+                    d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
+                    fill="transparent"
+                  />
+                  <text>
+                    <textPath
+                      href="#circlePath"
+                      class="font-sans text-[8px] md:text-[9.5px] uppercase tracking-[0.25em] fill-brand-green font-semibold"
+                    >
+                      Prime Real Estate • Exclusive Access •
+                    </textPath>
+                  </text>
+                </svg>
+                <div
+                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-brand-green rounded-full"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Architectural Stats Bar -->
+        <div
+          class="mt-32 md:mt-48 pt-12 md:pt-16 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-4 gs-about-stats-container"
+        >
+          <!-- Stat 1 -->
+          <div
+            class="flex flex-col relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-[1px] before:bg-brand-green/60"
+          >
+            <span
+              class="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-2 md:mb-3 gs-stat-val"
+              data-target="2.4"
+              data-prefix="$"
+              data-suffix="B"
+              >0</span
+            >
+            <span
+              class="font-sans text-[9px] md:text-[10px] text-gray-500 uppercase tracking-[0.2em] font-bold gs-stat-label"
+              >Career Volume</span
+            >
+          </div>
+          <!-- Stat 2 -->
+          <div
+            class="flex flex-col relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-[1px] before:bg-white/10"
+          >
+            <span
+              class="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-2 md:mb-3 gs-stat-val"
+              data-target="1"
+              data-prefix=""
+              data-suffix="%"
+              >0</span
+            >
+            <span
+              class="font-sans text-[9px] md:text-[10px] text-gray-500 uppercase tracking-[0.2em] font-bold gs-stat-label"
+              >Global Tier</span
+            >
+          </div>
+          <!-- Stat 3 -->
+          <div
+            class="flex flex-col relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-[1px] before:bg-white/10"
+          >
+            <span
+              class="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-2 md:mb-3 gs-stat-val"
+              data-target="42"
+              data-prefix=""
+              data-suffix=""
+              >0</span
+            >
+            <span
+              class="font-sans text-[9px] md:text-[10px] text-gray-500 uppercase tracking-[0.2em] font-bold gs-stat-label"
+              >Exclusive Assets</span
+            >
+          </div>
+          <!-- Stat 4 -->
+          <div
+            class="flex flex-col relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-[1px] before:bg-white/10"
+          >
+            <span
+              class="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-2 md:mb-3 gs-stat-val"
+              data-target="24"
+              data-prefix=""
+              data-suffix="/7"
+              >0</span
+            >
+            <span
+              class="font-sans text-[9px] md:text-[10px] text-gray-500 uppercase tracking-[0.2em] font-bold gs-stat-label"
+              >Private Advisory</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Projects Section (Super Premium Horizontal Scroll) -->
+    <section
+      id="projects"
+      class="relative w-full bg-brand-menuBg text-brand-dark z-30"
+    >
+      <!-- Section Wrapper for Horizontal Scroll -->
+      <div class="gs-horiz-wrapper relative w-full overflow-hidden">
+        <div class="w-full h-screen flex flex-col justify-center relative">
+          <!-- Floating Section Header -->
+          <div
+            class="absolute top-24 md:top-32 left-6 md:left-12 lg:left-24 z-20 pointer-events-none"
+          >
+            <div class="flex items-center gap-4 mb-4">
+              <div class="h-[1px] w-12 bg-brand-green"></div>
+              <span
+                class="font-sans text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-brand-green font-bold inline-block"
+                >Exclusive Portfolio</span
+              >
+            </div>
+            <h2
+              class="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[1] tracking-tight text-brand-dark"
+            >
+              Curated
+              <span class="text-brand-green italic font-light">Estates.</span>
+            </h2>
+          </div>
+
+          <!-- NEW: Premium Navigation Controls -->
+          <div
+            class="absolute bottom-8 right-6 md:bottom-12 md:right-12 z-30 flex gap-4 pointer-events-auto"
+          >
+            <button
+              id="project-prev"
+              class="w-12 h-12 md:w-16 md:h-16 rounded-full border border-brand-dark/20 flex items-center justify-center hover:bg-brand-dark hover:text-white transition-all duration-300 text-brand-dark bg-white/60 backdrop-blur-md group shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)]"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:-translate-x-1"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
+              </svg>
+            </button>
+            <button
+              id="project-next"
+              class="w-12 h-12 md:w-16 md:h-16 rounded-full border border-brand-dark/20 flex items-center justify-center hover:bg-brand-dark hover:text-white transition-all duration-300 text-brand-dark bg-white/60 backdrop-blur-md group shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)]"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:translate-x-1"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Horizontal Sliding Track -->
+          <div
+            class="gs-horiz-scroll flex gap-8 md:gap-16 px-6 md:px-12 lg:px-24 items-center w-max mt-20 md:mt-16"
+          >
+            <!-- Blank spacer for initial load to let header breathe -->
+            <div
+              class="w-[10vw] md:w-[30vw] shrink-0 h-[60vh] pointer-events-none"
+            ></div>
+
+            <!-- Project Card 1 -->
+            <div
+              class="w-[85vw] sm:w-[75vw] lg:w-[65vw] h-[55vh] md:h-[65vh] shrink-0 relative group rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] transform-style-3d cursor-pointer"
+            >
+              <div class="absolute inset-0 overflow-hidden bg-brand-dark">
+                <!-- Image with Safely Bounded Horizontal Parallax -->
+                <img
+                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1600&auto=format&fit=crop"
+                  class="absolute top-0 -left-[20%] w-[140%] max-w-none h-full object-cover gs-horiz-image origin-center opacity-90 transition-opacity duration-700 group-hover:opacity-100"
+                  alt="The Glass Pavilion"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-80"
+                ></div>
+              </div>
+
+              <!-- Content Overlay -->
+              <div
+                class="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-16 flex flex-col sm:flex-row justify-between items-end gap-6 z-10"
+              >
+                <div>
+                  <p
+                    class="font-sans text-xs md:text-sm uppercase tracking-[0.2em] text-brand-green font-bold mb-3 md:mb-4 opacity-0 translate-y-4 transition-all duration-700 delay-100 group-hover:opacity-100 group-hover:translate-y-0"
+                  >
+                    Beverly Hills, CA
+                  </p>
+                  <h3
+                    class="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-2 md:mb-4 opacity-0 translate-y-8 transition-all duration-700 delay-200 group-hover:opacity-100 group-hover:translate-y-0"
+                  >
+                    The Glass Pavilion
+                  </h3>
+                  <div
+                    class="flex gap-4 md:gap-6 font-sans text-xs md:text-sm text-gray-300 opacity-0 translate-y-4 transition-all duration-700 delay-300 group-hover:opacity-100 group-hover:translate-y-0"
+                  >
+                    <span>$32,500,000</span>
+                    <span
+                      class="w-1 h-1 rounded-full bg-brand-green self-center"
+                    ></span>
+                    <span>6 Beds</span>
+                    <span
+                      class="w-1 h-1 rounded-full bg-brand-green self-center"
+                    ></span>
+                    <span>12,400 SqFt</span>
+                  </div>
+                </div>
+
+                <!-- Liquid Swipe Button -->
+                <button
+                  class="btn-swipe shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-full border border-white/30 backdrop-blur-md flex items-center justify-center transition-all duration-500 group-hover:border-transparent opacity-0 scale-50 group-hover:opacity-100 group-hover:scale-100 delay-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="white"
+                    class="w-5 h-5 md:w-6 md:h-6 relative z-10 transform -rotate-45 group-hover:rotate-0 transition-transform duration-500"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Project Card 2 -->
+            <div
+              class="w-[85vw] sm:w-[75vw] lg:w-[65vw] h-[55vh] md:h-[65vh] shrink-0 relative group rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] transform-style-3d cursor-pointer"
+            >
+              <div class="absolute inset-0 overflow-hidden bg-brand-dark">
+                <img
+                  src="https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1600&auto=format&fit=crop"
+                  class="absolute top-0 -left-[20%] w-[140%] max-w-none h-full object-cover gs-horiz-image origin-center opacity-90 transition-opacity duration-700 group-hover:opacity-100"
+                  alt="Villa Oceana"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-80"
+                ></div>
+              </div>
+              <div
+                class="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-16 flex flex-col sm:flex-row justify-between items-end gap-6 z-10"
+              >
+                <div>
+                  <p
+                    class="font-sans text-xs md:text-sm uppercase tracking-[0.2em] text-brand-green font-bold mb-3 md:mb-4 opacity-0 translate-y-4 transition-all duration-700 delay-100 group-hover:opacity-100 group-hover:translate-y-0"
+                  >
+                    Miami, FL
+                  </p>
+                  <h3
+                    class="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-2 md:mb-4 opacity-0 translate-y-8 transition-all duration-700 delay-200 group-hover:opacity-100 group-hover:translate-y-0"
+                  >
+                    Villa Oceana
+                  </h3>
+                  <div
+                    class="flex gap-4 md:gap-6 font-sans text-xs md:text-sm text-gray-300 opacity-0 translate-y-4 transition-all duration-700 delay-300 group-hover:opacity-100 group-hover:translate-y-0"
+                  >
+                    <span>$18,900,000</span>
+                    <span
+                      class="w-1 h-1 rounded-full bg-brand-green self-center"
+                    ></span>
+                    <span>5 Beds</span>
+                    <span
+                      class="w-1 h-1 rounded-full bg-brand-green self-center"
+                    ></span>
+                    <span>8,200 SqFt</span>
+                  </div>
+                </div>
+                <button
+                  class="btn-swipe shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-full border border-white/30 backdrop-blur-md flex items-center justify-center transition-all duration-500 group-hover:border-transparent opacity-0 scale-50 group-hover:opacity-100 group-hover:scale-100 delay-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="white"
+                    class="w-5 h-5 md:w-6 md:h-6 relative z-10 transform -rotate-45 group-hover:rotate-0 transition-transform duration-500"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Project Card 3 -->
+            <div
+              class="w-[85vw] sm:w-[75vw] lg:w-[65vw] h-[55vh] md:h-[65vh] shrink-0 relative group rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] transform-style-3d cursor-pointer"
+            >
+              <div class="absolute inset-0 overflow-hidden bg-brand-dark">
+                <img
+                  src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1600&auto=format&fit=crop"
+                  class="absolute top-0 -left-[20%] w-[140%] max-w-none h-full object-cover gs-horiz-image origin-center opacity-90 transition-opacity duration-700 group-hover:opacity-100"
+                  alt="The Alpine Retreat"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-80"
+                ></div>
+              </div>
+              <div
+                class="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-16 flex flex-col sm:flex-row justify-between items-end gap-6 z-10"
+              >
+                <div>
+                  <p
+                    class="font-sans text-xs md:text-sm uppercase tracking-[0.2em] text-brand-green font-bold mb-3 md:mb-4 opacity-0 translate-y-4 transition-all duration-700 delay-100 group-hover:opacity-100 group-hover:translate-y-0"
+                  >
+                    Aspen, CO
+                  </p>
+                  <h3
+                    class="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-2 md:mb-4 opacity-0 translate-y-8 transition-all duration-700 delay-200 group-hover:opacity-100 group-hover:translate-y-0"
+                  >
+                    The Alpine Retreat
+                  </h3>
+                  <div
+                    class="flex gap-4 md:gap-6 font-sans text-xs md:text-sm text-gray-300 opacity-0 translate-y-4 transition-all duration-700 delay-300 group-hover:opacity-100 group-hover:translate-y-0"
+                  >
+                    <span>$24,000,000</span>
+                    <span
+                      class="w-1 h-1 rounded-full bg-brand-green self-center"
+                    ></span>
+                    <span>7 Beds</span>
+                    <span
+                      class="w-1 h-1 rounded-full bg-brand-green self-center"
+                    ></span>
+                    <span>10,500 SqFt</span>
+                  </div>
+                </div>
+                <button
+                  class="btn-swipe shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-full border border-white/30 backdrop-blur-md flex items-center justify-center transition-all duration-500 group-hover:border-transparent opacity-0 scale-50 group-hover:opacity-100 group-hover:scale-100 delay-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="white"
+                    class="w-5 h-5 md:w-6 md:h-6 relative z-10 transform -rotate-45 group-hover:rotate-0 transition-transform duration-500"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Project Card 4 -->
+            <div
+              class="w-[85vw] sm:w-[75vw] lg:w-[65vw] h-[55vh] md:h-[65vh] shrink-0 relative group rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] transform-style-3d cursor-pointer"
+            >
+              <div class="absolute inset-0 overflow-hidden bg-brand-dark">
+                <img
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop"
+                  class="absolute top-0 -left-[20%] w-[140%] max-w-none h-full object-cover gs-horiz-image origin-center opacity-90 transition-opacity duration-700 group-hover:opacity-100"
+                  alt="Palm Estate"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-80"
+                ></div>
+              </div>
+              <div
+                class="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-16 flex flex-col sm:flex-row justify-between items-end gap-6 z-10"
+              >
+                <div>
+                  <p
+                    class="font-sans text-xs md:text-sm uppercase tracking-[0.2em] text-brand-green font-bold mb-3 md:mb-4 opacity-0 translate-y-4 transition-all duration-700 delay-100 group-hover:opacity-100 group-hover:translate-y-0"
+                  >
+                    Dubai, UAE
+                  </p>
+                  <h3
+                    class="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-2 md:mb-4 opacity-0 translate-y-8 transition-all duration-700 delay-200 group-hover:opacity-100 group-hover:translate-y-0"
+                  >
+                    Palm Estate
+                  </h3>
+                  <div
+                    class="flex gap-4 md:gap-6 font-sans text-xs md:text-sm text-gray-300 opacity-0 translate-y-4 transition-all duration-700 delay-300 group-hover:opacity-100 group-hover:translate-y-0"
+                  >
+                    <span>$45,000,000</span>
+                    <span
+                      class="w-1 h-1 rounded-full bg-brand-green self-center"
+                    ></span>
+                    <span>8 Beds</span>
+                    <span
+                      class="w-1 h-1 rounded-full bg-brand-green self-center"
+                    ></span>
+                    <span>15,000 SqFt</span>
+                  </div>
+                </div>
+                <button
+                  class="btn-swipe shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-full border border-white/30 backdrop-blur-md flex items-center justify-center transition-all duration-500 group-hover:border-transparent opacity-0 scale-50 group-hover:opacity-100 group-hover:scale-100 delay-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="white"
+                    class="w-5 h-5 md:w-6 md:h-6 relative z-10 transform -rotate-45 group-hover:rotate-0 transition-transform duration-500"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Elegant View All Card -->
+            <div
+              class="w-[85vw] sm:w-[50vw] lg:w-[35vw] h-[55vh] md:h-[65vh] shrink-0 relative group rounded-3xl overflow-hidden flex items-center justify-center bg-white border border-gray-200 hover:border-brand-green/50 transition-colors duration-500 cursor-pointer shadow-sm hover:shadow-xl ml-4 md:ml-0"
+            >
+              <div
+                class="absolute inset-0 bg-brand-green/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              ></div>
+              <div
+                class="flex flex-col items-center justify-center text-center px-8 z-10"
+              >
+                <div
+                  class="w-20 h-20 md:w-24 md:h-24 rounded-full border border-brand-dark/10 flex items-center justify-center mb-8 group-hover:bg-brand-green group-hover:border-brand-green transition-all duration-500 group-hover:scale-110 shadow-sm"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-8 h-8 text-brand-dark group-hover:text-white transition-colors duration-500"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                    />
+                  </svg>
+                </div>
+                <h3
+                  class="font-serif text-3xl md:text-4xl text-brand-dark mb-4"
+                >
+                  View Full Portfolio
+                </h3>
+                <p
+                  class="font-sans text-sm text-gray-500 uppercase tracking-[0.15em]"
+                >
+                  Explore all listings
+                </p>
+              </div>
+            </div>
+
+            <!-- End Spacer -->
+            <div class="w-[10vw] shrink-0 pointer-events-none"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        /* ==========================================
+               0. LENIS SMOOTH SCROLL INIT
+            ========================================== */
+        const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          direction: "vertical",
+          gestureDirection: "vertical",
+          smooth: true,
+          mouseMultiplier: 1,
+          smoothTouch: false,
+          touchMultiplier: 2,
+          infinite: false,
+        });
+
+        lenis.on("scroll", ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
+
+        gsap.ticker.lagSmoothing(0, 0);
+
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        /* ==========================================
+               1. FULLSCREEN MENU ANIMATION
+            ========================================== */
+        const menuToggle = document.getElementById("menu-toggle");
+        const menuText = document.getElementById("menu-text");
+        const menuIconBurger = document.getElementById("menu-icon-burger");
+        const menuIconClose = document.getElementById("menu-icon-close");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const menuItems = document.querySelectorAll(".menu-item");
+        const menuInfo = document.querySelector(".menu-info");
+        const desktopNav = document.getElementById("desktop-nav");
+
+        let isMenuOpen = false;
+
+        menuToggle.addEventListener("click", () => {
+          isMenuOpen = !isMenuOpen;
+
+          if (isMenuOpen) {
+            // Open Menu Overlay
+            mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+            mobileMenu.classList.add("opacity-100", "pointer-events-auto");
+
+            // Stop scrolling when menu is open
+            lenis.stop();
+
+            // Hide Desktop Nav
+            if (desktopNav)
+              gsap.to(desktopNav, {
+                opacity: 0,
+                y: -20,
+                duration: 0.4,
+                pointerEvents: "none",
+              });
+
+            // Button UI Update
+            menuText.innerText = "CLOSE";
+            menuIconBurger.classList.add("hidden");
+            menuIconClose.classList.remove("hidden");
+
+            // Stagger reveal text links
+            gsap.to(menuItems, {
+              y: "0%",
+              duration: 0.8,
+              stagger: 0.05,
+              ease: "power4.out",
+              delay: 0.1,
+            });
+            if (menuInfo)
+              gsap.to(menuInfo, {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power4.out",
+                delay: 0.4,
+              });
+          } else {
+            // Close Menu Overlay
+            mobileMenu.classList.add("opacity-0", "pointer-events-none");
+            mobileMenu.classList.remove("opacity-100", "pointer-events-auto");
+
+            // Restore scrolling
+            lenis.start();
+
+            // Show Desktop Nav
+            if (desktopNav)
+              gsap.to(desktopNav, {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                pointerEvents: "auto",
+                delay: 0.2,
+              });
+
+            // Button UI Update
+            menuText.innerText = "MENU";
+            menuIconBurger.classList.remove("hidden");
+            menuIconClose.classList.add("hidden");
+
+            // Hide links for next time
+            gsap.to(menuItems, { y: "120%", duration: 0.4, ease: "power2.in" });
+            if (menuInfo)
+              gsap.to(menuInfo, {
+                y: 20,
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.in",
+              });
+          }
+        });
+
+        /* ==========================================
+               2. INITIAL ENTRANCE FADE-IN
+            ========================================== */
+        gsap.fromTo(
+          ".gs-reveal",
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.1 },
+        );
+
+        /* ==========================================
+               3. MAGNETIC BUTTON EFFECT
+            ========================================== */
+        const magneticWraps = document.querySelectorAll(".magnetic-wrap");
+
+        magneticWraps.forEach((wrap) => {
+          const btn = wrap.querySelector(".magnetic-btn");
+
+          wrap.addEventListener("mousemove", (e) => {
+            const rect = wrap.getBoundingClientRect();
+            const h = rect.width / 2;
+            const w = rect.height / 2;
+            // Calculate distance from center of the wrapper
+            const x = e.clientX - rect.left - h;
+            const y = e.clientY - rect.top - w;
+
+            // Move the button towards the mouse slightly
+            gsap.to(btn, {
+              x: x * 0.4,
+              y: y * 0.4,
+              duration: 0.4,
+              ease: "power2.out",
+            });
+          });
+
+          wrap.addEventListener("mouseleave", () => {
+            // Snap back to original position
+            gsap.to(btn, {
+              x: 0,
+              y: 0,
+              duration: 0.7,
+              ease: "elastic.out(1, 0.3)",
+            });
+          });
+        });
+
+        /* ==========================================
+               4. ABOUT SECTION - MIND BLOWING ANIMATIONS
+            ========================================== */
+
+        // 4.1 Ambient Glow Pulse (Infinite)
+        gsap.to(".gs-ambient-glow", {
+          scale: 1.2,
+          opacity: 0.8,
+          duration: 4,
+          yoyo: true,
+          repeat: -1,
+          ease: "sine.inOut",
+        });
+
+        // 4.2 Aggressive Video Scrub Reveal (Scroll-linked)
+        // Starts huge, blurry, and square. Ends rounded, crisp, and normal size.
+        gsap.fromTo(
+          ".gs-about-media-main",
+          {
+            scale: 1.6,
+            filter: "blur(20px) brightness(0.4)",
+            borderRadius: "0px 0px 0px 0px",
+          },
+          {
+            scale: 1,
+            filter: "blur(0px) brightness(1)",
+            borderRadius: "500px 500px 16px 16px",
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: "#about",
+              start: "top 95%",
+              end: "top 25%",
+              scrub: 1.2,
+            },
+          },
+        );
+
+        // 4.3 3D Word-by-Word Text Entrance
+        const textTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: "#about",
+            start: "top 65%",
+          },
+        });
+
+        textTl
+          .to(".gs-about-line", { scaleX: 1, duration: 1, ease: "expo.out" })
+          .fromTo(
+            ".gs-about-label",
+            { y: "100%", rotation: 5, opacity: 0 },
+            {
+              y: "0%",
+              rotation: 0,
+              opacity: 1,
+              duration: 0.8,
+              ease: "power4.out",
+            },
+            "-=0.7",
+          )
+          .fromTo(
+            ".gs-word",
+            { y: "150%", rotation: 8, opacity: 0 },
+            {
+              y: "0%",
+              rotation: 0,
+              opacity: 1,
+              duration: 1.2,
+              stagger: 0.1,
+              ease: "back.out(1.4)",
+            },
+            "-=0.5",
+          )
+          .fromTo(
+            ".gs-about-fade",
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" },
+            "-=0.8",
+          );
+
+        // 4.4 3D Floating Image Reveal
+        gsap.fromTo(
+          ".gs-about-media-float",
+          {
+            y: 100,
+            x: -40,
+            rotationZ: -15,
+            rotationY: 45,
+            opacity: 0,
+            scale: 0.8,
+          },
+          {
+            y: 0,
+            x: 0,
+            rotationZ: 0,
+            rotationY: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 1.5,
+            ease: "expo.out",
+            scrollTrigger: {
+              trigger: ".gs-about-media-main",
+              start: "top 50%",
+            },
+          },
+        );
+
+        // 4.5 Badge Pop In
+        gsap.fromTo(
+          ".gs-about-badge",
+          { scale: 0, rotation: -90, opacity: 0 },
+          {
+            scale: 1,
+            rotation: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "back.out(1.5)",
+            scrollTrigger: {
+              trigger: ".gs-about-media-main",
+              start: "top 40%",
+            },
+          },
+        );
+
+        // 4.6 Floating Image Parallax (Scrubbed)
+        gsap.to(".gs-parallax-img", {
+          y: "15%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: "#about",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+
+        // 4.7 Dynamic Stat Counters
+        const stats = document.querySelectorAll(".gs-stat-val");
+        const labels = document.querySelectorAll(".gs-stat-label");
+
+        // Fade labels
+        gsap.fromTo(
+          labels,
+          { opacity: 0, y: 15 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: ".gs-about-stats-container",
+              start: "top 85%",
+            },
+          },
+        );
+
+        // Count up values
+        stats.forEach((stat, index) => {
+          let target = parseFloat(stat.getAttribute("data-target"));
+          let prefix = stat.getAttribute("data-prefix") || "";
+          let suffix = stat.getAttribute("data-suffix") || "";
+
+          gsap.fromTo(
+            stat,
+            { innerHTML: 0, opacity: 0, y: 30 },
+            {
+              innerHTML: target,
+              opacity: 1,
+              y: 0,
+              duration: 2.5,
+              ease: "expo.out",
+              delay: index * 0.1,
+              scrollTrigger: {
+                trigger: ".gs-about-stats-container",
+                start: "top 85%",
+              },
+              modifiers: {
+                innerHTML: function (i) {
+                  // Format logic for decimals vs integers
+                  let val = parseFloat(i);
+                  let formatted =
+                    target % 1 !== 0 ? val.toFixed(1) : Math.floor(val);
+                  return prefix + formatted + suffix;
+                },
+              },
+            },
+          );
+        });
+
+        /* ==========================================
+               5. FEATURED PROJECTS HORIZONTAL SCROLL
+            ========================================== */
+        const horizWrapper = document.querySelector(".gs-horiz-wrapper");
+        const horizContainer = document.querySelector(".gs-horiz-scroll");
+        const horizImages = gsap.utils.toArray(".gs-horiz-image");
+
+        if (horizWrapper && horizContainer) {
+          // Calculate how far to scroll horizontally
+          function getScrollAmount() {
+            return horizContainer.scrollWidth - window.innerWidth;
+          }
+
+          // Create a single timeline for perfect synchronization
+          const horizTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: horizWrapper,
+              start: "top top",
+              end: () => `+=${getScrollAmount()}`,
+              pin: true,
+              scrub: 1,
+              invalidateOnRefresh: true,
+              anticipatePin: 1,
+            },
+          });
+
+          // Track movement
+          horizTl.to(
+            horizContainer,
+            {
+              x: () => -getScrollAmount(),
+              ease: "none",
+            },
+            0,
+          );
+
+          // Perfectly synced reverse parallax for images
+          horizImages.forEach((img) => {
+            horizTl.to(
+              img,
+              {
+                xPercent: 12, // Smooth percentage-based shift within the bounded image
+                ease: "none",
+              },
+              0,
+            );
+          });
+
+          // --- NEW: Manual Swiping Logic (Touch to Vertical Scroll mapping) ---
+          let startX, startY;
+          horizWrapper.addEventListener(
+            "touchstart",
+            (e) => {
+              startX = e.touches[0].clientX;
+              startY = e.touches[0].clientY;
+            },
+            { passive: true },
+          );
+
+          horizWrapper.addEventListener(
+            "touchmove",
+            (e) => {
+              if (!startX || !startY) return;
+              let diffX = startX - e.touches[0].clientX;
+              let diffY = startY - e.touches[0].clientY;
+
+              // If horizontal swipe is more prominent than vertical, drive the scroll
+              if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 5) {
+                window.scrollBy({
+                  top: diffX * 1.5,
+                  left: 0,
+                  behavior: "auto",
+                });
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+              }
+            },
+            { passive: true },
+          );
+
+          // --- NEW: Prev/Next Button Logic ---
+          const btnPrev = document.getElementById("project-prev");
+          const btnNext = document.getElementById("project-next");
+          const projectCards = document.querySelectorAll(
+            ".gs-horiz-scroll > div.group",
+          );
+
+          if (btnPrev && btnNext && projectCards.length > 0) {
+            const getCardScrollAmount = () => {
+              // Calculate width of one card + gap to accurately scroll one item
+              const gap =
+                parseFloat(window.getComputedStyle(horizContainer).gap) || 0;
+              return projectCards[0].offsetWidth + gap;
+            };
+
+            btnNext.addEventListener("click", () => {
+              lenis.scrollTo(window.scrollY + getCardScrollAmount(), {
+                duration: 1.2,
+                lock: false,
+              });
+            });
+
+            btnPrev.addEventListener("click", () => {
+              lenis.scrollTo(window.scrollY - getCardScrollAmount(), {
+                duration: 1.2,
+                lock: false,
+              });
+            });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

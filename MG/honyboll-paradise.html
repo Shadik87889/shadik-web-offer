@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Merchant Hannibal Paradise | Prime Real Estate</title>
+
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Manrope", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            colors: {
+              brand: {
+                dark: "#05080f",
+                green: "#10b981",
+                greenDark: "#047857",
+                menuBg: "#f4fbf7",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Base Resets & Lenis Smooth Scroll */
+      body {
+        background-color: #05080f; /* Base dark */
+        color: #ffffff;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      html.lenis,
+      html.lenis body {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+      }
+      .lenis.lenis-smooth[data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+      .lenis.lenis-scrolling iframe {
+        pointer-events: none;
+      }
+
+      /* Home Page Specific Nav Styles */
+      .pill-shadow {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04),
+          0 1px 3px rgba(0, 0, 0, 0.02);
+        border: 1px solid rgba(0, 0, 0, 0.02);
+      }
+      .menu-link-text {
+        display: inline-block;
+        color: transparent;
+        -webkit-text-stroke: 1.5px #0a101f;
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        transform-origin: left bottom;
+        will-change: transform, color, -webkit-text-stroke;
+      }
+      .menu-link:hover .menu-link-text {
+        color: #10b981;
+        -webkit-text-stroke: 1.5px transparent;
+        transform: translateX(30px) skewX(-5deg);
+      }
+      .nav-link {
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+        vertical-align: top;
+        height: 1.2em;
+      }
+      .nav-text-main {
+        display: block;
+        transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .nav-text-hover {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        color: #10b981;
+        transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        width: 100%;
+      }
+      .nav-item:hover .nav-text-main {
+        transform: translateY(-100%);
+      }
+      .nav-item:hover .nav-text-hover {
+        transform: translateY(-100%);
+      }
+
+      /* Buttons & Hover Effects */
+      .magnetic-wrap {
+        display: inline-block;
+        padding: 10px;
+        margin: -10px;
+      }
+      .btn-epic {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        transition: color 0.4s ease, border-color 0.4s ease;
+      }
+      .btn-epic::after {
+        content: "";
+        position: absolute;
+        width: 150%;
+        height: 150%;
+        background: #10b981;
+        top: 50%;
+        left: 50%;
+        z-index: -1;
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale3d(0, 0, 1);
+        transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .btn-epic:hover::after {
+        transform: translate(-50%, -50%) scale3d(1, 1, 1);
+      }
+      .btn-epic:hover {
+        box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
+        border-color: transparent;
+        color: white !important;
+      }
+      .btn-swipe {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .btn-swipe::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #10b981;
+        z-index: -1;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .btn-swipe:hover::before {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      /* Hero Specific Styles */
+      .hero-text-outline {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+      }
+      @media (min-width: 768px) {
+        .hero-text-outline {
+          -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.15);
+        }
+      }
+      .hero-image-wrapper {
+        will-change: transform, width, height, border-radius;
+      }
+
+      /* Specifications Grid Hover Effect */
+      .spec-cell {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s ease;
+        background-color: #05080f; /* Base dark */
+      }
+      .spec-cell::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #10b981;
+        transform: translateY(100%);
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 0;
+      }
+      .spec-cell:hover::before {
+        transform: translateY(0);
+      }
+      .spec-cell:hover * {
+        color: #05080f !important;
+        position: relative;
+        z-index: 1;
+      }
+      .spec-cell * {
+        transition: color 0.5s ease;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Premium Map Filter */
+      .premium-map iframe {
+        filter: grayscale(100%) invert(92%) contrast(83%) hue-rotate(180deg);
+        transition: filter 0.5s ease;
+      }
+      .premium-map:hover iframe {
+        filter: grayscale(80%) invert(90%) contrast(90%) hue-rotate(180deg);
+      }
+
+      /* Related Project Hover */
+      .related-card img {
+        transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .related-card:hover img {
+        transform: scale(1.08);
+      }
+
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body
+    class="selection:bg-brand-green/20 selection:text-white flex flex-col relative"
+  >
+    <!-- ==========================================
+         EXACT NAV FROM HOME-2.HTML
+         ========================================== -->
+    <header
+      class="fixed top-4 md:top-6 left-0 w-full px-4 md:px-12 z-[100] flex justify-between items-center pointer-events-none"
+    >
+      <!-- Logo (Magnetic & Floating) -->
+      <div class="magnetic-wrap pointer-events-auto -ml-2">
+        <a
+          href="index.html"
+          class="magnetic-btn flex items-center justify-center transition-transform duration-300 hover:scale-[1.03] origin-left"
+        >
+          <!-- Logo made white for dark theme hero visibility -->
+          <img
+            src="Merchant Group Logo.png"
+            alt="Merchant Group"
+            class="h-16 sm:h-20 md:h-24 w-auto block drop-shadow-sm brightness-0 invert"
+          />
+        </a>
+      </div>
+
+      <!-- Center Nav Pill (Desktop) -->
+      <nav
+        id="desktop-nav"
+        class="pointer-events-auto bg-white rounded-full px-6 xl:px-10 py-4 pill-shadow hidden xl:flex items-center gap-6 xl:gap-8 absolute left-1/2 -translate-x-1/2 transition-all"
+      >
+        <a
+          href="home-2.html"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+          ><span class="nav-link"
+            ><span class="nav-text-main">Home</span
+            ><span class="nav-text-hover">Home</span></span
+          ></a
+        >
+        <a
+          href="#about"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+          ><span class="nav-link"
+            ><span class="nav-text-main">About</span
+            ><span class="nav-text-hover">About</span></span
+          ></a
+        >
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+          ><span class="nav-link"
+            ><span class="nav-text-main">Projects</span
+            ><span class="nav-text-hover">Projects</span></span
+          ></a
+        >
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+          ><span class="nav-link"
+            ><span class="nav-text-main">Blog</span
+            ><span class="nav-text-hover">Blog</span></span
+          ></a
+        >
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+          ><span class="nav-link"
+            ><span class="nav-text-main">Gallery</span
+            ><span class="nav-text-hover">Gallery</span></span
+          ></a
+        >
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+          ><span class="nav-link"
+            ><span class="nav-text-main">Career</span
+            ><span class="nav-text-hover">Career</span></span
+          ></a
+        >
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark"
+          ><span class="nav-link"
+            ><span class="nav-text-main">Contact</span
+            ><span class="nav-text-hover">Contact</span></span
+          ></a
+        >
+        <a
+          href="#"
+          class="nav-item font-sans text-[11px] font-bold tracking-[0.15em] uppercase text-brand-green"
+          ><span class="nav-link"
+            ><span class="nav-text-main">Landowner</span
+            ><span class="nav-text-hover text-brand-dark">Landowner</span></span
+          ></a
+        >
+      </nav>
+
+      <!-- Menu Toggle Pill (Magnetic) -->
+      <div class="magnetic-wrap pointer-events-auto">
+        <button
+          id="menu-toggle"
+          class="magnetic-btn bg-white rounded-full px-5 py-3 md:px-6 md:py-4 pill-shadow flex items-center gap-2.5 md:gap-3 transition-colors hover:text-brand-green group"
+        >
+          <span
+            id="menu-text"
+            class="font-sans text-[10px] md:text-[11px] font-bold tracking-[0.15em] uppercase text-brand-dark transition-colors group-hover:text-brand-green"
+            >Menu</span
+          >
+          <div
+            id="menu-icon-burger"
+            class="relative w-4 h-2 md:w-5 md:h-2.5 flex flex-col justify-between overflow-hidden"
+          >
+            <span
+              class="w-full h-[1.5px] bg-brand-dark block transition-colors group-hover:bg-brand-green"
+            ></span>
+            <span
+              class="w-full h-[1.5px] bg-brand-dark block transition-colors group-hover:bg-brand-green transform transition-transform group-hover:translate-x-1"
+            ></span>
+          </div>
+          <svg
+            id="menu-icon-close"
+            class="hidden w-3.5 h-3.5 md:w-4 md:h-4 text-brand-dark transition-colors group-hover:text-brand-green"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Fullscreen Menu Overlay -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 bg-brand-menuBg z-[90] opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out flex flex-col"
+    >
+      <div
+        class="w-full max-w-7xl mx-auto px-6 md:px-16 lg:px-24 pt-28 pb-12 lg:py-0 h-full overflow-y-auto lg:overflow-hidden flex flex-col lg:flex-row justify-start lg:justify-between items-start lg:items-center scrollbar-hide"
+      >
+        <!-- Left: Massive Navigation Links -->
+        <div
+          class="w-full lg:w-1/2 lg:h-[60vh] lg:overflow-y-auto scrollbar-hide lg:fade-scroll py-4 lg:py-10 shrink-0"
+        >
+          <nav
+            class="flex flex-col font-serif font-bold text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[1.1] text-brand-dark gap-2 md:gap-4"
+          >
+            <div class="overflow-hidden py-1">
+              <a
+                href="home-2.html"
+                class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">Home</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a
+                href="#about"
+                class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">About</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">Projects</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">Blog</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">Gallery</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">Career</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span class="menu-link-text">Contact</span></a
+              >
+            </div>
+            <div class="overflow-hidden py-1">
+              <a href="#" class="menu-link block menu-item translate-y-full"
+                ><span
+                  class="menu-link-text"
+                  style="color: #10b981; -webkit-text-stroke: 0;"
+                  >Landowner</span
+                ></a
+              >
+            </div>
+          </nav>
+        </div>
+
+        <!-- Right: Featured Card & Contact Details -->
+        <div
+          class="flex flex-col sm:flex-row gap-10 lg:gap-12 items-start lg:items-center menu-info opacity-0 translate-y-8 mt-12 lg:mt-0 w-full lg:w-auto pb-8 lg:pb-0"
+        >
+          <div
+            class="bg-white rounded-[2rem] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.06)] w-full sm:w-80 shrink-0 lg:transform lg:-rotate-2 hover:rotate-0 transition-transform duration-500 border border-gray-100 group"
+          >
+            <div
+              class="rounded-2xl overflow-hidden h-40 sm:h-48 mb-4 sm:mb-5 relative"
+            >
+              <img
+                src="https://i.postimg.cc/Dy2B14kw/Honeyboll-Paradise.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Honeyboll Paradise"
+              />
+            </div>
+            <div class="px-2 pb-2">
+              <h3
+                class="font-sans font-bold text-xl sm:text-[22px] text-brand-dark mb-2 transition-colors group-hover:text-brand-green"
+              >
+                Hannibal Paradise
+              </h3>
+              <p
+                class="font-sans text-sm text-gray-500 leading-relaxed mb-5 sm:mb-6"
+              >
+                Designed for modern living, smart home tech, spacious living
+                areas, serene bedrooms.
+              </p>
+              <button
+                class="btn-swipe w-full border border-brand-dark bg-brand-dark text-white font-sans font-semibold py-3 sm:py-3.5 rounded-xl transition-colors shadow-md"
+              >
+                <span class="relative z-10 transition-colors"
+                  >View Details</span
+                >
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="flex flex-col gap-8 sm:gap-10 font-sans w-full sm:max-w-[200px]"
+          >
+            <div>
+              <h4
+                class="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-greenDark mb-3"
+              >
+                Headquarters
+              </h4>
+              <p
+                class="text-[15px] text-gray-700 leading-relaxed hover:text-brand-dark transition-colors"
+              >
+                Momenbag, Jatrabari<br />Bangladesh, 1362
+              </p>
+            </div>
+            <div>
+              <h4
+                class="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-greenDark mb-3"
+              >
+                Direct Contact
+              </h4>
+              <a
+                href="mailto:merchantgroupbd@gmail.com"
+                class="text-xl font-serif text-brand-dark hover:text-brand-green transition-colors break-words"
+                >merchantgroupbd@gmail.com</a
+              >
+              <p
+                class="text-[15px] text-gray-700 mt-2 hover:text-brand-dark transition-colors"
+              >
+                +880 1714-988421
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. HERO SECTION (FULL SCREEN & PARALLAX) -->
+    <section
+      id="hero-section"
+      class="relative w-full h-screen bg-brand-dark z-10 overflow-hidden flex flex-col items-center justify-center"
+    >
+      <!-- Background Massive Kinetic Typography -->
+      <div
+        class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 gs-hero-text-wrap whitespace-nowrap mix-blend-overlay opacity-50"
+      >
+        <h1
+          class="font-serif text-[22vw] sm:text-[18vw] leading-[0.8] text-white/20 font-medium gs-hero-text-left"
+        >
+          HANNIBAL
+        </h1>
+        <h1
+          class="font-serif text-[22vw] sm:text-[18vw] leading-[0.8] hero-text-outline font-medium gs-hero-text-right"
+        >
+          PARADISE
+        </h1>
+      </div>
+
+      <!-- Full Screen Image with Parallax -->
+      <div class="absolute inset-0 w-full h-full z-0 overflow-hidden">
+        <img
+          src="https://i.postimg.cc/Dy2B14kw/Honeyboll-Paradise.jpg"
+          alt="Merchant Hannibal Paradise"
+          class="absolute top-[-10%] left-0 w-full h-[120%] object-cover gs-hero-img-inner"
+        />
+        <!-- Gradient overlay for text readability -->
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-brand-dark/10"
+        ></div>
+      </div>
+
+      <!-- Bottom Info (Visible immediately) -->
+      <div
+        class="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-16 z-20 flex flex-col md:flex-row justify-between items-start md:items-end gap-6"
+      >
+        <div>
+          <div class="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
+            <div class="h-[1px] w-8 md:w-12 bg-brand-green"></div>
+            <span
+              class="font-sans text-[9px] md:text-xs uppercase tracking-[0.3em] text-brand-green font-bold bg-brand-dark/60 px-3 py-1 rounded-full backdrop-blur-md border border-brand-green/20"
+              >জলসিঁড়ি আবাসনে</span
+            >
+          </div>
+          <h2
+            class="font-serif text-4xl sm:text-5xl md:text-7xl text-white leading-[1.05] tracking-tight drop-shadow-lg"
+          >
+            Merchant<br /><span class="italic font-light text-gray-300"
+              >Hannibal Paradise</span
+            >
+          </h2>
+          <p
+            class="font-sans text-white/80 mt-3 md:mt-4 text-[10px] md:text-sm tracking-widest uppercase drop-shadow-md"
+          >
+            Sec:16 • Road: 505 • Plot:09
+          </p>
+        </div>
+
+        <a
+          href="#specifications"
+          class="btn-swipe w-12 h-12 md:w-16 md:h-16 rounded-full border border-white/20 bg-white/10 backdrop-blur-md flex items-center justify-center shrink-0 hidden sm:flex"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="white"
+            class="w-5 h-5 md:w-6 md:h-6 animate-bounce"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+            />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div
+        class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20 gs-scroll-ind"
+      >
+        <span
+          class="font-sans text-[9px] tracking-[0.3em] uppercase text-white/60 font-bold"
+          >Scroll to Explore</span
+        >
+        <div class="w-[1px] h-10 bg-white/20 relative overflow-hidden">
+          <div
+            class="absolute top-0 left-0 w-full h-1/2 bg-white animate-[scroll-down_1.5s_ease-in-out_infinite]"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PROJECT SPECIFICATIONS (THE BLUEPRINT) -->
+    <!-- Beautiful transition from the hero into this grid. No gaps. -->
+    <section
+      id="specifications"
+      class="relative w-full py-20 md:py-32 bg-brand-dark text-white z-20 overflow-hidden"
+    >
+      <!-- Background Grid Pattern -->
+      <div
+        class="absolute inset-0 opacity-[0.03]"
+        style="
+          background-image: linear-gradient(#fff 1px, transparent 1px),
+            linear-gradient(90deg, #fff 1px, transparent 1px);
+          background-size: 50px 50px;
+        "
+      ></div>
+      <div
+        class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-green/10 rounded-full blur-[120px] pointer-events-none"
+      ></div>
+
+      <div
+        class="container mx-auto px-4 sm:px-6 md:px-12 lg:px-24 relative z-10"
+      >
+        <!-- Header -->
+        <div class="mb-12 md:mb-20 gs-reveal">
+          <div class="flex items-center gap-4 mb-4 md:mb-6">
+            <div class="w-2 h-2 rounded-full bg-brand-green"></div>
+            <span
+              class="font-sans text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-400 font-bold"
+              >Architectural Blueprint</span
+            >
+          </div>
+          <h2
+            class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] tracking-tight"
+          >
+            Project
+            <span class="italic font-light text-brand-green"
+              >Specifications.</span
+            >
+          </h2>
+        </div>
+
+        <!-- Masterfully Built Grid (1px gap technique creates perfect thin borders on all screen sizes) -->
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-white/10 gs-reveal border border-white/10 rounded-xl overflow-hidden shadow-2xl"
+        >
+          <!-- Spec 1 -->
+          <div
+            class="spec-cell p-6 md:p-10 flex flex-col justify-between min-h-[180px] md:min-h-[280px]"
+          >
+            <p
+              class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-4"
+            >
+              Total Area
+            </p>
+            <div>
+              <p
+                class="font-serif text-4xl md:text-6xl text-white mb-1 md:mb-2"
+              >
+                2850
+              </p>
+              <p class="font-sans text-xs md:text-sm text-gray-400">
+                Square Feet
+              </p>
+            </div>
+          </div>
+
+          <!-- Spec 2 -->
+          <div
+            class="spec-cell p-6 md:p-10 flex flex-col justify-between min-h-[180px] md:min-h-[280px]"
+          >
+            <p
+              class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-4"
+            >
+              Building Type
+            </p>
+            <div>
+              <p
+                class="font-serif text-3xl md:text-4xl text-white mb-1 md:mb-2"
+              >
+                B+G+M+8
+              </p>
+              <p class="font-sans text-xs md:text-sm text-gray-400">
+                Storied Architecture
+              </p>
+            </div>
+          </div>
+
+          <!-- Spec 3 -->
+          <div
+            class="spec-cell p-6 md:p-10 flex flex-col justify-between min-h-[180px] md:min-h-[280px]"
+          >
+            <p
+              class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-4"
+            >
+              Bedrooms
+            </p>
+            <div>
+              <p
+                class="font-serif text-4xl md:text-6xl text-white mb-1 md:mb-2"
+              >
+                4
+                <span class="text-2xl md:text-3xl text-gray-600 font-light"
+                  >or</span
+                >
+                3
+              </p>
+              <p
+                class="font-sans text-[10px] md:text-xs text-brand-green font-semibold tracking-wider"
+              >
+                CUSTOMIZABLE
+              </p>
+            </div>
+          </div>
+
+          <!-- Spec 4 -->
+          <div
+            class="spec-cell p-6 md:p-10 flex flex-col justify-between min-h-[180px] md:min-h-[280px]"
+          >
+            <p
+              class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-4"
+            >
+              Balconies & Green
+            </p>
+            <div>
+              <p
+                class="font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1 md:mb-2"
+              >
+                3 Balconies
+              </p>
+              <p
+                class="font-sans text-xs md:text-sm text-gray-400 leading-relaxed"
+              >
+                + Mini Terrace with integrated green space
+              </p>
+            </div>
+          </div>
+
+          <!-- Spec 5 -->
+          <div
+            class="spec-cell p-6 md:p-10 flex flex-col justify-between min-h-[180px] md:min-h-[280px]"
+          >
+            <p
+              class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-4"
+            >
+              Living Spaces
+            </p>
+            <div>
+              <p class="font-serif text-xl md:text-2xl text-white mb-2 md:mb-3">
+                Formal Living,<br />Family Living<br />& Dining Rooms
+              </p>
+              <p class="font-sans text-xs md:text-sm text-gray-400">
+                Expansive open layouts
+              </p>
+            </div>
+          </div>
+
+          <!-- Spec 6 -->
+          <div
+            class="spec-cell p-6 md:p-10 flex flex-col justify-between min-h-[180px] md:min-h-[280px]"
+          >
+            <p
+              class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-4"
+            >
+              Washrooms
+            </p>
+            <div>
+              <p
+                class="font-serif text-4xl md:text-6xl text-white mb-1 md:mb-2"
+              >
+                06
+              </p>
+              <p class="font-sans text-xs md:text-sm text-gray-400">
+                Premium Toilets
+              </p>
+            </div>
+          </div>
+
+          <!-- Spec 7 -->
+          <div
+            class="spec-cell p-6 md:p-10 flex flex-col justify-between min-h-[180px] md:min-h-[280px]"
+          >
+            <p
+              class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-4"
+            >
+              Culinary & Storage
+            </p>
+            <div>
+              <p class="font-serif text-xl md:text-2xl text-white mb-1 md:mb-2">
+                Spacious Kitchen<br />& Store Area
+              </p>
+              <p class="font-sans text-xs md:text-sm text-gray-400">
+                Modern fittings
+              </p>
+            </div>
+          </div>
+
+          <!-- Spec 8 -->
+          <div
+            class="spec-cell p-6 md:p-10 flex flex-col justify-between min-h-[180px] md:min-h-[280px]"
+          >
+            <p
+              class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-4"
+            >
+              Staff Quarters
+            </p>
+            <div>
+              <p class="font-serif text-xl md:text-2xl text-white mb-1 md:mb-2">
+                Servant Toilet & Bed
+              </p>
+              <p class="font-sans text-xs md:text-sm text-gray-400">
+                Dedicated private access
+              </p>
+            </div>
+          </div>
+
+          <!-- Spec 9 -->
+          <div
+            class="spec-cell p-6 md:p-10 flex flex-col justify-between min-h-[180px] md:min-h-[280px] bg-white/5 relative z-10"
+          >
+            <!-- Background override on hover logic kept intact -->
+            <p
+              class="font-sans text-[10px] uppercase tracking-[0.2em] text-brand-green font-bold mb-4 relative z-10"
+            >
+              Additional Features
+            </p>
+            <ul
+              class="space-y-2 md:space-y-3 font-sans text-xs sm:text-sm text-gray-300 relative z-10"
+            >
+              <li class="flex items-center gap-3">
+                <div
+                  class="w-1.5 h-1.5 bg-brand-green rounded-full shrink-0"
+                ></div>
+                South Facing
+              </li>
+              <li class="flex items-center gap-3">
+                <div
+                  class="w-1.5 h-1.5 bg-brand-green rounded-full shrink-0"
+                ></div>
+                Parking: 16 Nos
+              </li>
+              <li class="flex items-center gap-3">
+                <div
+                  class="w-1.5 h-1.5 bg-brand-green rounded-full shrink-0"
+                ></div>
+                Caretaker Accommodation
+              </li>
+              <li class="flex items-center gap-3">
+                <div
+                  class="w-1.5 h-1.5 bg-brand-green rounded-full shrink-0"
+                ></div>
+                Community Space
+              </li>
+              <li class="flex items-center gap-3">
+                <div
+                  class="w-1.5 h-1.5 bg-brand-green rounded-full shrink-0"
+                ></div>
+                Mezzanine Floor
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. NEARBY AMENITIES (THE ECOSYSTEM) -->
+    <section
+      id="amenities"
+      class="relative w-full py-20 md:py-32 bg-brand-light text-brand-dark z-20"
+      style="background-color: #f8f9fa;"
+    >
+      <div class="container mx-auto px-6 md:px-12 lg:px-24">
+        <div class="flex flex-col lg:flex-row gap-12 lg:gap-24">
+          <!-- Left sticky content -->
+          <div class="w-full lg:w-1/3 relative">
+            <div class="lg:sticky lg:top-32 gs-reveal">
+              <h2
+                class="font-serif text-4xl sm:text-5xl md:text-6xl leading-[1.1] tracking-tight mb-6"
+              >
+                Surrounding<br /><span class="italic text-brand-green"
+                  >Ecosystem.</span
+                >
+              </h2>
+              <p
+                class="font-sans text-gray-600 text-sm md:text-base leading-relaxed mb-8"
+              >
+                Situated in the highly coveted Jolshiri Abashon, Merchant
+                Hannibal Paradise offers immediate access to the city's most
+                premium recreational, educational, and lifestyle facilities.
+              </p>
+              <div class="w-full h-[1px] bg-brand-dark/10 mb-8"></div>
+              <p
+                class="font-sans text-[10px] uppercase tracking-[0.2em] font-bold text-brand-dark"
+              >
+                13 Key Landmarks Nearby
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Staggered List -->
+          <div class="w-full lg:w-2/3">
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 md:gap-x-12 md:gap-y-8"
+            >
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green"
+                  >01</span
+                >
+                <p
+                  class="font-sans text-base md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Lake
+                </p>
+              </div>
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green"
+                  >02</span
+                >
+                <p
+                  class="font-sans text-base md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Lake Drive Road
+                </p>
+              </div>
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green"
+                  >03</span
+                >
+                <p
+                  class="font-sans text-base md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Golf Course
+                </p>
+              </div>
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green"
+                  >04</span
+                >
+                <p
+                  class="font-sans text-base md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Central Park
+                </p>
+              </div>
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green"
+                  >05</span
+                >
+                <p
+                  class="font-sans text-base md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Mosque
+                </p>
+              </div>
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green"
+                  >06</span
+                >
+                <p
+                  class="font-sans text-base md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Park
+                </p>
+              </div>
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green"
+                  >07</span
+                >
+                <p
+                  class="font-sans text-base md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Amusement Park
+                </p>
+              </div>
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green"
+                  >08</span
+                >
+                <p
+                  class="font-sans text-base md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Community Center
+                </p>
+              </div>
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green"
+                  >09</span
+                >
+                <p
+                  class="font-sans text-base md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Shopping Mall
+                </p>
+              </div>
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green"
+                  >10</span
+                >
+                <p
+                  class="font-sans text-base md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Filling Station
+                </p>
+              </div>
+
+              <!-- Longer Educational Items -->
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4 md:col-span-2"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green shrink-0"
+                  >11</span
+                >
+                <p
+                  class="font-sans text-sm md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Sheikh Russel Cantonment Public School & Collage
+                </p>
+              </div>
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4 md:col-span-2"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green shrink-0"
+                  >12</span
+                >
+                <p
+                  class="font-sans text-sm md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Jolshiri Cantonment Public School & Collage
+                </p>
+              </div>
+              <div
+                class="flex items-start gap-4 group gs-reveal border-b border-gray-200 pb-4 md:col-span-2"
+              >
+                <span
+                  class="font-serif text-xl text-gray-400 transition-colors group-hover:text-brand-green shrink-0"
+                  >13</span
+                >
+                <p
+                  class="font-sans text-sm md:text-lg font-medium pt-0.5 transition-transform group-hover:translate-x-2"
+                >
+                  Bangladesh International School & Collage (BISC)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. LIVE PREMIUM MAP -->
+    <section
+      id="location"
+      class="relative w-full h-[60vh] md:h-screen min-h-[500px] bg-brand-dark z-20 flex flex-col items-center justify-center overflow-hidden"
+    >
+      <!-- Text Overlay floating above map -->
+      <div
+        class="absolute top-12 md:top-24 left-6 md:left-12 lg:left-24 z-30 pointer-events-none drop-shadow-xl"
+      >
+        <h2
+          class="font-serif text-4xl sm:text-5xl md:text-7xl text-white tracking-tight leading-none mb-2"
+        >
+          Prime<br /><span class="italic text-brand-green">Positioning.</span>
+        </h2>
+        <p
+          class="font-sans text-xs md:text-sm text-gray-300 tracking-widest uppercase mt-3 md:mt-4"
+        >
+          Jolshiri Abashon, Sec:16
+        </p>
+      </div>
+
+      <!-- The Custom Styled Map -->
+      <div class="absolute inset-0 z-10 premium-map pointer-events-auto">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14606.376822263445!2d90.4851214!3d23.8329864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c9d6404285ad%3A0x6b907e5f3c9e6d0a!2sJolshiri%20Abashon!5e0!3m2!1sen!2sbd!4v1714828100000!5m2!1sen!2sbd"
+          width="100%"
+          height="100%"
+          style="border: 0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+
+      <!-- Gradient masks to blend map into the site -->
+      <div
+        class="absolute inset-0 z-20 bg-gradient-to-b from-brand-dark via-transparent to-brand-dark pointer-events-none opacity-90"
+      ></div>
+      <div
+        class="absolute inset-0 z-20 bg-gradient-to-r from-brand-dark via-transparent to-transparent pointer-events-none opacity-80 w-full md:w-1/2"
+      ></div>
+
+      <!-- Interactive Button -->
+      <div
+        class="absolute bottom-12 md:bottom-16 left-1/2 -translate-x-1/2 z-30 pointer-events-auto"
+      >
+        <a
+          href="https://goo.gl/maps"
+          target="_blank"
+          class="magnetic-btn btn-epic relative group px-6 md:px-8 py-3 md:py-4 border border-white/20 bg-brand-dark/50 backdrop-blur-md text-white rounded-full font-sans font-bold text-[10px] md:text-xs tracking-widest uppercase inline-flex items-center gap-3"
+        >
+          <span class="relative z-10">Get Directions</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+            />
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 5. RELATED PROJECTS -->
+    <section
+      id="related"
+      class="relative w-full py-20 md:py-32 bg-brand-dark text-white z-20 border-t border-white/5"
+    >
+      <div class="container mx-auto px-6 md:px-12 lg:px-24">
+        <div class="flex items-end justify-between mb-12 md:mb-16 gs-reveal">
+          <h2
+            class="font-serif text-4xl sm:text-5xl md:text-6xl tracking-tight"
+          >
+            Explore <span class="italic text-brand-green font-light">More</span>
+          </h2>
+          <a
+            href="#"
+            class="hidden md:inline-flex items-center gap-2 font-sans text-sm text-gray-400 hover:text-white transition-colors uppercase tracking-widest"
+            >View All Projects
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+              /></svg
+          ></a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <a
+            href="#"
+            class="related-card group block relative rounded-2xl overflow-hidden aspect-[4/5] gs-reveal"
+          >
+            <img
+              src="https://i.postimg.cc/j2RQ6m1B/Jannat-Tower.jpg"
+              alt="Jannat Tower"
+              class="w-full h-full object-cover"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent"
+            ></div>
+            <div
+              class="absolute bottom-0 left-0 w-full p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+            >
+              <p
+                class="font-sans text-[10px] uppercase tracking-[0.2em] text-brand-green font-bold mb-2"
+              >
+                Jatrabari, Dhaka
+              </p>
+              <h3 class="font-serif text-2xl md:text-3xl text-white">
+                Jannat Tower
+              </h3>
+            </div>
+          </a>
+
+          <a
+            href="#"
+            class="related-card group block relative rounded-2xl overflow-hidden aspect-[4/5] gs-reveal"
+            style="transition-delay: 100ms;"
+          >
+            <img
+              src="https://i.postimg.cc/hv4TQxJk/Lily-Tower.jpg"
+              alt="Lily Tower"
+              class="w-full h-full object-cover"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent"
+            ></div>
+            <div
+              class="absolute bottom-0 left-0 w-full p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+            >
+              <p
+                class="font-sans text-[10px] uppercase tracking-[0.2em] text-brand-green font-bold mb-2"
+              >
+                Prime Location
+              </p>
+              <h3 class="font-serif text-2xl md:text-3xl text-white">
+                Lily Tower
+              </h3>
+            </div>
+          </a>
+
+          <a
+            href="#"
+            class="related-card group block relative rounded-2xl overflow-hidden aspect-[4/5] gs-reveal"
+            style="transition-delay: 200ms;"
+          >
+            <img
+              src="https://i.postimg.cc/fbx9H5m1/bhuiyan-sheikh-twin-tower.jpg"
+              alt="Bhuiyan Sheikh Twin Tower"
+              class="w-full h-full object-cover"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent"
+            ></div>
+            <div
+              class="absolute bottom-0 left-0 w-full p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+            >
+              <p
+                class="font-sans text-[10px] uppercase tracking-[0.2em] text-brand-green font-bold mb-2"
+              >
+                Exclusive Area
+              </p>
+              <h3 class="font-serif text-2xl md:text-3xl text-white">
+                Bhuiyan Sheikh Twin Tower
+              </h3>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer
+      class="relative w-full bg-[#03060c] text-white pt-24 md:pt-32 overflow-hidden z-40 footer-wrapper border-t border-white/5"
+    >
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-brand-green/30 to-transparent"
+      ></div>
+      <div
+        class="absolute -top-[20rem] right-0 w-[40rem] h-[40rem] bg-brand-green/5 rounded-full blur-[120px] pointer-events-none"
+      ></div>
+
+      <div class="container mx-auto px-6 md:px-12 lg:px-24 relative z-10">
+        <div
+          class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 pb-20 md:pb-32 border-b border-white/10"
+        >
+          <div class="lg:col-span-5 flex flex-col justify-between h-full">
+            <div>
+              <div class="mb-8">
+                <img
+                  src="Merchant Group Logo.png"
+                  alt="Merchant Group"
+                  class="h-14 md:h-16 w-auto block brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
+                />
+              </div>
+              <h3
+                class="font-serif text-3xl md:text-4xl lg:text-5xl text-white leading-[1.1] tracking-tight mb-6 max-w-sm"
+              >
+                Curating
+                <span class="text-brand-green italic font-light"
+                  >the Unseen.</span
+                >
+              </h3>
+            </div>
+          </div>
+          <div
+            class="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-8 pt-4 lg:pt-0"
+          >
+            <div class="flex flex-col gap-4">
+              <h4
+                class="font-sans text-[10px] uppercase tracking-[0.2em] text-brand-green font-bold mb-4"
+              >
+                Quick Links
+              </h4>
+              <a
+                href="home-2.html"
+                class="font-sans text-gray-400 hover:text-white transition-colors w-max text-sm md:text-base"
+                >Home</a
+              >
+              <a
+                href="#"
+                class="font-sans text-gray-400 hover:text-white transition-colors w-max text-sm md:text-base"
+                >About Us</a
+              >
+              <a
+                href="#"
+                class="font-sans text-gray-400 hover:text-white transition-colors w-max text-sm md:text-base"
+                >Curated Estates</a
+              >
+            </div>
+            <div class="flex flex-col gap-4">
+              <h4
+                class="font-sans text-[10px] uppercase tracking-[0.2em] text-brand-green font-bold mb-4"
+              >
+                Inquiries
+              </h4>
+              <a
+                href="mailto:merchantgroupbd@gmail.com"
+                class="font-serif text-lg md:text-xl text-gray-300 hover:text-brand-green transition-colors leading-snug break-words"
+                >merchantgroupbd<br />@gmail.com</a
+              >
+              <a
+                href="tel:+8801714988421"
+                class="font-sans text-gray-400 hover:text-white transition-colors mt-2 text-sm md:text-base"
+                >+880 1714-988421</a
+              >
+            </div>
+            <div class="flex flex-col gap-4">
+              <h4
+                class="font-sans text-[10px] uppercase tracking-[0.2em] text-brand-green font-bold mb-4"
+              >
+                Headquarters
+              </h4>
+              <p
+                class="font-sans text-gray-400 leading-relaxed text-sm md:text-base"
+              >
+                Momenbag, Jatrabari,<br />Bangladesh, 1362
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex flex-col md:flex-row justify-between items-center py-8 gap-6 relative z-10"
+        >
+          <p class="font-sans text-xs md:text-sm text-gray-600">
+            &copy; 2026 Merchant Group. All rights reserved.
+          </p>
+        </div>
+      </div>
+      <div
+        class="w-full flex items-center justify-center overflow-hidden translate-y-[25%] pointer-events-none absolute bottom-0 left-0 z-0 opacity-40 mix-blend-screen"
+      >
+        <h1
+          class="font-serif text-[18vw] leading-none whitespace-nowrap footer-massive-text select-none"
+        >
+          MERCHANT
+        </h1>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // 1. LENIS SMOOTH SCROLL INIT
+        const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smooth: true,
+        });
+        lenis.on("scroll", ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0, 0);
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 2. NAV MENU (FROM HOME-2.HTML)
+        const menuToggle = document.getElementById("menu-toggle");
+        const menuText = document.getElementById("menu-text");
+        const menuIconBurger = document.getElementById("menu-icon-burger");
+        const menuIconClose = document.getElementById("menu-icon-close");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const menuItems = document.querySelectorAll(".menu-item");
+        const menuInfo = document.querySelector(".menu-info");
+        const desktopNav = document.getElementById("desktop-nav");
+        let isMenuOpen = false;
+
+        if (menuToggle) {
+          menuToggle.addEventListener("click", () => {
+            isMenuOpen = !isMenuOpen;
+
+            if (isMenuOpen) {
+              mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+              mobileMenu.classList.add("opacity-100", "pointer-events-auto");
+              lenis.stop();
+              if (desktopNav)
+                gsap.to(desktopNav, {
+                  opacity: 0,
+                  y: -20,
+                  duration: 0.4,
+                  pointerEvents: "none",
+                });
+
+              menuText.innerText = "CLOSE";
+              menuIconBurger.classList.add("hidden");
+              menuIconClose.classList.remove("hidden");
+
+              gsap.to(menuItems, {
+                y: "0%",
+                duration: 0.8,
+                stagger: 0.05,
+                ease: "power4.out",
+                delay: 0.1,
+              });
+              if (menuInfo)
+                gsap.to(menuInfo, {
+                  y: 0,
+                  opacity: 1,
+                  duration: 0.8,
+                  ease: "power4.out",
+                  delay: 0.4,
+                });
+            } else {
+              mobileMenu.classList.add("opacity-0", "pointer-events-none");
+              mobileMenu.classList.remove("opacity-100", "pointer-events-auto");
+              lenis.start();
+              if (desktopNav)
+                gsap.to(desktopNav, {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.4,
+                  pointerEvents: "auto",
+                  delay: 0.2,
+                });
+
+              menuText.innerText = "MENU";
+              menuIconBurger.classList.remove("hidden");
+              menuIconClose.classList.add("hidden");
+
+              gsap.to(menuItems, {
+                y: "120%",
+                duration: 0.4,
+                ease: "power2.in",
+              });
+              if (menuInfo)
+                gsap.to(menuInfo, {
+                  y: 20,
+                  opacity: 0,
+                  duration: 0.3,
+                  ease: "power2.in",
+                });
+            }
+          });
+        }
+
+        // 3. MAGNETIC BUTTONS
+        document.querySelectorAll(".magnetic-wrap").forEach((wrap) => {
+          const btn = wrap.querySelector(".magnetic-btn");
+          if (!btn) return;
+          wrap.addEventListener("mousemove", (e) => {
+            const rect = wrap.getBoundingClientRect();
+            const h = rect.width / 2;
+            const w = rect.height / 2;
+            const x = e.clientX - rect.left - h;
+            const y = e.clientY - rect.top - w;
+            gsap.to(btn, {
+              x: x * 0.4,
+              y: y * 0.4,
+              duration: 0.4,
+              ease: "power2.out",
+            });
+          });
+          wrap.addEventListener("mouseleave", () => {
+            gsap.to(btn, {
+              x: 0,
+              y: 0,
+              duration: 0.7,
+              ease: "elastic.out(1, 0.3)",
+            });
+          });
+        });
+
+        // 4. EPIC HERO ANIMATION (EXPANDING IMAGE WITH NO PIN OVERLAP)
+        const heroSection = document.getElementById("hero-section");
+        if (heroSection) {
+          // Parallax effect for the background image
+          gsap.to(".gs-hero-img-inner", {
+            y: "15%", // Moves the image down slightly as you scroll down
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+
+          // Kinetic text subtle scroll effect
+          gsap.to(".gs-hero-text-left", {
+            x: "-10%",
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+
+          gsap.to(".gs-hero-text-right", {
+            x: "10%",
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+
+          // Scroll Indicator fade out
+          gsap.to(".gs-scroll-ind", {
+            opacity: 0,
+            y: 20,
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "30% top",
+              scrub: true,
+            },
+          });
+        }
+
+        // 5. FADE UP ON SCROLL
+        gsap.utils.toArray(".gs-reveal").forEach((el) => {
+          gsap.fromTo(
+            el,
+            { opacity: 0, y: 40 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: { trigger: el, start: "top 85%" },
+            },
+          );
+        });
+      });
+    </script>
+  </body>
+</html>

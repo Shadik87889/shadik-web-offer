@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lagunitas | Ultra Premium Journey</title>
+
+    <!-- Premium Font Stack -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@700&family=Oswald:wght@400;500;700&family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- CORE VARIABLES & RESET --- */
+      :root {
+        --bg-light: #f4f1ea;
+        --bg-dark: #121212;
+        --bg-gold: #d89025;
+        --accent-red: #c1121f;
+        --text-dark: #1a1a1a;
+        --text-light: #fdfdfd;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: var(--bg-light);
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        color: var(--text-dark);
+      }
+
+      /* --- SMOOTH SCROLLING (Lenis) --- */
+      html.lenis {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto;
+      }
+      .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+      .lenis.lenis-scrolling iframe {
+        pointer-events: none;
+      }
+
+      /* --- TEXTURE OVERLAY --- */
+      .noise {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.04;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* --- NAVIGATION --- */
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 30px 4vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        pointer-events: none;
+        mix-blend-mode: difference;
+        color: white;
+      }
+      .logo {
+        font-family: "Anton", sans-serif;
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+      }
+      .nav-btn {
+        pointer-events: auto;
+        background: white;
+        color: black;
+        padding: 14px 32px;
+        font-family: "Oswald", sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 2px;
+      }
+      .nav-btn:hover {
+        transform: scale(1.05);
+      }
+
+      /* --- THE FIXED TRAVELING BOTTLE --- */
+      .fixed-bottle-layer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 100; /* Travels above all sections */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 1000px;
+      }
+      .main-bottle {
+        height: 75vh;
+        width: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.4));
+        will-change: transform;
+        transform-origin: center center;
+      }
+
+      /* --- SOLID SECTION ARCHITECTURE --- 
+           By locking sections to exactly 100vh, we create a mathematical 
+           perfection for the master scroll timeline. No overlap jitters. */
+      .section {
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        padding: 0 6vw;
+      }
+
+      /* Typography Utilities */
+      h1,
+      h2,
+      h3 {
+        font-family: "Anton", sans-serif;
+        text-transform: uppercase;
+        line-height: 0.85;
+        margin: 0;
+      }
+      .script {
+        font-family: "Caveat", cursive;
+        font-size: 3rem;
+        transform: rotate(-3deg);
+        display: block;
+        color: var(--accent-red);
+      }
+
+      /* Premium Text Masking Setup */
+      .mask-wrap {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        display: inline-block;
+      }
+      .mask-text {
+        display: block;
+        transform: translateY(110%);
+      }
+
+      /* --- SECTION 1: HERO --- */
+      #sec-hero {
+        background: radial-gradient(
+          circle at center top,
+          #ffffff,
+          var(--bg-light)
+        );
+        justify-content: space-between;
+      }
+      .hero-left {
+        width: 45%;
+        position: relative;
+        z-index: 10;
+      }
+      .hero-left .script {
+        margin-bottom: -15px;
+      }
+      .hero-left h1 {
+        font-size: clamp(6rem, 13vw, 16rem);
+        letter-spacing: -2px;
+        margin-bottom: 30px;
+      }
+      .hero-left p {
+        font-size: 1.25rem;
+        line-height: 1.6;
+        max-width: 85%;
+        font-weight: 300;
+        opacity: 0;
+      }
+
+      .hero-stats {
+        width: 25%;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.4);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 40px;
+        border-radius: 4px;
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      .stat {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 20px 0;
+      }
+      .stat:last-child {
+        border: none;
+        padding-bottom: 0;
+      }
+      .stat h4 {
+        font-family: "Oswald", sans-serif;
+        color: var(--accent-red);
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+      }
+      .stat .val {
+        font-family: "Anton", sans-serif;
+        font-size: 4rem;
+        line-height: 1;
+      }
+
+      /* --- SECTION 2: INGREDIENTS --- */
+      #sec-ingredients {
+        background: var(--bg-dark);
+        color: var(--text-light);
+      }
+      .ing-text {
+        max-width: 45%;
+        margin-left: 5vw;
+        position: relative;
+        z-index: 2;
+      }
+      .ing-text h2 {
+        font-size: clamp(5rem, 11vw, 13rem);
+        color: var(--text-light);
+      }
+      .ing-text h2 span {
+        color: var(--accent-red);
+      }
+      .ing-text p {
+        font-size: 1.5rem;
+        line-height: 1.5;
+        opacity: 0.7;
+        margin-top: 30px;
+        font-weight: 300;
+      }
+      .parallax-bg-text {
+        position: absolute;
+        font-family: "Anton";
+        font-size: 28vw;
+        line-height: 0.8;
+        color: transparent;
+        -webkit-text-stroke: 2px rgba(255, 255, 255, 0.05);
+        pointer-events: none;
+        z-index: 1;
+        white-space: nowrap;
+      }
+      .txt-hop {
+        top: 10%;
+        right: -5%;
+      }
+      .txt-malt {
+        bottom: -5%;
+        left: -10%;
+      }
+
+      /* --- SECTION 3: LIQUID PROCESS --- */
+      #sec-process {
+        background: var(--bg-gold);
+        color: var(--bg-dark);
+        justify-content: flex-end;
+      }
+      .liquid-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 70% 50%,
+          #fca311 0%,
+          #d89025 100%
+        );
+        opacity: 0.8;
+        z-index: 1;
+      }
+      .process-text {
+        width: 45%;
+        z-index: 2;
+        text-align: right;
+        padding-right: 2vw;
+      }
+      .process-text h2 {
+        font-size: clamp(5rem, 10vw, 12rem);
+        color: var(--text-light);
+        text-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+      .process-text .script {
+        color: var(--bg-dark);
+        text-shadow: none;
+      }
+
+      /* --- SECTION 4: FLAVOR SPLASHES --- */
+      #sec-flavors {
+        background: var(--bg-light);
+        justify-content: center;
+      }
+      .splashes-container {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .splash {
+        position: absolute;
+        width: 45vw;
+        height: 45vw;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.6;
+        mix-blend-mode: multiply;
+        transform: scale(0);
+      }
+      .sp-red {
+        background: var(--accent-red);
+        top: -10%;
+        left: -5%;
+      }
+      .sp-brown {
+        background: #b07d62;
+        bottom: -10%;
+        right: -5%;
+      }
+      .flavor-text {
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+      .ft-left {
+        position: absolute;
+        top: 30%;
+        left: 8vw;
+        max-width: 300px;
+        text-align: left;
+      }
+      .ft-right {
+        position: absolute;
+        bottom: 30%;
+        right: 8vw;
+        max-width: 300px;
+        text-align: right;
+      }
+      .flavor-text h3 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+      }
+
+      /* --- SECTION 5: KINETIC VIBE --- */
+      #sec-vibe {
+        background: var(--accent-red);
+        color: var(--bg-light);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .marquee-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2vh;
+        transform: rotate(-2deg);
+      }
+      .marquee {
+        white-space: nowrap;
+        font-family: "Anton", sans-serif;
+        font-size: 14vw;
+        line-height: 0.85;
+        opacity: 0.9;
+      }
+      .marquee.outline {
+        -webkit-text-stroke: 2px var(--bg-light);
+        color: transparent;
+        opacity: 0.5;
+      }
+      .vibe-center {
+        position: absolute;
+        text-align: center;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+      .vibe-center h2 {
+        font-size: 8rem;
+        text-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+      }
+      .vibe-center .script {
+        color: var(--bg-light);
+        font-size: 5rem;
+        text-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      /* --- SECTION 6: THE FINAL LINEUP --- */
+      #sec-lineup {
+        background: #eae6d9;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 15vh;
+      }
+      .avail-header {
+        text-align: center;
+        margin-bottom: auto;
+      }
+      .avail-header h2 {
+        font-size: clamp(6rem, 12vw, 14rem);
+        color: var(--text-dark);
+      }
+
+      .shelf-container {
+        position: absolute;
+        bottom: 15vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .shelf {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 5vw;
+        width: 80%;
+        position: relative;
+        padding-bottom: 20px;
+      }
+      .shelf::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: radial-gradient(
+          circle,
+          rgba(0, 0, 0, 0.4) 0%,
+          rgba(0, 0, 0, 0) 100%
+        );
+      }
+
+      .item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .sil {
+        background: linear-gradient(to right, #d9d9d9, #ffffff, #d9d9d9);
+        box-shadow: inset -5px 0 15px rgba(0, 0, 0, 0.05);
+      }
+      .sil.tap {
+        width: 45px;
+        height: 180px;
+        background: #222;
+      }
+      .sil.b22 {
+        width: 90px;
+        height: 360px;
+        background: linear-gradient(to right, #5c3012, #8b5523, #5c3012);
+        border-radius: 45px 45px 0 0;
+      }
+      .sil.c12 {
+        width: 80px;
+        height: 160px;
+        border-radius: 5px 5px 0 0;
+      }
+      .sil.c19 {
+        width: 90px;
+        height: 260px;
+        border-radius: 5px 5px 0 0;
+      }
+
+      /* The invisible space for the bottle to land perfectly */
+      .landing-zone {
+        width: 110px;
+        height: 260px;
+        position: relative;
+      }
+      .landing-shadow {
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 20px;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0.6) 0%,
+          rgba(0, 0, 0, 0) 70%
+        );
+        opacity: 0;
+      }
+
+      .label {
+        margin-top: 35px;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #666;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+      .label strong {
+        font-family: "Oswald";
+        font-size: 1.4rem;
+        color: var(--text-dark);
+        display: block;
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise"></div>
+
+    <header>
+      <div class="logo">LAGUNITAS</div>
+      <button class="nav-btn">Buy Beer</button>
+    </header>
+
+    <!-- The Singular Bottle that travels seamlessly -->
+    <div class="fixed-bottle-layer">
+      <img
+        src="ChatGPT Image Apr 17, 2026, 12_25_30 PM.png"
+        alt="Lagunitas Bottle"
+        class="main-bottle"
+      />
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main id="smooth-wrapper">
+      <!-- Section 1 -->
+      <section class="section" id="sec-hero">
+        <div class="hero-left">
+          <span class="script">Unlimited release</span>
+          <h1>
+            <span class="mask-wrap"
+              ><span class="mask-text hero-h1">INDIA</span></span
+            ><br />
+            <span class="mask-wrap"
+              ><span class="mask-text hero-h1">PALE ALE</span></span
+            >
+          </h1>
+          <p class="hero-p">
+            The recipe was formulated with malt and hops working together to
+            balance it all out on your 'buds so you can knock back more than one
+            without wearing yourself out. Big on the aroma with a hoppy-sweet
+            finish.
+          </p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <h4>ABV</h4>
+            <div class="val">6.2%</div>
+          </div>
+          <div class="stat">
+            <h4>IBU</h4>
+            <div class="val">51.1</div>
+          </div>
+          <div class="stat">
+            <h4>OG</h4>
+            <div class="val">1.059</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2 -->
+      <section class="section" id="sec-ingredients">
+        <div class="parallax-bg-text txt-hop">HOPS</div>
+        <div class="parallax-bg-text txt-malt">MALT</div>
+
+        <div class="ing-text">
+          <h2>OLD SCHOOL<br /><span>C-HOPS</span></h2>
+          <p>
+            Brewed with 43 different hops and 65 various malts. This redolent
+            ale will likely float your boat, whatever planet you're on.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section class="section" id="sec-process">
+        <div class="liquid-overlay"></div>
+        <div class="process-text">
+          <span class="script">Smooth &</span>
+          <h2>BALANCED<br />FINISH</h2>
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section class="section" id="sec-flavors">
+        <div class="splashes-container">
+          <div class="splash sp-red"></div>
+          <div class="splash sp-brown"></div>
+        </div>
+        <div class="flavor-text">
+          <div class="ft-left">
+            <h3>CITRUS & PINE</h3>
+            <p>
+              Bright, deep, and grounding. Making you want to take another sip.
+            </p>
+          </div>
+          <div class="ft-right">
+            <h3>CARAMEL MALT</h3>
+            <p>
+              Brings a clean, almost biscuit-like flavor and the beautiful
+              orange color.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5 -->
+      <section class="section" id="sec-vibe">
+        <div class="marquee-container">
+          <div class="marquee outline marq-1">
+            BEER SPEAKS. PEOPLES MUMBLE. LAGUNITAS.
+          </div>
+          <div class="marquee marq-2">
+            BEER SPEAKS. PEOPLES MUMBLE. LAGUNITAS.
+          </div>
+          <div class="marquee outline marq-3">
+            BEER SPEAKS. PEOPLES MUMBLE. LAGUNITAS.
+          </div>
+        </div>
+
+        <div class="vibe-center">
+          <span class="script">Est. 1993</span>
+          <h2>PETALUMA, CA</h2>
+        </div>
+      </section>
+
+      <!-- Section 6 -->
+      <section class="section" id="sec-lineup">
+        <div class="avail-header">
+          <span class="script" style="font-size: 3.5rem;">Availability</span>
+          <h2>YEAR ROUND</h2>
+        </div>
+
+        <div class="shelf-container">
+          <div class="shelf">
+            <div class="item">
+              <div class="sil tap"></div>
+              <div class="label"><strong>On Tap</strong><br />&nbsp;</div>
+            </div>
+            <div class="item">
+              <div class="sil b22"></div>
+              <div class="label">
+                <strong>22 oz bottles</strong><br />6-PACK
+              </div>
+            </div>
+
+            <!-- The Bottle lands gracefully here -->
+            <div class="item">
+              <div class="landing-zone">
+                <div class="landing-shadow"></div>
+              </div>
+              <div class="label">
+                <strong>12 oz bottles</strong><br />6- OR 12-PACK
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="sil c12"></div>
+              <div class="label"><strong>12 oz cans</strong><br />&nbsp;</div>
+            </div>
+            <div class="item">
+              <div class="sil c19"></div>
+              <div class="label"><strong>19.2 oz can</strong><br />&nbsp;</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+      // 1. Initialize Smooth Scroll (Lenis)
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+      });
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+      gsap.registerPlugin(ScrollTrigger);
+
+      // 2. Initial Page Load Premium Reveal
+      const introTl = gsap.timeline({ delay: 0.2 });
+      introTl
+        .to(".hero-h1", {
+          y: 0,
+          duration: 1.2,
+          stagger: 0.1,
+          ease: "power4.out",
+        })
+        .to(".hero-p", { opacity: 1, duration: 1, ease: "power2.out" }, "-=0.8")
+        .to(
+          ".hero-stats",
+          { x: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
+          "-=1",
+        )
+        .fromTo(
+          ".main-bottle",
+          { y: 150, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.5, ease: "back.out(1.2)" },
+          "-=1.2",
+        );
+
+      // 3. THE MASTER BOTTLE JOURNEY
+      /*
+          Because every section is exactly 100vh, there are exactly 5 scroll transitions 
+          to reach the bottom. By giving each tween `ease: "none"` and letting them default
+          to equal duration inside a single timeline, we achieve MATHEMATICAL PERFECTION. 
+          The bottle will hit its exact designated spot the millisecond the section boundary 
+          aligns with the viewport.
+        */
+      const bottleTL = gsap.timeline({
+        scrollTrigger: {
+          trigger: "main",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1, // No jitter, matches scroll exactly
+        },
+      });
+
+      bottleTL
+        // 1. Hero -> Ingredients
+        .to(".main-bottle", {
+          scale: 0.75,
+          rotation: 15,
+          x: "22vw",
+          y: "5vh",
+          filter: "drop-shadow(30px 50px 30px rgba(0,0,0,0.8))",
+          ease: "none",
+        })
+        // 2. Ingredients -> Process
+        .to(".main-bottle", {
+          scale: 1.15,
+          rotation: -12,
+          x: "-20vw",
+          y: "0vh",
+          filter: "drop-shadow(-30px 40px 40px rgba(0,0,0,0.5))",
+          ease: "none",
+        })
+        // 3. Process -> Flavors
+        .to(".main-bottle", {
+          scale: 0.85,
+          rotation: 5,
+          x: "0vw",
+          y: "-5vh",
+          filter: "drop-shadow(0 30px 40px rgba(0,0,0,0.3))",
+          ease: "none",
+        })
+        // 4. Flavors -> Vibe (Macro Shot)
+        .to(".main-bottle", {
+          scale: 2.2,
+          rotation: -5,
+          x: "0vw",
+          y: "15vh",
+          filter: "drop-shadow(0 80px 80px rgba(0,0,0,0.6))",
+          ease: "none",
+        })
+        // 5. Vibe -> Lineup (Lands on Shelf)
+        // Adjust the `y` value here if the image size makes it sit slightly off the shelf
+        .to(".main-bottle", {
+          scale: 0.35,
+          rotation: 0,
+          x: "0vw",
+          y: "24vh",
+          filter: "drop-shadow(0 15px 15px rgba(0,0,0,0.2))",
+          ease: "none",
+        });
+
+      // 4. INDIVIDUAL SECTION ENHANCEMENTS
+
+      // Ingredients Parallax Background
+      gsap.to(".txt-hop", {
+        y: -250,
+        scrollTrigger: { trigger: "#sec-ingredients", scrub: true },
+      });
+      gsap.to(".txt-malt", {
+        y: -350,
+        scrollTrigger: { trigger: "#sec-ingredients", scrub: true },
+      });
+
+      // Flavor Splashes Bloom
+      gsap.to(".sp-red", {
+        scale: 1,
+        x: "10vw",
+        scrollTrigger: {
+          trigger: "#sec-flavors",
+          start: "top center",
+          end: "center center",
+          scrub: 1,
+        },
+      });
+      gsap.to(".sp-brown", {
+        scale: 1,
+        x: "-10vw",
+        scrollTrigger: {
+          trigger: "#sec-flavors",
+          start: "top center",
+          end: "center center",
+          scrub: 1,
+        },
+      });
+
+      // Kinetic Vibe Marquee
+      gsap.to(".marq-1", {
+        x: "-20vw",
+        scrollTrigger: {
+          trigger: "#sec-vibe",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+      gsap.to(".marq-2", {
+        x: "15vw",
+        scrollTrigger: {
+          trigger: "#sec-vibe",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+      gsap.to(".marq-3", {
+        x: "-25vw",
+        scrollTrigger: {
+          trigger: "#sec-vibe",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+
+      // Shelf Items Reveal & Shadow
+      gsap.from(".item", {
+        y: 80,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 1,
+        ease: "back.out(1.5)",
+        scrollTrigger: { trigger: "#sec-lineup", start: "top center" },
+      });
+
+      // Fade in shadow exactly when bottle lands
+      gsap.to(".landing-shadow", {
+        opacity: 1,
+        scrollTrigger: {
+          trigger: "main",
+          start: "90% bottom", // Triggers at the very end of scroll
+          end: "bottom bottom",
+          scrub: true,
+        },
+      });
+    </script>
+  </body>
+</html>
