@@ -262,7 +262,7 @@
         z-index: 0;
       }
 
-      /* Floating Animations */
+      /* Floating Animation */
       @keyframes float {
         0% {
           transform: translateY(0px) rotate(0deg);
@@ -276,44 +276,6 @@
       }
       .animate-float {
         animation: float 8s ease-in-out infinite;
-      }
-
-      /* Floating Cards Animation */
-      @keyframes float-card-1 {
-        0%,
-        100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-12px) rotate(-1deg);
-        }
-      }
-      @keyframes float-card-2 {
-        0%,
-        100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-8px) rotate(1.5deg);
-        }
-      }
-      @keyframes float-card-3 {
-        0%,
-        100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-10px) rotate(1deg);
-        }
-      }
-      .animate-float-card-1 {
-        animation: float-card-1 6s ease-in-out infinite;
-      }
-      .animate-float-card-2 {
-        animation: float-card-2 7s ease-in-out infinite 1s;
-      }
-      .animate-float-card-3 {
-        animation: float-card-3 5.5s ease-in-out infinite 2s;
       }
 
       /* Grid Lines */
@@ -563,7 +525,7 @@
       =============================================================== 
     -->
     <section
-      class="relative w-full h-[100svh] min-h-[700px] flex flex-col justify-center overflow-hidden bg-brand-black"
+      class="relative w-full min-h-[100svh] flex flex-col justify-center overflow-hidden bg-brand-black pt-24 pb-48 lg:pb-0"
       id="hero"
     >
       <!-- Deep Cinematic Glow -->
@@ -587,38 +549,26 @@
         </h1>
       </div>
 
-      <!-- Interactive / Foreground Layer -->
+      <!-- Interactive / Foreground Layer (2-Column Layout) -->
       <div
-        class="relative z-10 w-full h-full max-w-[1800px] mx-auto px-4 md:px-8 flex flex-col md:block pt-24 md:pt-0"
+        class="relative z-10 w-full max-w-[1600px] mx-auto px-4 md:px-8 flex flex-col lg:flex-row items-center justify-between gap-12 mt-8 lg:mt-0"
       >
-        <!-- Astronaut Container (Flex-grow on mobile, Absolute Centered on desktop) -->
+        <!-- Left: Text Block -->
         <div
-          class="w-full flex-grow md:absolute md:inset-0 flex items-center justify-center pointer-events-none min-h-[40vh] md:min-h-0 pb-8 md:pb-0 z-10"
-        >
-          <div
-            class="relative w-full max-w-[320px] sm:max-w-[400px] md:max-w-[480px] lg:max-w-[580px] flex items-center justify-center opacity-0 translate-y-12 scale-95 hero-img-anim pointer-events-none"
-          >
-            <img
-              src="https://i.postimg.cc/X71MDb9z/SP1.png"
-              alt="Netziah 3D Element"
-              class="w-full h-auto object-contain animate-float drop-shadow-[0_20px_80px_rgba(0,85,255,0.4)] filter contrast-125 pointer-events-auto"
-            />
-          </div>
-        </div>
-
-        <!-- Text Block: Bottom Left -->
-        <div
-          class="w-full md:absolute md:bottom-[8%] lg:bottom-16 md:left-4 lg:left-8 z-30 pb-12 md:pb-0 max-w-[400px] lg:max-w-[480px] hero-details opacity-0 pointer-events-auto"
+          class="w-full lg:w-5/12 z-30 hero-details opacity-0 flex flex-col items-start text-left"
         >
           <div class="pl-4 md:pl-6 border-l-2 border-brand-blue">
             <h2
-              class="text-white font-display text-4xl sm:text-5xl lg:text-[4.5rem] uppercase font-bold tracking-tighter mb-4 md:mb-6 leading-[1.05]"
+              class="text-white font-display text-4xl md:text-5xl lg:text-[4.5rem] uppercase font-bold tracking-tighter mb-6 leading-[1.05]"
             >
               We Help Businesses <br />
-              <span class="text-brand-blue">Close Deals.</span>
+              <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-accent"
+                >Close Deals.</span
+              >
             </h2>
             <p
-              class="font-sans text-brand-text text-sm sm:text-base leading-relaxed mb-6 md:mb-8 font-medium max-w-sm md:max-w-md"
+              class="font-sans text-brand-text text-sm md:text-base leading-relaxed mb-10 font-medium max-w-md"
             >
               Netziah becomes your sales force. We qualify prospects, assign
               trained closers, follow up with discipline, and help your business
@@ -626,7 +576,7 @@
             </p>
             <a
               href="solutions"
-              class="magnetic-btn bg-white text-black px-6 md:px-8 py-3 md:py-4 text-[10px] md:text-[11px] uppercase tracking-widest font-bold btn-white w-fit"
+              class="magnetic-btn bg-white text-black px-8 py-4 text-[11px] md:text-xs uppercase tracking-widest font-bold btn-white w-fit"
             >
               <span class="z-10 relative">See How We Work</span>
               <div class="fill bg-black"></div>
@@ -634,18 +584,96 @@
           </div>
         </div>
 
-        <!-- Scroll Down Indicator: Bottom Right -->
+        <!-- Right: Astronaut Image (Perfectly Scaled) -->
         <div
-          class="absolute bottom-8 right-4 md:right-8 flex flex-col items-center justify-end z-30 hero-details opacity-0 hidden sm:flex"
+          class="w-full lg:w-7/12 relative flex items-center justify-center lg:justify-end hero-img-anim opacity-0"
         >
-          <span
-            class="text-[9px] font-sans font-bold uppercase tracking-[0.4em] text-brand-text mb-16 rotate-90 origin-center absolute top-[-40px]"
-            >Scroll</span
+          <img
+            src="https://i.postimg.cc/X71MDb9z/SP1.png"
+            alt="Netziah 3D Element"
+            class="w-full max-w-[350px] md:max-w-[450px] lg:max-w-[600px] h-auto object-contain animate-float drop-shadow-[0_20px_80px_rgba(0,85,255,0.25)] filter contrast-110"
+          />
+        </div>
+      </div>
+
+      <!-- Sleek Bottom Info Bar (Replaces Floating Cards) -->
+      <div
+        class="absolute bottom-0 left-0 w-full z-30 border-t border-white/10 bg-[#030303]/60 backdrop-blur-xl hero-details opacity-0"
+      >
+        <div
+          class="max-w-[1600px] mx-auto px-4 md:px-8 flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-white/10"
+        >
+          <!-- Info 1 -->
+          <div
+            class="flex-1 py-5 md:py-6 px-4 md:px-8 flex items-start gap-4 group hover:bg-white/5 transition-colors"
           >
-          <div class="w-[1px] h-16 bg-brand-border relative overflow-hidden">
             <div
-              class="absolute top-0 left-0 w-full h-1/3 bg-white animate-[bounce_2.5s_infinite]"
+              class="w-2 h-2 mt-1.5 rounded-full bg-brand-blue group-hover:scale-150 transition-transform"
             ></div>
+            <div>
+              <h4
+                class="text-[10px] md:text-xs uppercase tracking-[0.2em] text-white font-display font-bold mb-1"
+              >
+                Elite Closers
+              </h4>
+              <p
+                class="text-[11px] text-brand-text leading-relaxed font-sans max-w-[280px]"
+              >
+                Expertly trained to convert conversations into customers.
+              </p>
+            </div>
+          </div>
+
+          <!-- Info 2 -->
+          <div
+            class="flex-1 py-5 md:py-6 px-4 md:px-8 flex items-start gap-4 group hover:bg-white/5 transition-colors"
+          >
+            <svg
+              class="w-4 h-4 mt-0.5 text-brand-blue group-hover:scale-110 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              ></path>
+            </svg>
+            <div>
+              <h4
+                class="text-[10px] md:text-xs uppercase tracking-[0.2em] text-white font-display font-bold mb-1"
+              >
+                We Operate Your Sales
+              </h4>
+              <p
+                class="text-[11px] text-brand-text leading-relaxed font-sans max-w-[280px]"
+              >
+                We run your sales process end to end.
+              </p>
+            </div>
+          </div>
+
+          <!-- Info 3 -->
+          <div
+            class="flex-1 py-5 md:py-6 px-4 md:px-8 flex items-start gap-4 group hover:bg-white/5 transition-colors"
+          >
+            <div
+              class="w-2 h-2 mt-1.5 rounded-full bg-brand-accent shadow-[0_0_8px_#00D1FF] group-hover:scale-150 transition-transform"
+            ></div>
+            <div>
+              <h4
+                class="text-[10px] md:text-xs uppercase tracking-[0.2em] text-white font-display font-bold mb-1"
+              >
+                Results
+              </h4>
+              <p
+                class="text-[11px] text-brand-text leading-relaxed font-sans max-w-[280px]"
+              >
+                More closed deals.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -1257,7 +1285,7 @@
             </div>
 
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/HubSpot_Logo.svg/1920px-HubSpot_Logo.svg.png"
+              src="https://upload.wikimedia.org/wikipedia/commons/f/fa/HubSpot_Logo.svg"
               alt="HubSpot"
               class="partner-logo"
             />
@@ -1270,7 +1298,7 @@
             </div>
 
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/ZOHO_logo_2023.svg/1280px-ZOHO_logo_2023.svg.png"
+              src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Zoho_Logo.svg"
               alt="Zoho"
               class="partner-logo"
             />
@@ -1573,24 +1601,21 @@
           >
             <!-- Glowing Box Background (Appears on Focus) -->
             <div
-              class="absolute -inset-1 bg-gradient-to-r from-brand-blue/30 to-brand-accent/30 rounded-xl blur opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 pointer-events-none"
+              class="absolute -inset-4 bg-brand-blue/5 border border-brand-blue/0 rounded-xl transition-all duration-500 group-focus-within:border-brand-blue/30 group-focus-within:bg-brand-blue/10 group-focus-within:shadow-[0_0_30px_rgba(0,85,255,0.1)] scale-95 group-focus-within:scale-100 opacity-0 group-focus-within:opacity-100 pointer-events-none -z-10"
             ></div>
 
             <div
-              class="relative flex items-center w-full bg-[#0a0a0a] border border-white/10 group-focus-within:border-brand-blue/50 rounded-xl p-1.5 transition-all duration-500"
+              class="flex items-center border-b border-brand-border group-focus-within:border-transparent pb-4 md:pb-6 relative transition-colors"
             >
               <input
                 type="email"
                 placeholder="ENTER YOUR EMAIL"
-                class="flex-grow bg-transparent text-white px-4 md:px-6 py-3 md:py-4 font-sans text-sm md:text-base outline-none placeholder:text-gray-600 placeholder:font-display placeholder:uppercase placeholder:tracking-widest"
+                class="w-full bg-transparent text-white font-display text-xl md:text-2xl uppercase font-bold focus:outline-none placeholder:text-gray-700 peer z-20 relative"
               />
               <button
-                class="relative flex-shrink-0 bg-brand-blue text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-[10px] md:text-xs uppercase tracking-widest font-bold transition-all hover:bg-brand-accent hover:shadow-[0_0_20px_rgba(0,209,255,0.4)] overflow-hidden group/btn"
+                class="absolute right-0 top-1/2 -translate-y-1/2 text-[10px] md:text-xs uppercase tracking-widest font-bold text-brand-blue peer-focus:text-brand-accent hover:text-white transition-colors z-20"
               >
-                <span class="relative z-20">Subscribe</span>
-                <div
-                  class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover/btn:animate-[shimmer_1.5s_infinite]"
-                ></div>
+                Subscribe
               </button>
             </div>
           </div>

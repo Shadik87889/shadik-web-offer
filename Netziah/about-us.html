@@ -173,6 +173,10 @@
           transform: scale(1.05);
         }
       }
+      /* Bright Hero Override */
+      .hero-bg-img {
+        filter: grayscale(100%) contrast(1.05) brightness(1) !important;
+      }
 
       /* Magnetic Buttons */
       .magnetic-btn {
@@ -285,6 +289,13 @@
         display: block;
         transform: translateY(100%);
       }
+
+      /* Button Shimmer Animation */
+      @keyframes shimmer {
+        100% {
+          transform: translateX(100%);
+        }
+      }
     </style>
   </head>
   <body class="antialiased selection:bg-brand-blue selection:text-white">
@@ -295,28 +306,6 @@
     <!-- Hover Image Follower (Pillars Section - Desktop Only) -->
     <div class="hover-img-wrapper hidden lg:block">
       <div class="hover-img-inner"></div>
-    </div>
-
-    <!-- Cinematic Preloader -->
-    <div class="preloader fixed inset-0 z-[10000] flex bg-[#000]">
-      <div
-        class="absolute inset-0 flex flex-col items-center justify-center z-20 preloader-content"
-      >
-        <div class="overflow-hidden mb-2">
-          <span
-            class="font-display font-bold text-4xl md:text-7xl uppercase tracking-tighter text-white loader-word block translate-y-[110%]"
-            >Netziah</span
-          >
-        </div>
-        <div class="overflow-hidden">
-          <span
-            class="font-sans text-[9px] md:text-[10px] uppercase tracking-widest text-brand-text loader-word block translate-y-[110%]"
-            >System Initialization // 2026</span
-          >
-        </div>
-      </div>
-      <div class="w-1/2 h-full bg-[#050505] panel-left origin-left"></div>
-      <div class="w-1/2 h-full bg-[#050505] panel-right origin-right"></div>
     </div>
 
     <!-- Mobile Menu Overlay -->
@@ -469,20 +458,25 @@
     >
       <!-- Background Structure -->
       <div class="absolute inset-0 flex w-full h-full z-0">
-        <!-- Mobile Background (Darkened edge-to-edge image) -->
+        <!-- Mobile Background (Brighter, Modern Office) -->
         <div class="md:hidden absolute inset-0 w-full h-full overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80"
-            alt="Architecture"
-            class="w-full h-full object-cover opacity-[0.25] scale-110"
+            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80"
+            alt="Modern Office Architecture"
+            class="w-full h-full object-cover hero-bg-img scale-110 opacity-70"
           />
           <div
-            class="absolute inset-0 bg-gradient-to-t from-[#000] via-[#000]/60 to-transparent"
+            class="absolute inset-0 bg-gradient-to-t from-[#000] via-[#000]/40 to-transparent"
           ></div>
         </div>
 
         <!-- Desktop Split Background -->
         <div class="hidden md:block w-[40%] h-full bg-[#000] relative">
+          <!-- Subtle Blue Glow for Confidence/Depth -->
+          <div
+            class="absolute bottom-0 right-0 w-[50vw] h-[50vw] bg-brand-blue/10 rounded-full blur-[100px] pointer-events-none translate-x-1/2 translate-y-1/4"
+          ></div>
+
           <div
             class="absolute right-0 top-0 w-[1px] h-full bg-brand-border"
           ></div>
@@ -491,16 +485,17 @@
           ></div>
         </div>
         <div class="hidden md:block w-[60%] h-full overflow-hidden relative">
+          <!-- Brighter, Modern Office Image -->
           <img
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80"
-            alt="Architecture"
-            class="w-full h-full object-cover hero-bg-img img-premium opacity-80 scale-125 origin-center"
+            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2000&q=80"
+            alt="Modern Office Architecture"
+            class="w-full h-full object-cover hero-bg-img opacity-90 scale-125 origin-center"
           />
           <div
-            class="absolute inset-0 bg-gradient-to-r from-[#000] via-transparent to-transparent"
+            class="absolute inset-0 bg-gradient-to-r from-[#000] via-[#000]/60 to-transparent"
           ></div>
           <div
-            class="absolute inset-0 bg-gradient-to-t from-[#000] via-transparent to-transparent opacity-80"
+            class="absolute inset-0 bg-gradient-to-t from-[#000] via-transparent to-transparent opacity-60"
           ></div>
         </div>
       </div>
@@ -509,7 +504,7 @@
       <div
         class="relative z-10 w-full px-6 md:px-12 flex flex-col justify-center h-full max-w-[1800px] mx-auto pt-32 pb-16 md:pb-24"
       >
-        <!-- Massive Typographic Overlap (Calibrated sizes to PREVENT clipping) -->
+        <!-- Massive Typographic Overlap -->
         <div
           class="w-full relative blend-diff pointer-events-none mb-10 md:mb-16"
         >
@@ -532,7 +527,7 @@
 
         <!-- Lower Information Grid -->
         <div
-          class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 mt-auto items-end hero-fade opacity-0 translate-y-8"
+          class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 mt-auto items-end hero-fade opacity-0 translate-y-8 relative z-20"
         >
           <div class="col-span-1 md:col-span-4 hidden md:block">
             <div class="flex flex-col gap-2">
@@ -547,19 +542,20 @@
             class="col-span-1 md:col-span-4 font-sans text-brand-text text-[13px] md:text-base leading-relaxed font-medium md:pr-8"
           >
             <p>
-              Netziah is a
-              <strong class="text-white">revenue growth consulting firm</strong>
-              focused on helping businesses turn opportunities into measurable
-              results.
+              Netziah helps companies turn
+              <strong class="text-white"
+                >real interest into real revenue.</strong
+              >
             </p>
           </div>
           <div
             class="col-span-1 md:col-span-4 font-sans text-brand-text text-[13px] md:text-base leading-relaxed font-medium"
           >
             <p>
-              We design disciplined, data-driven revenue systems that help
-              companies convert more leads into paying clients and scale with
-              confidence.
+              We step into the sales process where most teams lose control:
+              qualifying opportunities, managing follow-up, supporting trained
+              sales personnel, and keeping serious conversations moving until
+              they become closed deals.
             </p>
           </div>
         </div>
@@ -576,13 +572,12 @@
     >
       <div class="max-w-[1400px] mx-auto px-6 md:px-12 text-center">
         <h2
-          class="bridge-text font-display text-2xl md:text-6xl font-bold uppercase tracking-tighter leading-[1.2] text-[#1a1a1a]"
+          class="bridge-text font-display text-3xl md:text-6xl font-bold uppercase tracking-tighter leading-[1.2] text-[#1a1a1a]"
         >
-          Many businesses generate opportunities but lack the structure and
-          operational systems needed to fully capture that potential.
-          <br class="hidden md:block" /><br class="hidden md:block" />
+          Sales is not just about generating interest.<br />
+          It's about what happens after.<br />
           <span class="text-brand-blue block mt-4 md:inline md:mt-0"
-            >That's where Netziah comes in.</span
+            >That's why Netziah exists.</span
           >
         </h2>
       </div>
@@ -629,8 +624,8 @@
               <h3
                 class="font-display text-xl md:text-4xl text-white leading-[1.2] tracking-tighter uppercase border-l-4 border-brand-blue pl-5 md:pl-10 shadow-lg"
               >
-                "We don't sit on the sidelines. We build the systems needed to
-                close deals and scale revenue."
+                "Every conversation is a chance to win. Most companies lose it
+                in what happens next."
               </h3>
             </div>
           </div>
@@ -644,11 +639,12 @@
               <p
                 class="text-brand-text text-sm md:text-xl leading-relaxed font-medium"
               >
-                After working closely with growing organizations, it became
-                clear that the real challenge wasn't strategy — it was
-                execution. Joshua Pineda founded Netziah to help businesses
-                build disciplined, scalable revenue systems that transform
-                fragmented sales efforts into consistent performance.
+                Joshua Pineda founded Netziah after working across sales,
+                marketing agencies, attorney-led businesses, high-ticket
+                closing, and business consulting. Across different industries,
+                he saw the same problem: companies were creating interest, but
+                growth was being slowed down by owner-dependent sales, scattered
+                teams, manual follow-up, and disconnected execution.
               </p>
             </div>
 
@@ -656,15 +652,17 @@
               <p
                 class="text-white/90 text-sm md:text-xl leading-relaxed font-medium"
               >
-                Today, Netziah works as a strategic operating partner, helping
-                companies improve how they manage opportunities, convert leads,
-                and drive sustainable revenue growth.
+                Netziah was built to solve that gap by bringing the commercial
+                operation together into one structured team. From marketing
+                support and qualification to openers, closers, follow-up, and
+                revenue operations, Netziah helps businesses handle more volume,
+                create accountability, and grow with control.
               </p>
             </div>
           </div>
         </div>
 
-        <!-- Right: Epic Portrait w/ Badges -->
+        <!-- Right: Epic Portrait -->
         <div
           class="col-span-1 lg:col-span-6 order-1 lg:order-2 relative group mt-4 lg:mt-0 flex items-center justify-center"
         >
@@ -684,32 +682,13 @@
             class="w-full md:w-[80%] aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-2xl relative z-10 shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
           >
             <img
-              src="https://i.postimg.cc/g2t1t1B3/netziah-founder.png"
+              src="jos.PNG.png"
               alt="Joshua Pineda"
               class="w-full h-full object-cover img-premium parallax-portrait md:scale-125 origin-center"
             />
             <div
               class="absolute inset-0 bg-gradient-to-t from-[#000] via-transparent to-transparent opacity-90"
             ></div>
-          </div>
-
-          <!-- Floating High-End Info Badge (Desktop) -->
-          <div
-            class="absolute bottom-10 right-[5%] md:right-0 bg-[#121212]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hidden md:flex flex-col gap-2 shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-30 transform translate-y-12 badge-reveal"
-          >
-            <div class="flex items-center gap-3 mb-2">
-              <div
-                class="w-2 h-2 rounded-full bg-brand-accent animate-pulse shadow-[0_0_8px_#00D1FF]"
-              ></div>
-              <span
-                class="text-[9px] uppercase tracking-[0.2em] text-brand-text font-bold"
-                >Systems</span
-              >
-            </div>
-            <span
-              class="text-xl font-display font-bold text-white uppercase tracking-tight"
-              >Execution Ready</span
-            >
           </div>
 
           <!-- Data Overlay Bottom Left -->
@@ -726,6 +705,283 @@
             >
               Founder & CEO, Netziah
             </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+      ===============================================================
+      NEW SECTION: Revenue Ecosystem / Roles Network
+      =============================================================== 
+    -->
+    <section
+      class="relative bg-[#000] w-full border-b border-brand-border overflow-hidden py-24 md:py-48"
+    >
+      <!-- Background Illustration (Network Visual Reference) -->
+      <div
+        class="absolute inset-0 z-0 opacity-[0.12] mix-blend-screen pointer-events-none"
+      >
+        <img
+          src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=80"
+          class="w-full h-full object-cover grayscale"
+          alt="Network Structure"
+        />
+      </div>
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-[#000] via-[#000]/50 to-[#000] z-0"
+      ></div>
+
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+        <div class="text-center mb-16 md:mb-24 text-reveal">
+          <h2
+            class="font-display text-4xl md:text-6xl text-white font-bold uppercase tracking-tighter leading-none mb-4"
+          >
+            The
+            <span
+              class="text-stroke text-transparent"
+              style="-webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);"
+              >Ecosystem</span
+            >
+          </h2>
+          <p
+            class="text-brand-blue text-[10px] md:text-xs uppercase tracking-[0.3em] font-bold"
+          >
+            Integrated Revenue Operations
+          </p>
+        </div>
+
+        <!-- Network / Roles Layout -->
+        <div class="relative w-full flex flex-col items-center gap-4 md:gap-6">
+          <!-- Row 1 -->
+          <div
+            class="flex flex-wrap justify-center gap-4 md:gap-6 w-full text-reveal"
+          >
+            <!-- Closers -->
+            <div
+              class="flex items-center gap-4 bg-[#0a0a0a]/90 backdrop-blur-md border border-white/20 px-2 py-2 pr-6 md:pr-8 rounded-full hover:border-brand-blue transition-all group cursor-default shadow-lg"
+            >
+              <div
+                class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-brand-blue/20 group-hover:border-brand-blue/50 transition-colors shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 md:w-5 md:h-5 text-white group-hover:text-brand-accent transition-colors"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  ></path>
+                </svg>
+              </div>
+              <span
+                class="text-white font-sans text-[10px] md:text-xs uppercase tracking-widest font-bold whitespace-nowrap"
+                >Closers</span
+              >
+            </div>
+
+            <!-- Openers -->
+            <div
+              class="flex items-center gap-4 bg-[#0a0a0a]/90 backdrop-blur-md border border-white/20 px-2 py-2 pr-6 md:pr-8 rounded-full hover:border-brand-blue transition-all group cursor-default shadow-lg"
+            >
+              <div
+                class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-brand-blue/20 group-hover:border-brand-blue/50 transition-colors shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 md:w-5 md:h-5 text-white group-hover:text-brand-accent transition-colors"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                  ></path>
+                </svg>
+              </div>
+              <span
+                class="text-white font-sans text-[10px] md:text-xs uppercase tracking-widest font-bold whitespace-nowrap"
+                >Openers</span
+              >
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div
+            class="flex flex-wrap justify-center gap-4 md:gap-6 w-full text-reveal"
+          >
+            <!-- Sales Managers -->
+            <div
+              class="flex items-center gap-4 bg-[#0a0a0a]/90 backdrop-blur-md border border-white/20 px-2 py-2 pr-6 md:pr-8 rounded-full hover:border-brand-blue transition-all group cursor-default shadow-lg"
+            >
+              <div
+                class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-brand-blue/20 group-hover:border-brand-blue/50 transition-colors shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 md:w-5 md:h-5 text-white group-hover:text-brand-accent transition-colors"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                  ></path>
+                </svg>
+              </div>
+              <span
+                class="text-white font-sans text-[10px] md:text-xs uppercase tracking-widest font-bold whitespace-nowrap"
+                >Sales Managers</span
+              >
+            </div>
+
+            <!-- Account Managers -->
+            <div
+              class="flex items-center gap-4 bg-[#0a0a0a]/90 backdrop-blur-md border border-white/20 px-2 py-2 pr-6 md:pr-8 rounded-full hover:border-brand-blue transition-all group cursor-default shadow-lg"
+            >
+              <div
+                class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-brand-blue/20 group-hover:border-brand-blue/50 transition-colors shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 md:w-5 md:h-5 text-white group-hover:text-brand-accent transition-colors"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  ></path>
+                </svg>
+              </div>
+              <span
+                class="text-white font-sans text-[10px] md:text-xs uppercase tracking-widest font-bold whitespace-nowrap"
+                >Account Managers</span
+              >
+            </div>
+
+            <!-- Marketing Specialists -->
+            <div
+              class="flex items-center gap-4 bg-[#0a0a0a]/90 backdrop-blur-md border border-white/20 px-2 py-2 pr-6 md:pr-8 rounded-full hover:border-brand-blue transition-all group cursor-default shadow-lg"
+            >
+              <div
+                class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-brand-blue/20 group-hover:border-brand-blue/50 transition-colors shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 md:w-5 md:h-5 text-white group-hover:text-brand-accent transition-colors"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
+                  ></path>
+                </svg>
+              </div>
+              <span
+                class="text-white font-sans text-[10px] md:text-xs uppercase tracking-widest font-bold whitespace-nowrap"
+                >Marketing Specialists</span
+              >
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div
+            class="flex flex-wrap justify-center gap-4 md:gap-6 w-full text-reveal"
+          >
+            <!-- Follow-Up Specialists -->
+            <div
+              class="flex items-center gap-4 bg-[#0a0a0a]/90 backdrop-blur-md border border-white/20 px-2 py-2 pr-6 md:pr-8 rounded-full hover:border-brand-blue transition-all group cursor-default shadow-lg"
+            >
+              <div
+                class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-brand-blue/20 group-hover:border-brand-blue/50 transition-colors shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 md:w-5 md:h-5 text-white group-hover:text-brand-accent transition-colors"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                  ></path>
+                </svg>
+              </div>
+              <span
+                class="text-white font-sans text-[10px] md:text-xs uppercase tracking-widest font-bold whitespace-nowrap"
+                >Follow-Up Specialists</span
+              >
+            </div>
+
+            <!-- Appointment Setters -->
+            <div
+              class="flex items-center gap-4 bg-[#0a0a0a]/90 backdrop-blur-md border border-white/20 px-2 py-2 pr-6 md:pr-8 rounded-full hover:border-brand-blue transition-all group cursor-default shadow-lg"
+            >
+              <div
+                class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-brand-blue/20 group-hover:border-brand-blue/50 transition-colors shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 md:w-5 md:h-5 text-white group-hover:text-brand-accent transition-colors"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  ></path>
+                </svg>
+              </div>
+              <span
+                class="text-white font-sans text-[10px] md:text-xs uppercase tracking-widest font-bold whitespace-nowrap"
+                >Appointment Setters</span
+              >
+            </div>
+
+            <!-- Support -->
+            <div
+              class="flex items-center gap-4 bg-[#0a0a0a]/90 backdrop-blur-md border border-white/20 px-2 py-2 pr-6 md:pr-8 rounded-full hover:border-brand-blue transition-all group cursor-default shadow-lg"
+            >
+              <div
+                class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-brand-blue/20 group-hover:border-brand-blue/50 transition-colors shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 md:w-5 md:h-5 text-white group-hover:text-brand-accent transition-colors"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
+                  ></path>
+                </svg>
+              </div>
+              <span
+                class="text-white font-sans text-[10px] md:text-xs uppercase tracking-widest font-bold whitespace-nowrap"
+                >Support</span
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -1066,109 +1322,188 @@
       =============================================================== 
     -->
     <footer
-      class="bg-[#020202] pt-20 md:pt-40 pb-10 border-t border-brand-border text-white relative z-10 overflow-hidden"
+      class="bg-[#020202] pt-24 md:pt-40 pb-10 border-t border-brand-border text-white relative z-10"
     >
       <div
-        class="max-w-[1600px] mx-auto px-6 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 mb-20 md:mb-32 footer-reveal"
+        class="max-w-[1600px] mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 mb-24 md:mb-32 footer-reveal"
       >
-        <div class="col-span-1 md:col-span-4 flex flex-col justify-between">
+        <!-- Column 1: Brand -->
+        <div class="col-span-1 md:col-span-4 flex flex-col justify-start">
           <div>
-            <!-- Brand Logo -->
-            <a href="home" class="flex items-center group cursor-pointer z-10">
+            <a
+              href="/"
+              class="flex items-center mb-10 group cursor-pointer w-fit"
+            >
               <img
                 src="https://i.postimg.cc/Dzk04hSg/logo-w.png"
                 alt="Netziah Logo"
                 class="h-14 md:h-16 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
               />
             </a>
-            <p
-              class="text-brand-text font-display text-base md:text-xl uppercase tracking-tight font-medium max-w-[200px]"
+            <h2
+              class="font-display font-bold text-2xl md:text-3xl text-white uppercase tracking-tighter leading-[1.1]"
             >
-              Performance Powered by Intelligence
-            </p>
+              Performance<br />
+              Powered By<br />
+              Intelligence
+            </h2>
           </div>
         </div>
 
-        <div class="col-span-1 md:col-span-2 flex flex-col gap-6">
-          <h4
-            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
-          >
-            Navigation
-          </h4>
+        <!-- Column 2: Grid Table (Navigation & Resources) -->
+        <div class="col-span-1 md:col-span-4">
           <div
-            class="flex flex-col gap-3 font-display font-bold text-sm md:text-lg uppercase tracking-tight"
+            class="grid grid-cols-2 border-t border-l border-brand-border text-sm font-sans uppercase tracking-widest w-full"
           >
-            <a
-              href="solutions"
-              class="hover:text-brand-accent transition-colors w-fit"
-              >Solutions</a
+            <!-- Row 1 Headers -->
+            <div
+              class="border-r border-b border-brand-border p-5 text-white font-bold text-[10px] tracking-[0.2em] bg-[#080808]"
             >
-            <a
-              href="#"
-              class="text-white w-fit border-b border-brand-accent pb-1"
-              >About Us</a
+              Navigation
+            </div>
+            <div
+              class="border-r border-b border-brand-border p-5 text-white font-bold text-[10px] tracking-[0.2em] bg-[#080808]"
             >
-            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
-              >Careers</a
+              Resources
+            </div>
+
+            <!-- Row 2 -->
+            <div
+              class="border-r border-b border-brand-border p-5 hover:bg-brand-gray/50 transition-colors"
             >
+              <a
+                href="/"
+                class="block text-brand-text hover:text-white font-semibold text-[11px]"
+                >Home</a
+              >
+            </div>
+            <div
+              class="border-r border-b border-brand-border p-5 hover:bg-brand-gray/50 transition-colors"
+            >
+              <a
+                href="#"
+                class="block text-brand-text hover:text-white font-semibold text-[11px]"
+                >Privacy Policy</a
+              >
+            </div>
+
+            <!-- Row 3 -->
+            <div
+              class="border-r border-b border-brand-border p-5 hover:bg-brand-gray/50 transition-colors"
+            >
+              <a
+                href="solutions"
+                class="block text-brand-text hover:text-white font-semibold text-[11px]"
+                >Solutions</a
+              >
+            </div>
+            <div
+              class="border-r border-b border-brand-border p-5 hover:bg-brand-gray/50 transition-colors"
+            >
+              <a
+                href="#"
+                class="block text-brand-text hover:text-white font-semibold text-[11px]"
+                >Terms & Conditions</a
+              >
+            </div>
+
+            <!-- Row 4 -->
+            <div
+              class="border-r border-b border-brand-border p-5 hover:bg-brand-gray/50 transition-colors"
+            >
+              <a
+                href="about-us"
+                class="block text-brand-text hover:text-white font-semibold text-[11px]"
+                >About Us</a
+              >
+            </div>
+            <div
+              class="border-r border-b border-brand-border p-5 hover:bg-brand-gray/50 transition-colors"
+            >
+              <a
+                href="#"
+                class="block text-brand-text hover:text-white font-semibold text-[11px]"
+                >Careers</a
+              >
+            </div>
+
+            <!-- Row 5 -->
+            <div
+              class="border-r border-b border-brand-border p-5 hover:bg-brand-gray/50 transition-colors"
+            >
+              <a
+                href="insights"
+                class="block text-brand-text hover:text-white font-semibold text-[11px]"
+                >Insights</a
+              >
+            </div>
+            <div
+              class="border-r border-b border-brand-border p-5 hover:bg-brand-gray/50 transition-colors"
+            >
+              <a
+                href="contact"
+                class="block text-brand-text hover:text-white font-semibold text-[11px]"
+                >Contact Sales</a
+              >
+            </div>
           </div>
         </div>
 
-        <div class="col-span-1 md:col-span-2 flex flex-col gap-6">
+        <!-- Column 3: Newsletter -->
+        <div
+          class="col-span-1 md:col-span-4 flex flex-col gap-6 md:gap-8 justify-start"
+        >
           <h4
-            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
-          >
-            Legal
-          </h4>
-          <div
-            class="flex flex-col gap-3 font-display font-bold text-sm md:text-lg uppercase tracking-tight"
-          >
-            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
-              >Privacy Policy</a
-            >
-            <a href="#" class="hover:text-brand-accent transition-colors w-fit"
-              >Terms & Conditions</a
-            >
-          </div>
-        </div>
-
-        <div class="col-span-1 md:col-span-4 flex flex-col gap-6">
-          <h4
-            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold"
+            class="text-brand-text text-[10px] uppercase tracking-[0.2em] font-bold"
           >
             Subscribe to Our Newsletter
           </h4>
+
+          <!-- Animated Input Box -->
           <div
-            class="flex flex-col gap-4 border-b border-brand-border pb-4 md:pb-6 relative group"
+            class="relative group rounded-xl transition-all duration-500 z-10 w-full mt-2"
           >
-            <input
-              type="email"
-              placeholder="ENTER YOUR EMAIL"
-              class="w-full bg-transparent text-white font-display text-lg md:text-2xl uppercase font-bold focus:outline-none placeholder:text-gray-700"
-            />
-            <button
-              class="absolute right-0 top-1/2 -translate-y-1/2 text-[9px] md:text-xs uppercase tracking-widest font-bold text-brand-blue hover:text-white transition-colors"
+            <!-- Glowing Box Background (Appears on Focus) -->
+            <div
+              class="absolute -inset-1 bg-gradient-to-r from-brand-blue/30 to-brand-accent/30 rounded-xl blur opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 pointer-events-none"
+            ></div>
+
+            <div
+              class="relative flex items-center w-full bg-[#0a0a0a] border border-white/10 group-focus-within:border-brand-blue/50 rounded-xl p-1.5 transition-all duration-500"
             >
-              Submit
-            </button>
+              <input
+                type="email"
+                placeholder="ENTER YOUR EMAIL"
+                class="flex-grow bg-transparent text-white px-4 md:px-6 py-3 md:py-4 font-sans text-sm md:text-base outline-none placeholder:text-gray-600 placeholder:font-display placeholder:uppercase placeholder:tracking-widest"
+              />
+              <button
+                class="relative flex-shrink-0 bg-brand-blue text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-[10px] md:text-xs uppercase tracking-widest font-bold transition-all hover:bg-brand-accent hover:shadow-[0_0_20px_rgba(0,209,255,0.4)] overflow-hidden group/btn"
+              >
+                <span class="relative z-20">Subscribe</span>
+                <div
+                  class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover/btn:animate-[shimmer_1.5s_infinite]"
+                ></div>
+              </button>
+            </div>
           </div>
+
           <p
-            class="text-brand-text text-[9px] md:text-[10px] uppercase tracking-widest leading-relaxed"
+            class="text-brand-text text-[10px] uppercase tracking-widest leading-relaxed mt-4"
           >
-            I agree to my email being stored and used to receive...
+            I agree to receive communications and updates from Netziah.
           </p>
         </div>
       </div>
 
       <div
-        class="max-w-[1600px] mx-auto px-6 md:px-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-t border-brand-border pt-8 md:pt-10 text-[8px] md:text-[10px] uppercase tracking-[0.2em] font-bold text-brand-text"
+        class="max-w-[1600px] mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-brand-border pt-8 md:pt-10 text-[10px] uppercase tracking-[0.2em] font-bold text-brand-text"
       >
         <div>© 2026 Netziah. All Rights Reserved.</div>
-        <div
-          class="flex flex-wrap justify-start md:justify-center gap-4 md:gap-8"
-        >
-          <a href="home" class="hover:text-white transition-colors">Home</a>
-          <a href="#" class="text-white transition-colors">About Us</a>
+        <div class="flex flex-wrap justify-center gap-6 md:gap-8">
+          <a href="/" class="hover:text-white transition-colors">Home</a>
+          <a href="about-us" class="hover:text-white transition-colors"
+            >About Us</a
+          >
           <a href="solutions" class="hover:text-white transition-colors"
             >Solutions</a
           >
@@ -1310,57 +1645,29 @@
         });
       }
 
-      // Preloader & Hero Sequence
-      const tlPreloader = gsap.timeline();
-      tlPreloader
-        .to(".loader-word", {
-          y: "0%",
-          duration: 1.2,
-          ease: "expo.out",
-          stagger: 0.1,
-        })
-        .to(".loader-word", {
-          y: "-110%",
-          duration: 1,
-          ease: "expo.in",
-          stagger: 0.05,
-          delay: 0.6,
-        })
-        .to(
-          ".panel-left",
-          { xPercent: -100, duration: 1.5, ease: "expo.inOut" },
-          "-=0.2",
-        )
-        .to(
-          ".panel-right",
-          { xPercent: 100, duration: 1.5, ease: "expo.inOut" },
-          "-=1.5",
-        )
-        .set(".preloader", { display: "none" })
-        .to(
-          ".nav-reveal",
-          { opacity: 1, duration: 1.5, ease: "power2.out" },
-          "-=0.5",
-        )
+      // Hero Initial Load Sequence (No Preloader)
+      const tlLoad = gsap.timeline();
+      tlLoad
+        .to(".nav-reveal", { opacity: 1, duration: 1.5, ease: "power2.out" })
         .to(
           ".hero-anim",
           { y: "0%", duration: 2, ease: "expo.out", stagger: 0.1 },
-          "-=1",
+          0.2,
         )
         .from(
           ".hero-bg-img",
           {
             scale: 1.4,
-            filter: "grayscale(100%) brightness(0.2)",
+            filter: "grayscale(100%) contrast(1.05) brightness(0.2)",
             duration: 2.5,
             ease: "expo.out",
           },
-          "-=2",
+          0,
         )
         .to(
           ".hero-fade",
           { opacity: 1, y: 0, duration: 1.5, ease: "expo.out" },
-          "-=1.5",
+          1,
         );
 
       // --- SCROLL ANIMATIONS ---
@@ -1383,14 +1690,6 @@
           duration: 1.2,
           ease: "expo.out",
         });
-      });
-
-      gsap.to(".badge-reveal", {
-        scrollTrigger: { trigger: ".badge-reveal", start: "top 90%" },
-        y: 0,
-        opacity: 1,
-        duration: 1.5,
-        ease: "back.out(1.5)",
       });
 
       gsap.utils.toArray(".pillar-row").forEach((row) => {
